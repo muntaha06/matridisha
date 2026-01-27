@@ -1,41 +1,58 @@
-package frontend;
-
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
+import jakarta.servlet.annotation.*;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        String phone = request.getParameter("phone");
+
+        Connection conn = null;
+
         try {
-            String name = request.getParameter("name");
-            int age = Integer.parseInt(request.getParameter("age"));
-            double weight = Double.parseDouble(request.getParameter("weight"));
-            int weeks = Integer.parseInt(request.getParameter("weeks"));
-            String prevChild = request.getParameter("previousChild");
-            String deliveryType = request.getParameter("deliveryType");
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/matridisha", "root", "");
 
-            Register reg = new Register();
-            boolean success = reg.registerUser(name, age, weight, weeks, prevChild, deliveryType, username, password);
+            String sql = "INSERT INTO users (name, email, password, phone) VALUES (?, ?, ?, ?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, name);
+            pstmt.setString(2, email);
+            pstmt.setString(3, password);
+            pstmt.setString(4, phone);
 
-            if(success) {
-                response.setStatus(200);
-                response.getWriter().write("Success");
+            int row = pstmt.executeUpdate();
+
+            if (row > 0) {
+                out.println("<h2>Registration Successful!</h2>");
+                out.println("<a href='login.html'>Login Here</a>");
             } else {
-                response.setStatus(500);
-                response.getWriter().write("Registration Failed");
+                out.println("<h2>Registration Failed. Please try again.</h2>");
             }
+
         } catch (Exception e) {
-            response.setStatus(400);
-            response.getWriter().write("Error: " + e.getMessage());
+            out.println("<h2>Error: " + e.getMessage() + "</h2>");
+            e.printStackTrace();
+        } finally {
+            try {
+                if (conn != null) conn.close();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 }
