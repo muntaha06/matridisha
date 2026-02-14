@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>মাতৃ দিশা - ড্যাশবোর্ড</title>
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 25px;
+        }
+        .card {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #f8bbd0;
+            cursor: pointer;
+            transition: 0.3s;
+            color: #ad1457;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .card:hover {
+            background: #d81b60;
+            color: white;
+            transform: translateY(-3px);
+        }
+        /* Chatbox card will span across two columns to stay in the middle */
+        .full-width {
+            grid-column: span 2;
+            width: 60%;
+            margin: 0 auto;
+        }
+        .welcome-msg {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+        .logout-btn {
+            margin-top: 30px;
+            background-color: #d81b60;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            width: 100%;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container" style="width: 550px; margin: auto; text-align: center; padding-top: 50px;" >
+        <h1>মাতৃ দিশা</h1>
+        <h2 style="color: #555; margin-bottom: 5px;">স্বাগতম <span id="userDisplayName">ব্যবহারকারী</span>!</h2>
+        <p class="welcome-msg">"মাতৃত্বের এই সুন্দর পথচলায় আমরা আছি আপনার পাশে, ভরসা ও মমতায়।"</p>
+
+        <div class="grid-container">
+            <div class="card" onclick="location.href='profile.html'">আমার প্রোফাইল</div>
+            <div class="card" onclick="location.href='diseases.html'">সাধারণ রোগ ও সমাধান</div>
+            
+            <div class="card" onclick="location.href='guidelines_pre.html'">দিক-নির্দেশনা (জন্মের আগে)</div>
+            <div class="card" onclick="location.href='guidelines_post.html'">দিক-নির্দেশনা (জন্মের পরে)</div>
+
+            <div class="card full-width" onclick="location.href='chatbot.html'">চ্যাটবক্স (Chatbot)</div>
+        </div>
+
+        <button class="logout-btn" onclick="location.href='index.html'">লগ-আউট</button>
+    </div>
+    <script>
+        window.onload = function() {
+            fetch('/api/userprofile')
+            .then(response => {
+                if(!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(data => {
+                if(data && data.fullName && data.fullName !== "N/A") {
+                    document.getElementById('userDisplayName').innerText = data.fullName;
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching name: ', error);
+            });
+        };
+    </script>
+</body>
+</html>

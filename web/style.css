@@ -1,0 +1,103 @@
+/* Main Page Layout */
+body { 
+    background-color: #fff0f5; 
+    font-family: 'Segoe UI', sans-serif; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    min-height: 100vh; 
+    margin: 0; 
+    padding: 40px 0; 
+}
+
+/* Form and Content Wrapper */
+.container { 
+    background: white; 
+    padding: 35px; 
+    border-radius: 20px; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+    width: 420px; 
+    text-align: center; 
+}
+
+/* Header Text */
+h1 { 
+    color: #d81b60; 
+    margin-bottom: 5px; 
+}
+
+/* Input Field Spacing */
+.input-group { 
+    text-align: left; 
+    margin-bottom: 15px; 
+}
+
+/* Label Styling Above Inputs */
+.input-group label { 
+    display: block; 
+    color: #ad1457; 
+    font-weight: bold; 
+    font-size: 14px; 
+    margin-bottom: 5px; 
+}
+
+/* Input and Select Box Styling */
+input, select { 
+    width: 100%; 
+    padding: 12px; 
+    margin: 5px 0; 
+    border: 1.5px solid #f8bbd0; 
+    border-radius: 8px; 
+    box-sizing: border-box; 
+    font-size: 15px; 
+}
+
+/* Button Styling */
+.btn { 
+    background-color: #d81b60; 
+    color: white; 
+    border: none; 
+    padding: 14px; 
+    width: 100%; 
+    border-radius: 10px; 
+    cursor: pointer; 
+    font-weight: bold; 
+    margin-top: 15px; 
+}
+
+.btn:hover { 
+    background-color: #ad1457; 
+}
+
+/* Dashboard Grid Layout */
+.grid-container { 
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 15px; 
+    margin-top: 25px; 
+}
+
+/* Dashboard Card Styling */
+.card { 
+    background: #fff; 
+    padding: 20px 10px; 
+    border-radius: 15px; 
+    border: 2px solid #fce4ec; 
+    cursor: pointer; 
+    color: #ad1457; 
+    font-weight: bold; 
+    text-align: center; 
+    transition: 0.3s; 
+}
+
+.card:hover { 
+    background: #d81b60; 
+    color: white; 
+}
+
+/* Special Class for Logout or Main Buttons */
+.full-width { 
+    grid-column: span 2; 
+    width: 80%; 
+    margin: 5px auto; 
+}

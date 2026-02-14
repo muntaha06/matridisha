@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>আমার প্রোফাইল - মাতৃ দিশা</title>
+    <style>
+        .profile-card { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 15px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+            text-align: left;
+        }
+        .info-item { 
+            margin-bottom: 15px; 
+            padding-bottom: 10px; 
+            border-bottom: 1px solid #eee; 
+            display: flex;
+            justify-content: space-between;
+        }
+        .info-label { 
+            font-weight: bold; 
+            color: #ad1457; 
+        }
+        .info-value {
+            color: #333;
+        }
+        .back-btn { 
+            display: inline-block; 
+            margin-top: 25px; 
+            color: white; 
+            text-decoration: none; 
+            font-weight: bold; 
+            background-color: #ad1457;
+            padding: 10px 20px;
+            border-radius: 8px;
+            width: 100%;
+            text-align: center;
+            transition: 0.3s;
+        }
+        .back-btn:hover {
+            background-color: #d81b60;
+        }
+        #loading {
+            color: #d81b60;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="width: 500px;">
+        <h1>আপনার প্রোফাইল</h1>
+        <p style="margin-bottom: 20px; color: #666;">আপনার সংরক্ষিত তথ্যসমূহ নিচে দেওয়া হলো:</p>
+        
+        <div class="profile-card">
+            <div id="loader" style="text-align: center; padding: 20px;">
+                <span id="loading">তথ্য লোড হচ্ছে...</span>
+            </div>
+
+            <div id="profileContent" style="display: none;">
+                <div class="info-item">
+                    <span class="info-label">সম্পূর্ণ নাম:</span>
+                    <span class="info-value" id="displayFullName">--</span>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">বয়স:</span>
+                    <span class="info-value"><span id="displayAge">--</span> বছর</span>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-label">বর্তমান ওজন:</span>
+                    <span class="info-value"><span id="displayWeight">--</span> কেজি</span>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-label">গর্ভাবস্থার সপ্তাহ:</span>
+                    <span class="info-value"><span id="displayWeek">--</span> সপ্তাহ</span>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-label">পূর্ববর্তী সন্তান:</span>
+                    <span class="info-value" id="displayPrevChild">--</span>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-label">ডেলিভারির ধরণ:</span>
+                    <span class="info-value" id="displayDeliveryType">--</span>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-label">শারীরিক অবস্থা:</span>
+                    <span class="info-value" id="displayMedicalIssue">--</span>
+                </div>
+            </div>
+
+            <a href="dashboard.html" class="back-btn">← ড্যাশবোর্ডে ফিরে যান</a>
+        </div>
+    </div>
+
+    <script>
+        // data fetch after page load
+        window.onload = function() {
+            fetch('/api/userprofile')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('ডেটা পাওয়া যায়নি');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // show profile content
+                    document.getElementById('loader').style.display = 'none';
+                    document.getElementById('profileContent').style.display = 'block';
+
+                    // data population
+                    document.getElementById('displayFullName').innerText = data.fullName || "তথ্য নেই";
+                    document.getElementById('displayAge').innerText = data.age || "0";
+                    document.getElementById('displayWeight').innerText = data.weight || "0";
+                    document.getElementById('displayWeek').innerText = data.week || "0";
+                    document.getElementById('displayPrevChild').innerText = data.prevChild || "তথ্য নেই";
+                    document.getElementById('displayDeliveryType').innerText = data.deliveryType || "প্রযোজ্য নয়";
+                    document.getElementById('displayMedicalIssue').innerText = data.medicalIssue || "স্বাভাবিক";
+                })
+                .catch(err => {
+                    console.error("Error fetching profile:", err);
+                    document.getElementById('loading').innerText = "তথ্য লোড করতে সমস্যা হয়েছে। দয়া করে আবার লগইন করুন।";
+                    document.getElementById('loading').style.color = "red";
+                });
+        };
+    </script>
+</body>
+</html>

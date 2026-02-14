@@ -1,0 +1,11 @@
+cd src
+javac -cp ".;../lib/*" MainApp.java DatabaseManager.java
+java -cp ".;../lib/*" MainApp
+
+git add .
+git commit -m "update message"
+git push origin Muntaha
+
+cd AnikaWork
+git init
+git pull url 
