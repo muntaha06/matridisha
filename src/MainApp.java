@@ -25,7 +25,7 @@ public class MainApp {
                 
                 // ফাইলের এক্সটেনশন অনুযায়ী Content-Type সেট করা (ঐচ্ছিক কিন্তু ভালো)
                 if (path.endsWith(".html")) ex.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
-                if (path.endsWith(".jpg") || path.endsWith(".jpeg")) ex.getResponseHeaders().set("Content-Type", "image/jpeg");
+                 if (path.endsWith(".jpg") || path.endsWith(".jpeg")) ex.getResponseHeaders().set("Content-Type", "image/jpeg");
                 if (path.endsWith(".png")) ex.getResponseHeaders().set("Content-Type", "image/png");
                 if (path.endsWith(".css")) ex.getResponseHeaders().set("Content-Type", "text/css");
 
