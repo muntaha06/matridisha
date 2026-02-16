@@ -1,19 +1,31 @@
 <!DOCTYPE html>
 <html lang="bn">
+
 <head>
+
+    <!-- ===============================
+         1️⃣ Basic Page Configuration
+    =============================== -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MatriDisha - Login</title>
+
+    <!-- External CSS -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- ===============================
+         2️⃣ Custom Page Styling
+    =============================== -->
     <style>
-        /* Pink Header Styling */
+
+        /* Application Title Styling (Pink Theme) */
         h2 {
-            color: #d63384 !important; /* MatriDisha Pink Color */
+            color: #d63384 !important;
             font-size: 28px;
             margin-bottom: 10px;
         }
 
-        /* Error Notification for Login Fail */
+        /* Error Notification Popup */
         #notification {
             display: none;
             position: fixed;
@@ -28,6 +40,7 @@
             z-index: 1000;
         }
 
+        /* Reset Password Link Styling */
         .reset-link { 
             color: #ff4757; 
             cursor: pointer; 
@@ -35,42 +48,73 @@
             display: block; 
             margin-top: 10px; 
         }
+
     </style>
 </head>
+
 <body>
 
+    <!-- ===============================
+         3️⃣ Notification Section
+    =============================== -->
     <div id="notification"></div>
 
+    <!-- ===============================
+         4️⃣ Login Form Container
+    =============================== -->
     <div class="container">
-        <h2>মাতৃদিশা </h2>
+
+        <h2>মাতৃদিশা</h2>
         <p>লগইন করুন</p>
         
+        <!-- Login Form -->
         <form id="loginForm" action="/login" method="POST">
+
             <div class="input-group">
-                <input type="text" id="username" name="username" placeholder="ইউজারনেম" required>
+                <input type="text" id="username" name="username"
+                       placeholder="ইউজারনেম" required>
             </div>
+
             <div class="input-group">
-                <input type="password" id="password" name="password" placeholder="পাসওয়ার্ড" required>
+                <input type="password" id="password" name="password"
+                       placeholder="পাসওয়ার্ড" required>
             </div>
+
             <button type="submit" class="btn">লগইন</button>
+
         </form>
 
+        <!-- Registration Redirect -->
         <p>অ্যাকাউন্ট নেই? <a href="signup.html">রেজিস্ট্রেশন করুন</a></p>
-        <span class="reset-link" onclick="showReset()">পাসওয়ার্ড ভুলে গেছেন? রিসেট করুন</span>
+
+        <!-- Reset Password Trigger -->
+        <span class="reset-link" onclick="showReset()">
+            পাসওয়ার্ড ভুলে গেছেন? রিসেট করুন
+        </span>
+
     </div>
 
+    <!-- ===============================
+         5️⃣ JavaScript Section
+    =============================== -->
     <script>
+
+        // ===============================
+        // 5.1️⃣ Form Validation Setup
+        // ===============================
         const loginForm = document.getElementById('loginForm');
         const usernameInput = document.getElementById('username');
         const passwordInput = document.getElementById('password');
 
-        // Custom validation messages in Bangla
         const inputs = [usernameInput, passwordInput];
-        
+
+        // Custom validation messages (Bangla)
         inputs.forEach(input => {
-            // Invalid input handling
+
+            // When field is invalid
             input.addEventListener('invalid', function (e) {
                 e.target.setCustomValidity("");
+
                 if (!e.target.validity.valid) {
                     if (e.target.id === 'username') {
                         e.target.setCustomValidity("অনুগ্রহ করে এই ঘরটি পূরণ করুন।");
@@ -80,13 +124,16 @@
                 }
             });
 
-            // Input event to clear custom message
+            // Clear message when user types again
             input.addEventListener('input', function (e) {
                 e.target.setCustomValidity("");
             });
+
         });
 
-        // Error notification handling
+        // ===============================
+        // 5.2️⃣ Error Notification Handling
+        // ===============================
         const urlParams = new URLSearchParams(window.location.search);
         const notify = document.getElementById('notification');
 
@@ -94,20 +141,38 @@
             notify.innerText = "❌ ভুল পাসওয়ার্ড! আবার চেষ্টা করুন।";
             notify.style.backgroundColor = "#ff4757";
             notify.style.display = 'block';
-            setTimeout(() => { notify.style.display = 'none'; }, 4000);
+
+            // Auto-hide after 4 seconds
+            setTimeout(() => { 
+                notify.style.display = 'none'; 
+            }, 4000);
         }
 
+        // ===============================
+        // 5.3️⃣ Password Reset Function
+        // ===============================
         function showReset() {
+
             let user = prompt("ইউজারনেম দিন:");
             let newPass = prompt("নতুন পাসওয়ার্ড দিন:");
+
             if (user && newPass) {
+
                 let form = document.createElement('form');
-                form.method = 'POST'; form.action = '/reset';
-                form.innerHTML = `<input type="hidden" name="username" value="${user}"><input type="hidden" name="password" value="${newPass}">`;
+                form.method = 'POST';
+                form.action = '/reset';
+
+                form.innerHTML = `
+                    <input type="hidden" name="username" value="${user}">
+                    <input type="hidden" name="password" value="${newPass}">
+                `;
+
                 document.body.appendChild(form);
                 form.submit();
             }
         }
+
     </script>
+
 </body>
 </html>
