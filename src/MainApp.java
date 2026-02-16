@@ -5,16 +5,32 @@ import java.nio.file.*;
 import java.util.*;
 
 public class MainApp {
-    private static String loggedInUser = ""; // [cite: 167]
 
+    // ===============================
+    // 1️⃣ Global Variable (Session Tracking)
+    // ===============================
+    // Stores currently logged-in username
+    private static String loggedInUser = "";
+
+    // ===============================
+    // 2️⃣ Main Method – Start HTTP Server
+    // ===============================
     public static void main(String[] args) throws IOException {
-        HttpServer server = HttpServer.create(new InetSocketAddress(8081), 0); // [cite: 169]
 
-        // 1. Static File Server [cite: 170-176]
+        // Create HTTP Server on port 8081
+        HttpServer server = HttpServer.create(new InetSocketAddress(8081), 0);
+
+        // ===============================
+        // 3️⃣ Static File Server (HTML, CSS, JS)
+        // ===============================
+        // Serves files from ../web directory
         server.createContext("/", ex -> {
+
             String path = ex.getRequestURI().getPath();
             if (path.equals("/")) path = "/index.html";
+
             File file = new File("../web" + path);
+
             if (file.exists()) {
                 byte[] content = Files.readAllBytes(file.toPath());
                 ex.sendResponseHeaders(200, content.length);
@@ -22,20 +38,28 @@ public class MainApp {
             } else {
                 ex.sendResponseHeaders(404, 0);
             }
+
             ex.getResponseBody().close();
         });
 
-        // 2. Form Handlers [cite: 180-187]
+        // ===============================
+        // 4️⃣ Form Handling Endpoints
+        // ===============================
+        // Handles Register, Login, Reset Password requests
         server.createContext("/register", ex -> handleForm(ex, "reg"));
         server.createContext("/login", ex -> handleForm(ex, "login"));
         server.createContext("/reset", ex -> handleForm(ex, "reset"));
 
-        // 3. User Profile JSON API [cite: 188-203]
+        // ===============================
+        // 5️⃣ User Profile API (JSON Response)
+        // ===============================
+        // Returns logged-in user data as JSON
         server.createContext("/api/userprofile", ex -> {
+
             DatabaseManager db = new DatabaseManager();
             Map<String, String> profile = db.getUserProfile(loggedInUser);
-            
-            // Fixed JSON Formatting 
+
+            // Convert user profile map to JSON format
             String json = String.format(
                 "{\"fullName\":\"%s\",\"age\":\"%s\",\"weight\":\"%s\",\"week\":\"%s\",\"prevChild\":\"%s\",\"deliveryType\":\"%s\",\"medicalIssue\":\"%s\"}",
                 profile.getOrDefault("fullName", "N/A"),
@@ -49,54 +73,97 @@ public class MainApp {
 
             ex.getResponseHeaders().set("Content-Type", "application/json; charset=UTF-8");
             byte[] response = json.getBytes("UTF-8");
+
             ex.sendResponseHeaders(200, response.length);
             ex.getResponseBody().write(response);
             ex.getResponseBody().close();
         });
 
+        // Start server
         server.setExecutor(null);
         server.start();
-        System.out.println("MatriDisha Server started at: http://localhost:8081"); // [cite: 213]
+
+        System.out.println("MatriDisha Server started at: http://localhost:8081");
     }
 
+    // ===============================
+    // 6️⃣ Form Processing Method
+    // ===============================
+    // Handles Registration, Login & Password Reset logic
     private static void handleForm(HttpExchange ex, String type) throws IOException {
+
+        // Allow only POST requests
         if (!"POST".equalsIgnoreCase(ex.getRequestMethod())) return;
-        
+
+        // ===============================
+        // 6.1️⃣ Read Form Data
+        // ===============================
         String data = "";
-        // try-with-resources automatically closes the Scanner 's' 
+
         try (Scanner s = new Scanner(ex.getRequestBody()).useDelimiter("\\A")) {
             data = s.hasNext() ? s.next() : "";
         }
 
+        // Convert form data into key-value map
         Map<String, String> p = new HashMap<>();
         for (String pair : data.split("&")) {
             String[] kv = pair.split("=");
             if (kv.length > 1) {
-                p.put(URLDecoder.decode(kv[0], "UTF-8"), URLDecoder.decode(kv[1], "UTF-8"));
+                p.put(URLDecoder.decode(kv[0], "UTF-8"),
+                      URLDecoder.decode(kv[1], "UTF-8"));
             }
         }
 
         DatabaseManager db = new DatabaseManager();
         boolean success = false;
 
+        // ===============================
+        // 6.2️⃣ Perform Action Based on Type
+        // ===============================
         try {
+
             if (type.equals("reg")) {
-                success = db.registerUser(p.get("name"), Integer.parseInt(p.get("age")), 
-                          Double.parseDouble(p.get("weight")), Integer.parseInt(p.get("weeks")), 
-                          p.get("prev_child"), p.get("delivery_type"), p.get("medical_issue"), 
-                          p.get("username"), p.get("password")); // [cite: 232-237]
+                // Registration
+                success = db.registerUser(
+                        p.get("name"),
+                        Integer.parseInt(p.get("age")),
+                        Double.parseDouble(p.get("weight")),
+                        Integer.parseInt(p.get("weeks")),
+                        p.get("prev_child"),
+                        p.get("delivery_type"),
+                        p.get("medical_issue"),
+                        p.get("username"),
+                        p.get("password")
+                );
+
             } else if (type.equals("login")) {
-                success = db.validateLogin(p.get("username"), p.get("password")); // [cite: 239]
+                // Login Validation
+                success = db.validateLogin(
+                        p.get("username"),
+                        p.get("password")
+                );
+
                 if (success) loggedInUser = p.get("username");
+
             } else if (type.equals("reset")) {
-                success = db.resetPassword(p.get("username"), p.get("password")); // [cite: 241]
+                // Password Reset
+                success = db.resetPassword(
+                        p.get("username"),
+                        p.get("password")
+                );
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        // Redirect Logic [cite: 245-255]
-        String redirect = success ? (type.equals("login") ? "/dashboard.html" : "/index.html?success") : "/index.html?error";
+        // ===============================
+        // 6.3️⃣ Redirect After Action
+        // ===============================
+        String redirect = success
+                ? (type.equals("login") ? "/dashboard.html" : "/index.html?success")
+                : "/index.html?error";
+
         ex.getResponseHeaders().set("Location", redirect);
         ex.sendResponseHeaders(302, -1);
         ex.getResponseBody().close();
