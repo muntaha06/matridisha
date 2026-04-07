@@ -3,38 +3,52 @@ import java.io.*;
 import java.net.*;
 import java.nio.file.*;
 
+// Main Application Class
 public class MainApp {
+
+    // Main Method (Server Start)
     public static void main(String[] args) throws IOException {
-        // ৮০৮৩ পোর্টে সার্ভার তৈরি
+
+        // Create HTTP Server (Port 8083)
         HttpServer server = HttpServer.create(new InetSocketAddress(8083), 0);
-        
-        // স্ট্যাটিক ফাইল হ্যান্ডলার (HTML, CSS, Images লোড করার জন্য)
+
+        // Static File Handler (HTML, CSS, Images)
         server.createContext("/", ex -> {
             String path = ex.getRequestURI().getPath();
-            
-            // রুট পাথে থাকলে index.html এ পাঠিয়ে দিবে
+
+            // Default Route Handling
             if (path.equals("/")) {
                 path = "/index.html";
             }
-            
-            // ফাইলের লোকেশন (web ফোল্ডারের ভেতর)
+
+            // File Path Setup (web folder)
             File file = new File("web" + path);
-            
+
+            // File Exists Check & Response
             if (file.exists() && !file.isDirectory()) {
                 byte[] content = Files.readAllBytes(file.toPath());
-                
-                // ফাইলের এক্সটেনশন অনুযায়ী Content-Type সেট করা (ঐচ্ছিক কিন্তু ভালো)
-                if (path.endsWith(".html")) ex.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
-                 if (path.endsWith(".jpg") || path.endsWith(".jpeg")) ex.getResponseHeaders().set("Content-Type", "image/jpeg");
-                if (path.endsWith(".png")) ex.getResponseHeaders().set("Content-Type", "image/png");
-                if (path.endsWith(".css")) ex.getResponseHeaders().set("Content-Type", "text/css");
 
+                // Content-Type set
+                if (path.endsWith(".html"))
+                    ex.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
+
+                if (path.endsWith(".jpg") || path.endsWith(".jpeg"))
+                    ex.getResponseHeaders().set("Content-Type", "image/jpeg");
+
+                if (path.endsWith(".png"))
+                    ex.getResponseHeaders().set("Content-Type", "image/png");
+
+                if (path.endsWith(".css"))
+                    ex.getResponseHeaders().set("Content-Type", "text/css");
+
+                // Send Successful Response (200)
                 ex.sendResponseHeaders(200, content.length);
                 OutputStream os = ex.getResponseBody();
                 os.write(content);
                 os.close();
+
             } else {
-                // ফাইল না পাওয়া গেলে ৪MD৪ এরর
+                // Handle File Not Found (404)
                 String response = "404 (Not Found): ফাইলটি খুঁজে পাওয়া যায়নি।";
                 ex.sendResponseHeaders(404, response.length());
                 OutputStream os = ex.getResponseBody();
@@ -43,8 +57,11 @@ public class MainApp {
             }
         });
 
-        server.setExecutor(null); 
+        // Server Executor & Start
+        server.setExecutor(null);
         server.start();
+
+        // Console Output
         System.out.println("Server started successfully!");
         System.out.println("Visit: http://localhost:8083/diseases.html");
     }
