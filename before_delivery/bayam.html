@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ব্যায়াম</title>
+    <link rel="stylesheet" href="bayam.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <button class="back-btn" onclick="window.location.href='home.html'">← ফিরে যান</button>
+            <h1 id="page-title" class="page-title">ব্যায়াম</h1>
+        </header>
+    </div>
+
+    <!-- Exercise Popup -->
+    <div id="exercise-popup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn" onclick="closePopup()">&times;</span>
+            <div id="exercise-container">
+                <!-- Exercises will be loaded here -->
+            </div>
+            <div class="navigation-buttons">
+                <button id="prev-btn" class="nav-btn" onclick="previousExercise()">← পূর্ববর্তী</button>
+                <button id="next-btn" class="nav-btn" onclick="nextExercise()">পরবর্তী →</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const trimester = urlParams.get('trimester');
+        const trimesterMap = {
+            'first': 'first_trimester.json',
+            'second': 'second_trimester.json',
+            'third': 'third_trimester.json'
+        };
+        const trimesterNames = {
+            'first': 'প্রথম ত্রৈমাসিক',
+            'second': 'দ্বিতীয় ত্রৈমাসিক',
+            'third': 'তৃতীয় ত্রৈমাসিক'
+        };
+
+        let exerciseData = null;
+        let currentExerciseIndex = 0;
+        let exercises = [];
+
+        async function loadExerciseData() {
+            if (!trimester || !trimesterMap[trimester]) {
+                alert('অনুগ্রহ করে প্রথমে গর্ভাবস্থার পর্যায় নির্বাচন করুন');
+                window.location.href = 'home.html';
+                return;
+            }
+
+            try {
+                const response = await fetch(trimesterMap[trimester]);
+                exerciseData = await response.json();
+                exercises = exerciseData.প্রতিদিনের_ব্যায়াম || exerciseData['প্রতিদিনের_ব্যায়াম'] || [];
+                if (exercises.length > 0) {
+                    showPopup();
+                    displayExercise(0);
+                }
+            } catch (error) {
+                console.error('Error loading data:', error);
+                alert('ডেটা লোড করতে সমস্যা হয়েছে');
+            }
+        }
+
+        function showPopup() {
+            document.getElementById('exercise-popup').classList.add('show');
+            document.getElementById('exercise-popup').style.display = 'flex';
+        }
+
+        function closePopup() {
+            document.getElementById('exercise-popup').classList.remove('show');
+            document.getElementById('exercise-popup').style.display = 'none';
+        }
+
+        function displayExercise(index) {
+            if (index < 0 || index >= exercises.length) return;
+            
+            currentExerciseIndex = index;
+            const exercise = exercises[index];
+            const container = document.getElementById('exercise-container');
+            
+            const exerciseName = exercise.ব্যায়ামের_নাম || exercise['ব্যায়ামের_নাম'] || '';
+            const howTo = exercise.কিভাবে_করবেন || exercise['কিভাবে_করবেন'] || {};
+            const title = howTo.title || '';
+            const titleImage = howTo.title_image || '';
+            const videoLink = howTo.video_link || '';
+            const reasons = exercise.বিস্তারিত_কারণ || exercise.detailed_reasons || [];
+
+            container.innerHTML = `
+                <div class="exercise-header">
+                    <h2 class="exercise-name">${exerciseName}</h2>
+                    <div class="exercise-counter">${index + 1} / ${exercises.length}</div>
+                </div>
+                <div class="how-to-section">
+                    <h3 class="how-to-title">${title}</h3>
+                    ${titleImage ? `<img src="${titleImage}" alt="${title}" class="title-image" onerror="this.style.display='none'">` : ''}
+                    ${videoLink ? `<a href="${videoLink}" target="_blank" class="video-link">📹 ভিডিও দেখুন</a>` : ''}
+                </div>
+                <div class="reasons-section">
+                    <h3 class="reasons-title">বিস্তারিত কারণ:</h3>
+                    <ul class="reasons-list">
+                        ${reasons.map(reason => `<li>${reason}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+
+            // Update navigation buttons
+            document.getElementById('prev-btn').style.display = index === 0 ? 'none' : 'inline-block';
+            document.getElementById('next-btn').style.display = index === exercises.length - 1 ? 'none' : 'inline-block';
+        }
+
+        function nextExercise() {
+            if (currentExerciseIndex < exercises.length - 1) {
+                displayExercise(currentExerciseIndex + 1);
+            }
+        }
+
+        function previousExercise() {
+            if (currentExerciseIndex > 0) {
+                displayExercise(currentExerciseIndex - 1);
+            }
+        }
+
+        window.onclick = function(event) {
+            const popup = document.getElementById('exercise-popup');
+            if (event.target === popup) {
+                closePopup();
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (document.getElementById('exercise-popup').style.display === 'flex') {
+                if (e.key === 'ArrowRight') nextExercise();
+                if (e.key === 'ArrowLeft') previousExercise();
+                if (e.key === 'Escape') closePopup();
+            }
+        });
+
+        loadExerciseData();
+    </script>
+</body>
+</html>
+

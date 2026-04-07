@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>সাধারণ রোগ ও সমস্যা - মাতৃ দিশা</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #fdf2f5; margin: 0; padding: 20px; }
+        .container { max-width: 1000px; margin: auto; text-align: center; }
+        h1 { color: #ad1457; margin-bottom: 30px; }
+        .disease-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .disease-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer; transition: 0.3s; text-decoration: none; display: block; }
+        .disease-card:hover { transform: translateY(-5px); }
+        .disease-card img { width: 100%; height: 180px; object-fit: cover; }
+        .disease-card h3 { font-size: 16px; color: #333; padding: 15px; margin: 0; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div id="greeting" style="background: white; padding: 15px; border-radius: 10px; margin-bottom: 20px; color: #ad1457; font-weight: bold; font-size: 1.2rem; box-shadow: 0 4px 8px rgba(0,0,0,0.05); display: none;"></div>
+    <h1>সাধারণ রোগ ও সমস্যা</h1>
+    <div class="disease-grid">
+        <a href="morning-sickness.html" class="disease-card">
+            <img src="images/morning-sickness.png" alt="মর্নিং সিকনেস">
+            <h3>গর্ভাবস্থায় মর্নিং সিকনেস (বমি ভাব)</h3>
+        </a>
+        <a href="back-pain.html" class="disease-card">
+            <img src="images/back-pain.png" alt="কোমর ব্যথা">
+            <h3>গর্ভাবস্থায় কোমর ও পিঠে ব্যথা</h3>
+        </a>
+        <a href="leg-swelling.html" class="disease-card">
+            <img src="images/leg-swelling.jpg" alt="পা ফুলে যাওয়া">
+            <h3>গর্ভাবস্থায় পা ফুলে যাওয়া</h3>
+        </a>
+        <a href="mood-swing.html" class="disease-card">
+            <img src="images/mood-swing.jpg" alt="মুড সুইং">
+            <h3>গর্ভাবস্থায় মুড সুইং</h3>
+        </a>
+    <br><a href="http://localhost:8000" style="color: #ad1457; text-decoration: none; font-weight: bold;">← মাতৃদিশা হোমে ফিরে যান</a>
+</div>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    let userName = urlParams.get('name');
+    if (userName) {
+        localStorage.setItem('matridisha_user_name', userName);
+    } else {
+        userName = localStorage.getItem('matridisha_user_name');
+    }
+    if (userName) {
+        const greetingDiv = document.getElementById('greeting');
+        greetingDiv.innerText = "আসসালামু আলাইকুম " + userName + " আপু";
+        greetingDiv.style.display = 'block';
+    }
+</script>
+</body>
+</html>

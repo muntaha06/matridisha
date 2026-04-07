@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>শিশুর খাদ্য পরিকল্পনা - মাতৃদিশা</title>
+  
+  <style>
+    :root {
+      --primary: #db2777; /* মায়ের পেজের মতো ডার্ক পিঙ্ক */
+      --accent: #f472b6;
+      --bg-light: #fff1f2; /* হালকা গোলাপি ব্যাকগ্রাউন্ড */
+      --text: #1a1a1a;
+      --border-pink: #fbcfe8;
+    }
+
+    body {
+      background: var(--bg-light);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0; padding: 20px;
+      color: var(--text);
+    }
+
+    .diet-container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 35px;
+      padding: 30px;
+      box-shadow: 0 20px 60px rgba(219, 39, 119, 0.1);
+      border: 2px solid var(--border-pink);
+    }
+
+    .header-section { text-align: center; margin-bottom: 40px; }
+    .brand-title { color: var(--primary); font-size: 38px; margin-bottom: 5px; font-weight: 900; }
+
+    /* Modern Tabs - Pink Style */
+    .modern-tabs {
+      background: #fce7f3;
+      padding: 6px;
+      border-radius: 50px;
+      display: inline-flex;
+      margin-bottom: 30px;
+    }
+
+    .tab-btn {
+      border: none; padding: 12px 28px; border-radius: 50px;
+      cursor: pointer; font-weight: 800; background: transparent;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+      color: #be185d;
+    }
+    .tab-btn:hover { transform: translateY(-5px); }
+    .tab-btn.active {
+      background: var(--primary); color: white;
+      box-shadow: 0 12px 20px rgba(219, 39, 119, 0.4);
+      transform: translateY(-5px);
+    }
+
+    .info-box {
+      background: #fff5f7; 
+      border: 2px solid var(--border-pink); 
+      border-radius: 20px;
+      padding: 15px; 
+      margin-bottom: 25px; 
+    }
+    .info-box p { margin: 5px 0; font-weight: 700; color: #be185d; font-size: 15px; }
+
+    /* Timeline Section */
+    .timeline { position: relative; border-left: 4px solid var(--primary); margin-left: 20px; padding-left: 30px; }
+    .timeline-item { position: relative; margin-bottom: 35px; }
+    .timeline-item::before {
+        content: ''; position: absolute; left: -39px; top: 5px;
+        width: 14px; height: 14px; background: white;
+        border-radius: 50%; border: 4px solid var(--primary);
+    }
+
+    .timeline-content {
+      background: #fff; border: 1px solid #fce7f3;
+      padding: 22px; border-radius: 25px;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.02);
+    }
+    .timeline-content:hover {
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: 0 25px 50px rgba(219, 39, 119, 0.15);
+    }
+
+    .diet-time { font-size: 13px; color: var(--primary); font-weight: 800; }
+    .diet-title { font-size: 21px; margin: 5px 0 15px; font-weight: 900; color: #334155; }
+    .food-list { list-style: none; padding: 0; margin: 0; }
+    .food-list li { margin-bottom: 10px; font-weight: 600; display: flex; align-items: center; color: #475569; }
+    .food-list li::before { content: '🍼'; margin-right: 12px; font-size: 14px; }
+
+    /* Nutrition Cards - Pink Hover */
+    .nutrition-card {
+      background: white; margin-bottom: 25px; padding: 20px;
+      border-radius: 25px; display: flex; align-items: center;
+      gap: 25px; border: 1px solid #f1f5f9;
+      transition: transform 0.3s ease;
+    }
+    .nutrition-card:hover { transform: translateX(10px); border-color: var(--primary); }
+    
+    .card-pink { border-left: 8px solid var(--primary); }
+
+    .nutrition-img { width: 100px; height: 100px; border-radius: 20px; object-fit: cover; }
+    .nutrition-info h4 { margin: 0 0 8px; font-size: 20px; font-weight: 800; color: var(--primary); }
+    .nutrition-info p { font-size: 15px; color: #555; line-height: 1.6; margin: 0; }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: zoomIn 0.5s ease; }
+    @keyframes zoomIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+
+    .footer-btn { text-align: center; margin-top: 45px; }
+    .back-btn {
+      text-decoration: none; background: var(--primary); color: white;
+      padding: 14px 40px; border-radius: 50px;
+      font-weight: 800; transition: 0.3s; display: inline-block;
+    }
+    .back-btn:hover { transform: translateY(-7px); box-shadow: 0 10px 20px rgba(219, 39, 119, 0.4); }
+  </style>
+</head>
+<body>
+
+  <div class="diet-container">
+    <header class="header-section">
+      <h1 class="brand-title">শিশুর খাদ্য পরিকল্পনা</h1>
+      <p style="color: #be185d; font-weight: 700;">সুস্থ বিকাশে সঠিক পুষ্টি গাইড</p>
+      
+      <div class="modern-tabs">
+        <button class="tab-btn active" onclick="openTab('b0_6', this)">০–৬ মাস</button>
+        <button class="tab-btn" onclick="openTab('b6_12', this)">৬ মাস–১ বছর</button>
+      </div>
+    </header>
+
+    <div id="b0_6" class="tab-content active">
+      <div class="info-box">
+        <p>🤱 শুধুমাত্র মায়ের বুকের দুধ (Exclusive Breastfeeding)</p>
+        <p>🌸 প্রথম ৬ মাস শিশুর জন্য অন্য কোনো খাবারের প্রয়োজন নেই</p>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <span class="diet-time">⏰ দিনে ৮-১২ বার</span>
+            <h3 class="diet-title">মায়ের দুধ খাওয়ানোর নিয়ম</h3>
+            <ul class="food-list">
+              <li>জন্মের ১ ঘণ্টার মধ্যে শালদুধ খাওয়ান।</li>
+              <li>শিশু যখনই কান্না করবে বা ক্ষুধা অনুভব করবে তখনই দিন।</li>
+              <li>ছয় মাস পর্যন্ত এমনকি পানিও দেওয়ার প্রয়োজন নেই।</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="b6_12" class="tab-content">
+      <div class="info-box">
+        <p>🥣 পরিপূরক খাবার (Complementary Feeding)</p>
+        <p>🍎 শক্ত খাবারে অভ্যস্ত করার উপযুক্ত সময়</p>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <span class="diet-time">🌅 সকাল (নাস্তা)</span>
+            <h3 class="diet-title">সহজ ও পুষ্টিকর নাস্তা</h3>
+            <ul class="food-list">
+              <li>সুজি বা চালের গুঁড়োর পাতলা জাউ (পরিমাণ: ২-৪ টেবিল চামচ)।</li>
+              <li>চটকানো কলা বা সেদ্ধ আপেলের পেস্ট (পরিমাণ: ৩-৫ টেবিল চামচ)।</li>
+            </ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <span class="diet-time">🌞 দুপুর (মূল খাবার)</span>
+            <h3 class="diet-title">নরম খিচুড়ি</h3>
+            <ul class="food-list">
+              <li>চাল, ডাল ও সবজি দিয়ে নরম করে রান্না করা খিচুড়ি (পরিমাণ: আধা বাটি বা ১২৫ মি.লি.)।</li>
+              <li>তেল বা অল্প মাখন যোগ করুন যা শক্তির যোগান দেয়।</li>
+            </ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <span class="diet-time">🌙 রাত (রাতের খাবার)</span>
+            <h3 class="diet-title">হালকা ও পুষ্টিকর খাবার</h3>
+            <ul class="food-list">
+              <li>নরম সুজি বা মিষ্টি আলু সেদ্ধ চটকানো (পরিমাণ: ৩-৪ টেবিল চামচ)।</li>
+              <li>রাতের ঘুমের আগে পর্যাপ্ত পরিমাণে বুকের দুধ খাওয়ান।</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section style="margin-top:50px;">
+      <h3 style="text-align:center; color:var(--primary); margin-bottom:30px; font-weight:900; font-size:24px;">🌈 জরুরি পুষ্টি বার্তা</h3>
+      
+      <div class="nutrition-card card-pink">
+        <div style="font-size: 50px; background: #fff1f2; padding: 20px; border-radius: 20px;">🤱</div>
+        <div class="nutrition-info">
+          <h4>বুকের দুধের গুরুত্ব</h4>
+          <p>১ বছর পর্যন্ত বুকের দুধ শিশুর রোগ প্রতিরোধ ক্ষমতার মূল ভিত্তি হিসেবে কাজ করে।</p>
+        </div>
+      </div>
+
+      <div class="nutrition-card card-pink">
+        <div style="font-size: 50px; background: #fff1f2; padding: 20px; border-radius: 20px;">🥣</div>
+        <div class="nutrition-info">
+          <h4>পরিপূরক খাবার</h4>
+          <p>৬ মাসের পর থেকে খিচুড়িতে আয়রন সমৃদ্ধ ডাল ও শাকসবজি অবশ্যই যোগ করবেন।</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer-btn">
+      <a href="baby.html" class="back-btn">← মূল মেনুতে ফিরুন</a>
+    </div>
+  </div>
+
+  <script>
+    function openTab(tabId, btn) {
+      let content = document.getElementsByClassName("tab-content");
+      for (let i = 0; i < content.length; i++) { content[i].classList.remove("active"); }
+      let tabs = document.getElementsByClassName("tab-btn");
+      for (let i = 0; i < tabs.length; i++) { tabs[i].classList.remove("active"); }
+      document.getElementById(tabId).classList.add("active");
+      btn.classList.add("active");
+    }
+  </script>
+</body>
+</html>

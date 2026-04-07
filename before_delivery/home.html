@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>প্রসবপূর্ব নির্দেশনা</title>
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+    <div class="container">
+        <a href="http://localhost:8000" style="display:inline-block; margin-top:20px; text-decoration:none; background:#ff4d85; color:white; padding:10px 20px; border-radius:30px; font-weight:bold; box-shadow:0 4px 6px rgba(0,0,0,0.1);">← মাতৃদিশা হোমে ফিরে যান</a>
+        <!-- Header Section -->
+        <header class="header">
+            <div class="header-content">
+                <img src="icon.png" alt="Icon" class="app-icon" onerror="this.style.display='none'">
+                <h1 class="welcome-text">আসসালামুআলাইকুম <span class="username">Anika</span> আপু, প্রসবপূর্ব নির্দেশনায় আপনাকে স্বাগতম জানাই</h1>
+            </div>
+        </header>
+
+        <!-- Dropdown Section -->
+        <div class="dropdown-section">
+            <label for="trimester-select" class="dropdown-label">গর্ভাবস্থার পর্যায় নির্বাচন করুন:</label>
+            <select id="trimester-select" class="trimester-dropdown">
+                <option value="">-- নির্বাচন করুন --</option>
+                <option value="first">প্রথম ত্রৈমাসিক (০-৩ মাস / ১-১৩ সপ্তাহ)</option>
+                <option value="second">দ্বিতীয় ত্রৈমাসিক (৪-৬ মাস / ১৪-২৬ সপ্তাহ)</option>
+                <option value="third">তৃতীয় ত্রৈমাসিক (৭-৯ মাস / ২৭-৪০ সপ্তাহ)</option>
+            </select>
+        </div>
+
+        <!-- Main Content Panels -->
+        <div class="panels-container">
+            <div class="panel" id="khabar-panel">
+                <div class="panel-icon">🍽️</div>
+                <h2 class="panel-title">খাবার</h2>
+                <p class="panel-subtitle">Khabar</p>
+            </div>
+
+            <div class="panel" id="bayam-panel">
+                <div class="panel-icon">🏃‍♀️</div>
+                <h2 class="panel-title">ব্যায়াম</h2>
+                <p class="panel-subtitle">Bayam</p>
+            </div>
+
+            <div class="panel" id="sotorkota-panel">
+                <div class="panel-icon">⚠️</div>
+                <h2 class="panel-title">সতর্কতা</h2>
+                <p class="panel-subtitle">Sotorkota</p>
+            </div>
+
+            <div class="panel" id="supplement-panel">
+                <div class="panel-icon">💊</div>
+                <h2 class="panel-title">প্রয়োজনীয় পুষ্টি সাপ্লিমেন্ট</h2>
+                <p class="panel-subtitle">Proyojoniyo Pusti Supplement</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // extract name from URL or localStorage
+        const urlParams = new URLSearchParams(window.location.search);
+        let userName = urlParams.get('name');
+        
+        if (userName) {
+            // Save to this port's localStorage for persistence
+            localStorage.setItem('matridisha_user_name', userName);
+        } else {
+            // Fallback to local storage if URL parameter is missing
+            userName = localStorage.getItem('matridisha_user_name');
+        }
+        
+        if (userName) {
+            const span = document.querySelector('.username');
+            if (span) span.innerText = userName;
+        }
+
+        // Add click handlers for panels (will be implemented later)
+        document.getElementById('khabar-panel').addEventListener('click', function() {
+            const trimester = document.getElementById('trimester-select').value;
+            if (trimester) {
+                window.location.href = 'khabar.html?trimester=' + trimester;
+            } else {
+                alert('অনুগ্রহ করে প্রথমে গর্ভাবস্থার পর্যায় নির্বাচন করুন');
+            }
+        });
+
+        document.getElementById('bayam-panel').addEventListener('click', function() {
+            const trimester = document.getElementById('trimester-select').value;
+            if (trimester) {
+                window.location.href = 'bayam.html?trimester=' + trimester;
+            } else {
+                alert('অনুগ্রহ করে প্রথমে গর্ভাবস্থার পর্যায় নির্বাচন করুন');
+            }
+        });
+
+        document.getElementById('sotorkota-panel').addEventListener('click', function() {
+            const trimester = document.getElementById('trimester-select').value;
+            if (trimester) {
+                window.location.href = `sotorkota.html?trimester=${trimester}&name=${userName || ''}`;
+            } else {
+                alert('অনুগ্রহ করে প্রথমে গর্ভাবস্থার পর্যায় নির্বাচন করুন');
+            }
+        });
+
+        document.getElementById('supplement-panel').addEventListener('click', function() {
+            const trimester = document.getElementById('trimester-select').value;
+            if (trimester) {
+                window.location.href = `supplement.html?trimester=${trimester}&name=${userName || ''}`;
+            } else {
+                alert('অনুগ্রহ করে প্রথমে গর্ভাবস্থার পর্যায় নির্বাচন করুন');
+            }
+        });
+    </script>
+</body>
+</html>
+

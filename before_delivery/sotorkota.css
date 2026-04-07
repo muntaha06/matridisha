@@ -1,0 +1,153 @@
+:root {
+    --primary: #ff4d85;
+    --primary-light: #ff8fa3;
+    --secondary: #7209b7;
+    --background: #fdfafb;
+    --white: #ffffff;
+    --text-dark: #2b2d42;
+    --gray: #8d99ae;
+    --warning: #ffb703;
+    --success: #2ec4b6;
+    --danger: #e63946;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--text-dark);
+    font-family: 'Outfit', sans-serif;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.back-btn {
+    background: var(--white);
+    border: 1px solid #eee;
+    padding: 10px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+    margin-right: 20px;
+}
+
+.back-btn:hover {
+    background: var(--primary);
+    color: white;
+}
+
+.page-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.section-title {
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--primary-light);
+    color: var(--secondary);
+}
+
+/* Caution List */
+.caution-section {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    margin-bottom: 40px;
+}
+
+.caution-list {
+    list-style: none;
+}
+
+.caution-list li {
+    background: #fffafa;
+    border-left: 5px solid var(--danger);
+    padding: 15px 20px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: transform 0.2s;
+}
+
+.caution-list li:hover {
+    transform: translateX(5px);
+}
+
+/* Problem Cards */
+.problems-container {
+    display: grid;
+    gap: 25px;
+}
+
+.problem-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 1px solid #f1f1f1;
+}
+
+.problem-header {
+    background: linear-gradient(135deg, #fff5f7, #ffe9ee);
+    padding: 20px;
+    border-bottom: 1px solid #ffe1e8;
+}
+
+.problem-header h3 {
+    color: var(--danger);
+    font-size: 1.25rem;
+}
+
+.solution-body {
+    padding: 25px;
+}
+
+.solution-body h4 {
+    margin-bottom: 15px;
+    color: var(--success);
+    font-size: 1.1rem;
+}
+
+.solution-body ul {
+    list-style-position: inside;
+    list-style: none;
+}
+
+.solution-body li {
+    padding-left: 25px;
+    position: relative;
+    margin-bottom: 8px;
+}
+
+.solution-body li::before {
+    content: '✅';
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 600px) {
+    .page-title { font-size: 1.5rem; }
+    .header { flex-direction: column; align-items: flex-start; gap: 15px; }
+}

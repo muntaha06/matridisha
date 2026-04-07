@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>খাবার তালিকা</title>
+    <link rel="stylesheet" href="khabar.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header with Back Button -->
+        <header class="header">
+            <button class="back-btn" onclick="window.location.href='home.html'">← ফিরে যান</button>
+            <h1 id="page-title" class="page-title">খাবার তালিকা</h1>
+        </header>
+
+        <!-- Special Importance Section -->
+        <div class="importance-section">
+            <h2 class="importance-title">বিশেষ গুরুত্ব</h2>
+            <p id="importance-text" class="importance-text"></p>
+        </div>
+
+        <!-- Food Table -->
+        <div class="table-container">
+            <table class="food-table">
+                <thead>
+                    <tr>
+                        <th>খাদ্য শ্রেণী</th>
+                        <th>খাবার</th>
+                    </tr>
+                </thead>
+                <tbody id="food-table-body">
+                    <!-- Food items will be populated here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Food Detail Popup -->
+    <div id="food-popup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn" onclick="closePopup()">&times;</span>
+            <div class="popup-header">
+                <img id="popup-image" src="" alt="Food Image" class="popup-image">
+                <h2 id="popup-name" class="popup-name"></h2>
+            </div>
+            <div class="popup-body">
+                <h3 class="reasons-title">বিস্তারিত কারণ:</h3>
+                <ul id="popup-reasons" class="reasons-list">
+                    <!-- Reasons will be populated here -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get trimester from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const trimester = urlParams.get('trimester');
+
+        // Map trimester values to JSON file names
+        const trimesterMap = {
+            'first': 'first_trimester.json',
+            'second': 'second_trimester.json',
+            'third': 'third_trimester.json'
+        };
+
+        // Map trimester values to display names
+        const trimesterNames = {
+            'first': 'প্রথম ত্রৈমাসিক',
+            'second': 'দ্বিতীয় ত্রৈমাসিক',
+            'third': 'তৃতীয় ত্রৈমাসিক'
+        };
+
+        // Food class mapping (Bengali to display)
+        const foodClassMap = {
+            'শর্করা': 'শর্করা',
+            'আমিষ': 'আমিষ',
+            'স্নেহ_জাতীয়_খাবার': 'স্নেহ জাতীয় খাবার',
+            'ভিটামিন': 'ভিটামিন',
+            'খনিজ_লবণ': 'খনিজ লবণ',
+            'পানি': 'পানি'
+        };
+
+        let foodData = null;
+
+        // Load JSON data
+        async function loadFoodData() {
+            if (!trimester || !trimesterMap[trimester]) {
+                alert('অনুগ্রহ করে প্রথমে গর্ভাবস্থার পর্যায় নির্বাচন করুন');
+                window.location.href = 'home.html';
+                return;
+            }
+
+            try {
+                const response = await fetch(trimesterMap[trimester]);
+                foodData = await response.json();
+                displayData();
+            } catch (error) {
+                console.error('Error loading data:', error);
+                alert('ডেটা লোড করতে সমস্যা হয়েছে');
+            }
+        }
+
+        // Display data on page
+        function displayData() {
+            // Set page title
+            document.getElementById('page-title').textContent = 
+                trimesterNames[trimester] + ' খাদ্য তালিকা';
+
+            // Set importance text
+            document.getElementById('importance-text').textContent = 
+                foodData.বিশেষ_গুরুত্ব || foodData['বিশেষ_গুরুত্ব'] || '';
+
+            // Get food list
+            const foodList = foodData.খাদ্য_তালিকা || foodData['খাদ্য_তালিকা'] || {};
+            
+            const tableBody = document.getElementById('food-table-body');
+            tableBody.innerHTML = '';
+
+            // Food class order
+            const foodClasses = ['শর্করা', 'আমিষ', 'স্নেহ_জাতীয়_খাবার', 'ভিটামিন', 'খনিজ_লবণ', 'পানি'];
+
+            foodClasses.forEach(foodClass => {
+                const foods = foodList[foodClass];
+                if (foods) {
+                    if (foodClass === 'পানি') {
+                        // Handle water separately
+                        const row = document.createElement('tr');
+                        row.className = 'food-row';
+                        row.innerHTML = `
+                            <td class="food-class">${foodClassMap[foodClass] || foodClass}</td>
+                            <td class="food-item">
+                                <span class="water-info">${foods.পরিমাণ || ''}</span>
+                            </td>
+                        `;
+                        tableBody.appendChild(row);
+                    } else {
+                        // Handle regular food items - all in one row, separated by commas
+                        const row = document.createElement('tr');
+                        row.className = 'food-row';
+                        
+                        // Create comma-separated list of food items
+                        const foodItems = foods.map((food, index) => {
+                            const foodName = food.নাম || food.name || '';
+                            return `<span class="food-name" onclick="showFoodDetail('${foodClass}', ${index})">${foodName}</span>`;
+                        }).join(', ');
+                        
+                        row.innerHTML = `
+                            <td class="food-class">${foodClassMap[foodClass] || foodClass}</td>
+                            <td class="food-item">${foodItems}</td>
+                        `;
+                        tableBody.appendChild(row);
+                    }
+                }
+            });
+        }
+
+        // Show food detail popup
+        function showFoodDetail(foodClass, index) {
+            const foodList = foodData.খাদ্য_তালিকা || foodData['খাদ্য_তালিকা'] || {};
+            const foods = foodList[foodClass];
+            
+            if (!foods || !foods[index]) return;
+
+            const food = foods[index];
+            const foodName = food.নাম || food.name || '';
+            const foodImage = food.ছবি || food.image || '';
+            const reasons = food.বিস্তারিত_কারণ || food.detailed_reasons || [];
+
+            // Set popup content
+            const popupImage = document.getElementById('popup-image');
+            popupImage.src = foodImage;
+            popupImage.alt = foodName;
+            popupImage.onerror = function() {
+                this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2UwZTBlMCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5ছবি নেই</dGV4dD48L3N2Zz4=';
+            };
+            document.getElementById('popup-name').textContent = foodName;
+
+            // Set reasons
+            const reasonsList = document.getElementById('popup-reasons');
+            reasonsList.innerHTML = '';
+            if (reasons && reasons.length > 0) {
+                reasons.forEach(reason => {
+                    const li = document.createElement('li');
+                    li.textContent = reason;
+                    reasonsList.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = 'বিস্তারিত তথ্য পাওয়া যায়নি';
+                reasonsList.appendChild(li);
+            }
+
+            // Show popup
+            const popup = document.getElementById('food-popup');
+            popup.classList.add('show');
+            popup.style.display = 'flex';
+        }
+
+        // Close popup
+        function closePopup() {
+            const popup = document.getElementById('food-popup');
+            popup.classList.remove('show');
+            popup.style.display = 'none';
+        }
+
+        // Close popup when clicking outside
+        window.onclick = function(event) {
+            const popup = document.getElementById('food-popup');
+            if (event.target === popup) {
+                closePopup();
+            }
+        }
+
+        // Prevent popup from shaking by ensuring stable positioning
+        document.addEventListener('DOMContentLoaded', function() {
+            const popup = document.getElementById('food-popup');
+            // Force hardware acceleration and stable positioning
+            if (popup) {
+                popup.style.willChange = 'opacity';
+                const popupContent = popup.querySelector('.popup-content');
+                if (popupContent) {
+                    popupContent.style.willChange = 'transform, opacity';
+                }
+            }
+        });
+
+        // Load data when page loads
+        loadFoodData();
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>সতর্কতা ও সমাধান</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="sotorkota.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <button class="back-btn" onclick="goBack()">← ফিরে যান</button>
+            <h1 id="page-title" class="page-title">সতর্কতা ও সমাধান</h1>
+        </header>
+
+        <section class="caution-section">
+            <h2 class="section-title">⚠️ বিশেষ সতর্কতা</h2>
+            <ul id="caution-list" class="caution-list">
+                <!-- Cautions will be loaded here -->
+            </ul>
+        </section>
+
+        <section class="problems-section">
+            <h2 class="section-title">🩺 সাধারণ সমস্যা ও সমাধান</h2>
+            <div id="problems-container" class="problems-container">
+                <!-- Problems and solutions will be loaded here -->
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const trimester = urlParams.get('trimester');
+        const userName = urlParams.get('name');
+
+        const trimesterMap = {
+            'first': 'first_trimester.json',
+            'second': 'second_trimester.json',
+            'third': 'third_trimester.json',
+            '১ম': 'first_trimester.json',
+            '২য়': 'second_trimester.json',
+            '৩য়': 'third_trimester.json'
+        };
+
+        const trimesterPrefix = {
+            'first': 'প্রথম',
+            'second': 'দ্বিতীয়',
+            'third': 'তৃতীয়'
+        };
+
+        async function loadData() {
+            if (!trimester) {
+                window.location.href = 'home.html';
+                return;
+            }
+
+            try {
+                const response = await fetch(trimesterMap[trimester]);
+                const data = await response.json();
+                displayData(data);
+            } catch (error) {
+                console.error('Error loading data:', error);
+                alert('ডেটা লোড করতে সমস্যা হয়েছে।');
+            }
+        }
+
+        function displayData(data) {
+            document.getElementById('page-title').innerText = `${trimesterPrefix[trimester] || ''} ত্রৈমাসিকের সতর্কতা`;
+
+            // Display Cautions
+            const cautionList = document.getElementById('caution-list');
+            cautionList.innerHTML = '';
+            const cautions = data.সতর্কতা || [];
+            cautions.forEach(item => {
+                const li = document.createElement('li');
+                li.innerText = item;
+                cautionList.appendChild(li);
+            });
+
+            // Display Problems & Solutions
+            // The key varies by trimester (e.g. "প্রথম_ত্রৈমাসিকের_সাধারণ_সমস্যা_ও_সমাধান")
+            const problemKey = Object.keys(data).find(key => key.includes('সাধারণ_সমস্যা_ও_সমাধান'));
+            const problems = data[problemKey] || [];
+            const container = document.getElementById('problems-container');
+            container.innerHTML = '';
+
+            problems.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'problem-card';
+                card.innerHTML = `
+                    <div class="problem-header">
+                        <h3>🔴 সমস্যা: ${item.সমস্যা}</h3>
+                    </div>
+                    <div class="solution-body">
+                        <h4>🟢 সমাধান:</h4>
+                        <ul>
+                            ${item.সমাধান.map(s => `<li>${s}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function goBack() {
+            window.location.href = `home.html?trimester=${trimester}&name=${userName || ''}`;
+        }
+
+        loadData();
+    </script>
+</body>
+</html>

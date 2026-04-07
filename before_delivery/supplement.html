@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>প্রয়োজনীয় পুষ্টি সাপ্লিমেন্ট</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="supplement.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <button class="back-btn" onclick="goBack()">← ফিরে যান</button>
+            <h1 id="page-title" class="page-title">পুষ্টি সাপ্লিমেন্ট</h1>
+        </header>
+
+        <section class="supplement-grid" id="supplement-grid">
+            <!-- Supplement cards will be loaded here -->
+        </section>
+        
+        <div class="disclaimer">
+            <p>⚠️ <strong>সতর্কতা:</strong> কোনো সাপ্লিমেন্ট গ্রহণের আগে অবশ্যই আপনার চিকিৎসকের পরামর্শ নিন। এই তথ্যটি কেবল সাধারণ নির্দেশনার জন্য।</p>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const trimester = urlParams.get('trimester');
+        const userName = urlParams.get('name');
+
+        const trimesterMap = {
+            'first': 'first_trimester.json',
+            'second': 'second_trimester.json',
+            'third': 'third_trimester.json'
+        };
+
+        const trimesterPrefix = {
+            'first': 'প্রথম',
+            'second': 'দ্বিতীয়',
+            'third': 'তৃতীয়'
+        };
+
+        async function loadData() {
+            if (!trimester) {
+                window.location.href = 'home.html';
+                return;
+            }
+
+            try {
+                const response = await fetch(trimesterMap[trimester]);
+                const data = await response.json();
+                displayData(data);
+            } catch (error) {
+                console.error('Error loading data:', error);
+                alert('ডেটা লোড করতে সমস্যা হয়েছে।');
+            }
+        }
+
+        function displayData(data) {
+            document.getElementById('page-title').innerText = `${trimesterPrefix[trimester] || ''} ত্রৈমাসিকের সাপ্লিমেন্ট`;
+
+            const supplements = data.প্রয়োজনীয়_পুষ্টি_সাপ্লিমেন্ট || [];
+            const grid = document.getElementById('supplement-grid');
+            grid.innerHTML = '';
+
+            supplements.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'supp-card';
+                card.innerHTML = `
+                    <div class="supp-icon">💊</div>
+                    <h3 class="supp-name">${item.নাম}</h3>
+                    <p class="supp-amount"><strong>নির্ধারিত পরিমাণ:</strong> ${item.পরিমাণ}</p>
+                    <div class="supp-importance">
+                        <strong>কেন গুরুত্বপূর্ণ:</strong>
+                        <p>${item.গুরুত্ব}</p>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function goBack() {
+            window.location.href = `home.html?trimester=${trimester}&name=${userName || ''}`;
+        }
+
+        loadData();
+    </script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>মাতৃদিশা - হোম</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    /* ড্যাশবোর্ড অপ্টিমাইজেশন */
+    .home-card {
+        padding: 45px 35px !important; /* প্যাডিং কিছুটা বাড়ানো হয়েছে */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12) !important; /* শ্যাডো আরও গভীর করা হয়েছে */
+        border-radius: 40px;
+    }
+
+    .menu-btn {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        transition: all 0.3s ease;
+    }
+
+    /* হোভার ইফেক্ট */
+    .menu-btn:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(219, 39, 119, 0.15);
+    }
+
+    .menu-btn[href="ma.html"]::before { content: "🤱"; font-size: 24px; }
+    .menu-btn[href="baby.html"]::before { content: "👶"; font-size: 24px; }
+
+    .footer-container {
+        margin-top: 40px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .back-card-btn {
+        display: inline-block;
+        text-decoration: none;
+        background: #ffffff;
+        color: #db2777;
+        padding: 14px 30px;
+        border-radius: 999px;
+        border: 2px solid rgba(219, 39, 119, 0.15);
+        font-weight: 800;
+        font-size: 16px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        transition: all 0.25s ease;
+    }
+
+    .back-card-btn:hover {
+        transform: translateY(-3px);
+        background: rgba(219, 39, 119, 0.05);
+        border-color: #db2777;
+    }
+  </style>
+</head>
+
+<body class="app-page">
+  <main class="center-wrap">
+    <section class="center-card home-card">
+      <div class="brand-row">
+        <span class="brand-dot" aria-hidden="true"></span>
+        <h1 class="brand-title">মাতৃদিশা</h1>
+      </div>
+
+      <p class="brand-sub">
+        মায়ের যত্ন, শিশুর সুরক্ষা—আপনার পাশে মাতৃদিশা
+      </p>
+
+      <div class="menu-grid">
+        <a class="menu-btn" href="ma.html">মায়ের যত্ন (ডেলিভারির পর)</a>
+        <a class="menu-btn" href="baby.html">শিশুর যত্ন</a>
+      </div>
+
+      <div class="footer-container">
+        <a href="http://localhost:8000" class="back-card-btn">
+          ← মাতৃদিশা হোমে ফিরে যান
+        </a>
+      </div>
+
+    </section>
+  </main>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    let userName = urlParams.get('name');
+    if (userName) {
+        localStorage.setItem('matridisha_user_name', userName);
+    } else {
+        userName = localStorage.getItem('matridisha_user_name');
+    }
+    if (userName) {
+        document.querySelector('.brand-title').innerText += ' - ' + userName;
+    }
+  </script>
+</body>
+</html>

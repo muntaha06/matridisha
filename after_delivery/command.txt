@@ -1,0 +1,1 @@
+start "D:\BUBT project\after_delivery\index.html"
