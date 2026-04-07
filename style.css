@@ -1,0 +1,115 @@
+body {
+background-color:#fff0f3;
+font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+margin:0;
+}
+
+.container {
+background:white;
+padding:50px 30px;
+border-radius:40px;
+box-shadow:0 15px 40px rgba(214,51,132,0.08);
+text-align:center;
+width:90%;
+max-width:900px;
+}
+
+.brand-title {
+color:#d63384;
+font-size:50px;
+margin:0;
+}
+
+.tagline {
+color:#6c757d;
+font-size:16px;
+margin-bottom:40px;
+}
+
+.trimester-row {
+display:flex;
+justify-content:center;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.main-btn {
+background:white;
+border:1px solid #ffc1e3;
+padding:18px 20px;
+border-radius:20px;
+color:#d63384;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
+font-size:16px;
+flex:1;
+min-width:180px;
+}
+
+.main-btn:hover {
+background:#fff0f3;
+border-color:#d63384;
+}
+
+.footer {
+margin-top:40px;
+}
+
+.back-btn {
+background:white;
+border:1px solid #ffe1f0;
+padding:12px 40px;
+border-radius:30px;
+color:#d63384;
+cursor:pointer;
+font-size:15px;
+transition:0.3s;
+}
+
+.back-btn:hover {
+background:#f8f9fa;
+border-color:#d63384;
+}
+
+.content-box {
+display:none;
+margin-top:20px;
+}
+
+.card {
+border:1px solid #ffc1e3;
+padding:20px;
+margin:20px 0;
+border-radius:20px;
+text-align:left;
+}
+
+img, video {
+width:100%;
+max-width:400px;
+border-radius:15px;
+margin-top:15px;
+}
+
+/* Dashboard Button - like trimester buttons */
+.dashboard-btn {
+background:white;
+border:1px solid #ffc1e3;
+color:#d63384;
+padding:18px 20px;
+border-radius:20px;
+font-size:16px;
+cursor:pointer;
+transition:0.3s;
+font-weight:400; /* normal */
+}
+
+.dashboard-btn:hover {
+background:#fff0f3;
+border-color:#d63384;
+}
