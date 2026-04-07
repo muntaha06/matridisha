@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>মাতৃদিশা - মা ও শিশুর সার্বিক যত্ন</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff4d85;
+            --primary-dark: #e83a6f;
+            --secondary: #00b4d8;
+            --secondary-dark: #0096c7;
+            --background: #fdfafb;
+            --text-dark: #2b2d42;
+            --white: #ffffff;
+            --gray: #8d99ae;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text-dark);
+            background-image: radial-gradient(circle at 10% 20%, rgb(255, 240, 245) 0%, rgb(240, 248, 255) 90%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 20px 50px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-container {
+            text-align: center;
+        }
+
+        .logo-container h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-container h1 span {
+            color: var(--secondary);
+        }
+
+        .logo-container p {
+            color: var(--gray);
+            font-size: 1rem;
+            font-weight: 300;
+        }
+
+        .hero {
+            padding: 60px 20px 40px;
+            text-align: center;
+            max-width: 800px;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            width: 100%;
+            padding: 20px 50px;
+            margin-bottom: 60px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-dark);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.18);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--primary);
+            transition: height 0.3s ease;
+        }
+
+        .card.prenatal::before { background: #ff4d85; }
+        .card.postnatal::before { background: #ffb703; }
+        .card.chatbot::before { background: #7209b7; }
+        .card.disease::before { background: #00b4d8; }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .card.prenatal:hover { border-color: #ff4d85; }
+        .card.postnatal:hover { border-color: #ffb703; }
+        .card.chatbot:hover { border-color: #7209b7; }
+        .card.disease:hover { border-color: #00b4d8; }
+
+        .icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover .icon {
+            transform: scale(1.1);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .card p {
+            color: var(--gray);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 25px;
+            flex-grow: 1;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+            background: var(--background);
+            color: var(--text-dark);
+            border: 1px solid #e1e8f0;
+        }
+
+        .card:hover .btn {
+            color: white;
+            border-color: transparent;
+        }
+
+        .card.prenatal:hover .btn { background: #ff4d85; box-shadow: 0 4px 15px rgba(255, 77, 133, 0.3); }
+        .card.postnatal:hover .btn { background: #ffb703; box-shadow: 0 4px 15px rgba(255, 183, 3, 0.3); }
+        .card.chatbot:hover .btn { background: #7209b7; box-shadow: 0 4px 15px rgba(114, 9, 183, 0.3); }
+        .card.disease:hover .btn { background: #00b4d8; box-shadow: 0 4px 15px rgba(0, 180, 216, 0.3); }
+
+        @media (max-width: 768px) {
+            .hero h2 { font-size: 2rem; }
+            .grid-container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <h1>মাতৃ<span>দিশা</span></h1>
+            <p>মা ও শিশুর জন্য সার্বিক যত্ন</p>
+        </div>
+    </header>
+
+    <div class="hero">
+        <h2>আপনার হেলথ হাবে স্বাগতম</h2>
+        <p>গর্ভাবস্থার যত্ন, প্রসব-পরবর্তী রিকভারি, এআই পরামর্শ এবং সাধারণ রোগ পরিচালনার জন্য আপনার সমন্বিত পোর্টাল।</p>
+        
+        <div style="margin-top: 30px; background: white; padding: 20px; border-radius: 50px; display: inline-flex; align-items: center; box-shadow: 0 10px 20px rgba(0,0,0,0.05); border: 1px solid #ff4d85;">
+            <label for="mother-name" style="margin-right: 15px; font-weight: 600; color: #ff4d85;">মা এর নাম লিখুন:</label>
+            <input type="text" id="mother-name" placeholder="এখানে লিখুন..." style="border: none; outline: none; font-size: 1.1rem; width: 250px; font-family: inherit;">
+            <button onclick="saveAndLink()" style="background: #ff4d85; color: white; border: none; padding: 8px 25px; border-radius: 40px; cursor: pointer; font-weight: 600; margin-left: 10px; transition: 0.3s;">সংরক্ষণ করুন</button>
+        </div>
+        
+        <p style="margin-top: 20px; font-size: 0.9rem; color: var(--gray);">নাম লিখে "সংরক্ষণ করুন" টিপলে সব অ্যাপে আপনার নাম সেট হয়ে যাবে।</p>
+    </div>
+
+    <div class="grid-container">
+        <!-- Prenatal Care -->
+        <a href="http://localhost:8080" class="card prenatal" onclick="return checkName(this, event)">
+            <span class="icon">🤰</span>
+            <h3>প্রসবপূর্ব যত্ন</h3>
+            <p>গর্ভবতী মায়েদের জন্য বিস্তারিত গাইড। আপনার ত্রৈমাসিক, ডায়েট, ব্যায়াম এবং গর্ভাবস্থার গুরুত্বপূর্ণ ধাপগুলো সম্পর্কে জানুন।</p>
+            <div class="btn">প্রবেশ করুন</div>
+        </a>
+
+        <!-- Postnatal Care -->
+        <a href="http://localhost:8082" class="card postnatal" onclick="return checkName(this, event)">
+            <span class="icon">🤱</span>
+            <h3>প্রসব-পরবর্তী যত্ন</h3>
+            <p>ডেলিভারির পর মায়ের যত্ন এবং শিশুর সুরক্ষা। এর মধ্যে রয়েছে শিশুর যত্ন, মায়ের খাবার, মানসিক স্বাস্থ্য এবং ব্যায়াম।</p>
+            <div class="btn">প্রবেশ করুন</div>
+        </a>
+
+        <!-- AI Chatbot -->
+        <a href="http://localhost:8081" class="card chatbot" onclick="return checkName(this, event)">
+            <span class="icon">🤖</span>
+            <h3>এআই সহকারী</h3>
+            <p>আপনার সার্বক্ষণিক স্মার্ট প্রেগন্যান্সি অ্যাসিস্ট্যান্ট। যেকোনো প্রশ্ন করুন, লক্ষণগুলো জানান, এবং এআই এর সাহায্য পান।</p>
+            <div class="btn">চ্যাট শুরু করুন</div>
+        </a>
+
+        <!-- General Health -->
+        <a href="http://localhost:8083" class="card disease" onclick="return checkName(this, event)">
+            <span class="icon">🩺</span>
+            <h3>সাধারণ স্বাস্থ্য ও রোগ</h3>
+            <p>দৈনন্দিন স্বাস্থ্য সুরক্ষায় সাধারণ রোগ, এর লক্ষণ এবং ঘরোয়া ও মেডিকাল প্রতিকার সম্পর্কে বিস্তারিত জানুন।</p>
+            <div class="btn">রোগসমূহ দেখুন</div>
+        </a>
+    </div>
+
+    <script>
+        // Load saved name from localStorage
+        window.onload = function() {
+            const savedName = localStorage.getItem('matridisha_name');
+            if (savedName) {
+                document.getElementById('mother-name').value = savedName;
+            }
+        };
+
+        function saveAndLink() {
+            const name = document.getElementById('mother-name').value.trim();
+            if (name) {
+                localStorage.setItem('matridisha_name', name);
+                alert('তথ্য সফলভাবে সংরক্ষিত হয়েছে। এখন আপনি যেকোনো বিভাগে প্রবেশ করতে পারেন।');
+            } else {
+                alert('অনুগ্রহ করে নাম লিখুন।');
+            }
+        }
+
+        function checkName(anchor, event) {
+            event.preventDefault();
+            const name = document.getElementById('mother-name').value.trim();
+            if (!name) {
+                alert('অনুগ্রহ করে প্রথমে আপনার নাম লিখুন।');
+                document.getElementById('mother-name').focus();
+                return false;
+            }
+            
+            // Save to localStorage in case they just typed and clicked without hitting "Save"
+            localStorage.setItem('matridisha_name', name);
+            
+            const url = new URL(anchor.href);
+            url.searchParams.set('name', name);
+            window.location.href = url.toString();
+            return false;
+        }
+
+        // Support "Enter" key
+        document.getElementById('mother-name').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                saveAndLink();
+            }
+        });
+    </script>
+
+</body>
+</html>
