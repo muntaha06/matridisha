@@ -7,109 +7,131 @@ import java.awt.*;
 import java.sql.*;
 
 public class LoginFrame extends JFrame {
-    JTextField userField;
-    JPasswordField passField;
-    JButton loginBtn, signupBtn, forgotBtn;
+    private JTextField userField;
+    private JPasswordField passField;
+    private Color darkPink = new Color(199, 21, 133);
+    private Color lightPink = new Color(255, 182, 193);
 
     public LoginFrame() {
         setTitle("Matridisha - Login");
-        setSize(450, 600);
+        setSize(450, 550);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        getContentPane().setBackground(new Color(255, 240, 245)); // Soft Pink Background
+        getContentPane().setBackground(Color.WHITE);
 
-        // Center Panel (Card-like structure without advanced code)
-        JPanel card = new JPanel();
-        card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
-        card.setBorder(new EmptyBorder(40, 40, 40, 40));
-        card.setBackground(Color.WHITE);
+        // Main Panel
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.setBorder(new EmptyBorder(40, 50, 40, 50));
+        mainPanel.setBackground(Color.WHITE);
 
-        // Title
+        // Header
         JLabel title = new JLabel("Matridisha");
-        title.setFont(new Font("Arial", Font.BOLD, 36));
-        title.setForeground(new Color(139, 0, 139)); // Magenta/Dark Pink
+        title.setFont(new Font("Arial", Font.BOLD, 28));
+        title.setForeground(darkPink);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JLabel subTitle = new JLabel("Your Pregnancy Companion");
-        subTitle.setFont(new Font("Arial", Font.PLAIN, 18));
-        subTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLabel subtitle = new JLabel("Login to your Matridisha account");
+        subtitle.setFont(new Font("Arial", Font.PLAIN, 14));
+        subtitle.setForeground(Color.GRAY);
+        subtitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Inputs Panel
-        JPanel inputPanel = new JPanel(new GridLayout(4, 1, 5, 15));
-        inputPanel.setOpaque(false);
-        inputPanel.setMaximumSize(new Dimension(350, 150));
-
-        JLabel userLabel = new JLabel("Username");
-        userLabel.setFont(new Font("Arial", Font.BOLD, 14));
-        userLabel.setForeground(new Color(139, 0, 139));
+        // Input Fields
         userField = new JTextField();
-        userField.setBorder(new LineBorder(new Color(255, 182, 193), 2)); // Pink Border
+        setupField(userField, "Username");
 
-        JLabel passLabel = new JLabel("Password");
-        passLabel.setFont(new Font("Arial", Font.BOLD, 14));
-        passLabel.setForeground(new Color(139, 0, 139));
         passField = new JPasswordField();
-        passField.setBorder(new LineBorder(new Color(255, 182, 193), 2)); // Pink Border
-
-        inputPanel.add(userLabel); inputPanel.add(userField);
-        inputPanel.add(passLabel); inputPanel.add(passField);
+        setupField(passField, "Password");
 
         // Buttons
-        loginBtn = new JButton("Login");
-        loginBtn.setBackground(new Color(199, 21, 133)); // Deep Pink
-        loginBtn.setForeground(Color.WHITE);
-        loginBtn.setFont(new Font("Arial", Font.BOLD, 16));
-        loginBtn.setMaximumSize(new Dimension(350, 50));
-        loginBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-        loginBtn.setFocusable(false);
+        JButton loginBtn = new JButton("Login");
+        styleButton(loginBtn, darkPink, Color.WHITE);
 
-        signupBtn = new JButton("<html>No account? <u>Register now</u></html>");
-        signupBtn.setBorderPainted(false);
-        signupBtn.setContentAreaFilled(false);
-        signupBtn.setFocusable(false);
-        signupBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        forgotBtn = new JButton("<html><u>Forgot password? Reset</u></html>");
-        forgotBtn.setBorderPainted(false);
-        forgotBtn.setContentAreaFilled(false);
-        forgotBtn.setFocusable(false);
-        forgotBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JButton regBtn = new JButton("Don't have an account? Register");
+        regBtn.setContentAreaFilled(false);
+        regBtn.setBorderPainted(false);
+        regBtn.setForeground(darkPink);
+        regBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        regBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Assembly
-        card.add(title); card.add(Box.createRigidArea(new Dimension(0, 10)));
-        card.add(subTitle); card.add(Box.createRigidArea(new Dimension(0, 40)));
-        card.add(inputPanel); card.add(Box.createRigidArea(new Dimension(0, 40)));
-        card.add(loginBtn); card.add(Box.createRigidArea(new Dimension(0, 20)));
-        card.add(signupBtn); card.add(Box.createRigidArea(new Dimension(0, 5)));
-        card.add(forgotBtn);
+        mainPanel.add(title);
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 5)));
+        mainPanel.add(subtitle);
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 40)));
+        mainPanel.add(userField);
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 15)));
+        mainPanel.add(passField);
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 30)));
+        mainPanel.add(loginBtn);
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 15)));
+        mainPanel.add(regBtn);
 
-        add(card, BorderLayout.CENTER);
+        add(mainPanel);
 
-        // Actions
-        loginBtn.addActionListener(e -> loginAction());
-        signupBtn.addActionListener(e -> { new RegisterFrame().setVisible(true); dispose(); });
+        // --- Listeners ---
+        loginBtn.addActionListener(e -> handleLogin());
+        regBtn.addActionListener(e -> {
+            new RegisterFrame().setVisible(true);
+        });
     }
 
-    private void loginAction() {
-        String user = userField.getText();
-        String pass = new String(passField.getPassword());
+    private void setupField(JComponent c, String title) {
+        c.setBorder(BorderFactory.createTitledBorder(new LineBorder(lightPink, 2), title));
+        c.setMaximumSize(new Dimension(400, 55));
+        c.setFont(new Font("Arial", Font.PLAIN, 14));
+    }
+
+    private void styleButton(JButton b, Color bg, Color fg) {
+        b.setBackground(bg);
+        b.setForeground(fg);
+        b.setFont(new Font("Arial", Font.BOLD, 16));
+        b.setMaximumSize(new Dimension(400, 50));
+        b.setAlignmentX(Component.CENTER_ALIGNMENT);
+        b.setFocusable(false);
+        b.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }
+
+    private void handleLogin() {
+        String user = userField.getText().trim();
+        String pass = new String(passField.getPassword()).trim();
+
+        if (user.isEmpty() || pass.isEmpty()) {
+            showCustomMsg("Please enter both username and password!");
+            return;
+        }
+
         try (Connection conn = DBConnection.getConnection()) {
-            String sql = "SELECT * FROM users WHERE username=? AND password=?";
+            String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, user);
             pst.setString(2, pass);
+
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
-                String name = rs.getString("name");
-                new DashboardFrame(name).setVisible(true);
+                showCustomMsg("Login Successful!");
+                // Crucial: Passing the username to the Dashboard
+                new DashboardFrame(user).setVisible(true);
                 dispose();
             } else {
-                JOptionPane.showMessageDialog(this, "Invalid Username or Password!");
+                showCustomMsg("Invalid Username or Password!");
             }
-        } catch (Exception ex) { ex.printStackTrace(); }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            showCustomMsg("Database Error!");
+        }
+    }
+
+    private void showCustomMsg(String m) {
+        UIManager.put("OptionPane.background", Color.WHITE);
+        UIManager.put("Panel.background", Color.WHITE);
+        JOptionPane.showMessageDialog(this, 
+            "<html><font color='#C71585'><b>" + m + "</b></font></html>", 
+            "Matridisha", 
+            JOptionPane.PLAIN_MESSAGE);
     }
 
     public static void main(String[] args) {
-        new LoginFrame().setVisible(true);
+        SwingUtilities.invokeLater(() -> new LoginFrame().setVisible(true));
     }
 }

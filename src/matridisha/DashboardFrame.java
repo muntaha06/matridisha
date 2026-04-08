@@ -4,99 +4,119 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.sql.*;
 
 public class DashboardFrame extends JFrame {
-    public DashboardFrame(String name) {
-        setTitle("Matridisha - Dashboard");
-        setSize(500, 650);
+    private String username;
+    private String fullName = ""; 
+    private Color darkPink = new Color(199, 21, 133);
+    private Color bgPink = new Color(255, 245, 247); // Light Pink Background
+
+    public DashboardFrame(String username) {
+        this.username = username;
+        fetchFullName();
+
+        setTitle("Matridisha");
+        setSize(550, 750);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        getContentPane().setBackground(Color.WHITE);
+        showDashboard();
+    }
+
+    private void fetchFullName() {
+        try (Connection conn = DBConnection.getConnection()) {
+            PreparedStatement pst = conn.prepareStatement("SELECT name FROM users WHERE username = ?");
+            pst.setString(1, username);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) fullName = rs.getString("name");
+        } catch (Exception e) { e.printStackTrace(); }
+    }
+
+    public void showDashboard() {
+        getContentPane().removeAll();
+        setLayout(new BorderLayout());
+        getContentPane().setBackground(bgPink);
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.setBorder(new EmptyBorder(40, 40, 40, 40));
-        mainPanel.setBackground(Color.WHITE);
+        mainPanel.setBorder(new EmptyBorder(40, 50, 40, 50));
+        mainPanel.setBackground(bgPink);
 
-        // --- Header Section ---
-        JLabel title = new JLabel("Matridisha");
-        title.setFont(new Font("Arial", Font.BOLD, 36));
-        title.setForeground(new Color(199, 21, 133)); // Magenta/Deep Pink
+        // Header Title
+        JLabel title = new JLabel("Matridisha", JLabel.CENTER);
+        title.setFont(new Font("Arial", Font.BOLD, 42));
+        title.setForeground(darkPink);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JLabel welcome = new JLabel("Welcome " + name + " !");
+        // Welcome Message
+        JLabel welcome = new JLabel("Welcome, " + (fullName.isEmpty() ? username : fullName) + "!", JLabel.CENTER);
         welcome.setFont(new Font("Arial", Font.BOLD, 22));
         welcome.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JLabel quote = new JLabel("<html><center>We are by your side on this beautiful journey of motherhood, with trust and compassion.</center></html>");
-        quote.setFont(new Font("Arial", Font.PLAIN, 14));
-        quote.setMaximumSize(new Dimension(400, 60));
-        quote.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // Pregnancy Heading (HTML used for perfect centering and line break)
+        JLabel pregnancyHeading = new JLabel("<html><div style='text-align: center; width: 350px;'>" +
+                "Embrace the Joy of Motherhood:<br>Your Healthy Pregnancy Guide</div></html>", JLabel.CENTER);
+        pregnancyHeading.setFont(new Font("Serif", Font.ITALIC, 19));
+        pregnancyHeading.setForeground(new Color(150, 50, 100));
+        pregnancyHeading.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // --- Menu Grid (2x2) ---
-        JPanel gridPanel = new JPanel(new GridLayout(2, 2, 20, 20));
-        gridPanel.setOpaque(false);
-        gridPanel.setMaximumSize(new Dimension(400, 250));
+        // Grid Menu
+        JPanel grid = new JPanel(new GridLayout(2, 2, 20, 20));
+        grid.setOpaque(false);
+        grid.setMaximumSize(new Dimension(450, 280));
 
-        JButton btnProfile = createGridButton("My Profile");
-        JButton btnDisease = createGridButton("<html><center>Common Diseases<br>and Solutions</center></html>");
-        JButton btnGuidanceBefore = createGridButton("<html><center>Guidance<br>(before birth)</center></html>");
-        JButton btnGuidanceAfter = createGridButton("<html><center>Guidance<br>(after birth)</center></html>");
+        JButton b1 = createMenuBtn("My Profile");
+        JButton b2 = createMenuBtn("Common Diseases");
+        JButton b3 = createMenuBtn("Before Birth Guide");
+        JButton b4 = createMenuBtn("After Birth Care");
 
-        gridPanel.add(btnProfile); 
-        gridPanel.add(btnDisease);
-        gridPanel.add(btnGuidanceBefore); 
-        gridPanel.add(btnGuidanceAfter);
+        grid.add(b1); grid.add(b2); grid.add(b3); grid.add(b4);
 
-        // --- Bottom Buttons ---
-        JButton btnLogout = new JButton("Log out");
-        btnLogout.setBackground(new Color(199, 21, 133));
-        btnLogout.setForeground(Color.WHITE);
-        btnLogout.setFont(new Font("Arial", Font.BOLD, 16));
-        btnLogout.setMaximumSize(new Dimension(400, 50));
-        btnLogout.setAlignmentX(Component.CENTER_ALIGNMENT);
-        btnLogout.setFocusable(false);
+        // Logout Button
+        JButton logout = new JButton("Logout");
+        logout.setBackground(darkPink);
+        logout.setForeground(Color.WHITE);
+        logout.setFont(new Font("Arial", Font.BOLD, 15));
+        logout.setMaximumSize(new Dimension(450, 50));
+        logout.setAlignmentX(Component.CENTER_ALIGNMENT);
+        logout.setFocusable(false);
 
-        // Adding to Main Panel
-        mainPanel.add(title); mainPanel.add(Box.createRigidArea(new Dimension(0, 15)));
-        mainPanel.add(welcome); mainPanel.add(Box.createRigidArea(new Dimension(0, 15)));
-        mainPanel.add(quote); mainPanel.add(Box.createRigidArea(new Dimension(0, 30)));
-        mainPanel.add(gridPanel); mainPanel.add(Box.createRigidArea(new Dimension(0, 30)));
-        mainPanel.add(btnLogout);
+        // Listeners for Redirection
+        b1.addActionListener(e -> setContentPanel(new ProfilePanel(this, username)));
+        b2.addActionListener(e -> setContentPanel(new SearchPanel(this)));
+        b3.addActionListener(e -> setContentPanel(new GuidancePanel(this, true)));
+        b4.addActionListener(e -> setContentPanel(new GuidancePanel(this, false)));
+        logout.addActionListener(e -> { new LoginFrame().setVisible(true); dispose(); });
 
-        add(mainPanel);
+        mainPanel.add(title);
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        mainPanel.add(welcome);
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        mainPanel.add(pregnancyHeading);
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 45)));
+        mainPanel.add(grid);
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 45)));
+        mainPanel.add(logout);
 
-        // --- Button Click Actions (Events) ---
-
-        // Open Search Page
-        btnDisease.addActionListener(e -> {
-            new SearchFrame().setVisible(true);
-        });
-
-        // Open Diet/Guidance Page
-        btnGuidanceBefore.addActionListener(e -> {
-            new DietFrame().setVisible(true);
-        });
-
-        // Logout
-        btnLogout.addActionListener(e -> {
-            new LoginFrame().setVisible(true);
-            dispose(); // Close Dashboard
-        });
-
-        // Temp Alerts for other buttons
-        btnProfile.addActionListener(e -> JOptionPane.showMessageDialog(this, "Profile Section coming soon!"));
-        btnGuidanceAfter.addActionListener(e -> JOptionPane.showMessageDialog(this, "After Birth Guidance coming soon!"));
+        add(mainPanel, BorderLayout.CENTER);
+        revalidate();
+        repaint();
     }
 
-    private JButton createGridButton(String text) {
-        JButton btn = new JButton(text);
-        btn.setBackground(Color.WHITE);
-        btn.setFont(new Font("Arial", Font.BOLD, 14));
-        btn.setForeground(new Color(139, 0, 139)); 
-        btn.setBorder(new LineBorder(new Color(255, 182, 193), 2)); 
-        btn.setFocusable(false);
-        btn.setOpaque(true);
-        return btn;
+    private void setContentPanel(JPanel panel) {
+        getContentPane().removeAll();
+        add(panel);
+        revalidate();
+        repaint();
+    }
+
+    private JButton createMenuBtn(String t) {
+        JButton b = new JButton(t);
+        b.setBackground(Color.WHITE);
+        b.setFont(new Font("Arial", Font.BOLD, 14));
+        b.setForeground(new Color(139, 0, 139));
+        b.setBorder(new LineBorder(new Color(255, 182, 193), 2));
+        b.setFocusable(false);
+        return b;
     }
 }

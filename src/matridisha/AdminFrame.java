@@ -7,73 +7,152 @@ import java.awt.*;
 import java.sql.*;
 
 public class AdminFrame extends JFrame {
-    JTextField nameField;
+    JTextField nameField, causeField, imagePathField;
     JTextArea symArea, solArea;
 
     public AdminFrame() {
-        setTitle("Matridisha - Admin Panel");
-        setSize(450, 600);
+        setTitle("Matridisha - Admin Control Panel");
+        setSize(550, 700);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         getContentPane().setBackground(Color.WHITE);
 
-        JPanel main = new JPanel();
-        main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
-        main.setBorder(new EmptyBorder(30, 30, 30, 30));
-        main.setBackground(Color.WHITE);
-
         Color deepPink = new Color(199, 21, 133);
-        LineBorder pinkBorder = new LineBorder(new Color(255, 182, 193), 2);
+        Color lightPink = new Color(255, 182, 193);
+        Font boldFont = new Font("Arial", Font.BOLD, 14);
 
-        // Form elements
-        JLabel title = new JLabel("Add New Information");
-        title.setFont(new Font("Arial", Font.BOLD, 22));
-        title.setForeground(deepPink);
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // --- Main Panel ---
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.setBorder(new EmptyBorder(30, 40, 30, 40));
+        mainPanel.setBackground(Color.WHITE);
 
-        nameField = new JTextField(); nameField.setBorder(pinkBorder);
-        symArea = new JTextArea(3, 10); symArea.setBorder(pinkBorder);
-        solArea = new JTextArea(5, 10); solArea.setBorder(pinkBorder);
+        // Header
+        JLabel header = new JLabel("Disease Database Management");
+        header.setFont(new Font("Arial", Font.BOLD, 22));
+        header.setForeground(deepPink);
+        header.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JButton addBtn = new JButton("Save to Database");
-        addBtn.setBackground(deepPink);
-        addBtn.setForeground(Color.WHITE);
-        addBtn.setMaximumSize(new Dimension(400, 45));
-        addBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // --- Input Fields ---
+        nameField = createStyledField("Disease Name", lightPink);
+        causeField = createStyledField("Cause (Why it happens)", lightPink);
+        imagePathField = createStyledField("Image URL / Path", lightPink);
+        
+        symArea = new JTextArea(4, 20);
+        solArea = new JTextArea(4, 20);
+        setupTextArea(symArea, "Symptoms", lightPink);
+        setupTextArea(solArea, "Solution / Remedy", lightPink);
+
+        // --- Buttons ---
+        JButton addBtn = createPinkButton("Add Disease Record", deepPink);
+        JButton deleteBtn = new JButton("Delete Disease by Name");
+        deleteBtn.setBackground(Color.BLACK);
+        deleteBtn.setForeground(Color.WHITE);
+        deleteBtn.setFont(boldFont);
+        deleteBtn.setMaximumSize(new Dimension(450, 45));
+        deleteBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        deleteBtn.setFocusable(false);
 
         JButton backBtn = new JButton("Back to Dashboard");
-        backBtn.setContentAreaFilled(false);
         backBtn.setForeground(deepPink);
+        backBtn.setContentAreaFilled(false);
+        backBtn.setBorderPainted(false);
         backBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Adding components
-        main.add(title); main.add(Box.createRigidArea(new Dimension(0, 20)));
-        main.add(new JLabel("Disease Name:")); main.add(nameField);
-        main.add(Box.createRigidArea(new Dimension(0, 15)));
-        main.add(new JLabel("Symptoms:")); main.add(new JScrollPane(symArea));
-        main.add(Box.createRigidArea(new Dimension(0, 15)));
-        main.add(new JLabel("Solution:")); main.add(new JScrollPane(solArea));
-        main.add(Box.createRigidArea(new Dimension(0, 25)));
-        main.add(addBtn); main.add(Box.createRigidArea(new Dimension(0, 10)));
-        main.add(backBtn);
+        // --- Assembly ---
+        mainPanel.add(header);
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 25)));
+        mainPanel.add(nameField);
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        mainPanel.add(causeField);
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        mainPanel.add(new JScrollPane(symArea));
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        mainPanel.add(new JScrollPane(solArea));
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        mainPanel.add(imagePathField);
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 25)));
+        mainPanel.add(addBtn);
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        mainPanel.add(deleteBtn);
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        mainPanel.add(backBtn);
 
-        add(main);
+        add(new JScrollPane(mainPanel));
 
-        // Actions
+        // --- Action Listeners ---
         addBtn.addActionListener(e -> addData());
+        deleteBtn.addActionListener(e -> deleteData());
         backBtn.addActionListener(e -> dispose());
     }
 
+    private JTextField createStyledField(String title, Color borderCol) {
+        JTextField f = new JTextField();
+        f.setBorder(BorderFactory.createTitledBorder(new LineBorder(borderCol, 1), title));
+        f.setMaximumSize(new Dimension(450, 50));
+        return f;
+    }
+
+    private void setupTextArea(JTextArea area, String title, Color borderCol) {
+        area.setLineWrap(true);
+        area.setWrapStyleWord(true);
+        area.setBorder(BorderFactory.createTitledBorder(new LineBorder(borderCol, 1), title));
+    }
+
+    private JButton createPinkButton(String text, Color bg) {
+        JButton b = new JButton(text);
+        b.setBackground(bg);
+        b.setForeground(Color.WHITE);
+        b.setFont(new Font("Arial", Font.BOLD, 15));
+        b.setMaximumSize(new Dimension(450, 50));
+        b.setAlignmentX(Component.CENTER_ALIGNMENT);
+        b.setFocusable(false);
+        return b;
+    }
+
     private void addData() {
+        String name = nameField.getText().trim();
+        String symptoms = symArea.getText().trim();
+        String cause = causeField.getText().trim();
+        String solution = solArea.getText().trim();
+        String img = imagePathField.getText().trim();
+
+        if (name.isEmpty() || symptoms.isEmpty() || solution.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill at least Name, Symptoms, and Solution!");
+            return;
+        }
+
         try (Connection conn = DBConnection.getConnection()) {
-            String sql = "INSERT INTO diseases (name, symptoms, solution) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO diseases (name, symptoms, cause, solution, image_path) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setString(1, nameField.getText());
-            pst.setString(2, symArea.getText());
-            pst.setString(3, solArea.getText());
+            pst.setString(1, name);
+            pst.setString(2, symptoms);
+            pst.setString(3, cause);
+            pst.setString(4, solution);
+            pst.setString(5, img);
             pst.executeUpdate();
-            JOptionPane.showMessageDialog(this, "Data Saved Successfully!");
-            nameField.setText(""); symArea.setText(""); solArea.setText("");
-        } catch (Exception ex) { JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage()); }
+            JOptionPane.showMessageDialog(this, "Disease Added Successfully!");
+            // Clear fields
+            nameField.setText(""); symArea.setText(""); causeField.setText(""); 
+            solArea.setText(""); imagePathField.setText("");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage());
+        }
+    }
+
+    private void deleteData() {
+        String name = JOptionPane.showInputDialog(this, "Enter the exact Disease Name to delete:");
+        if (name != null && !name.trim().isEmpty()) {
+            try (Connection conn = DBConnection.getConnection()) {
+                String sql = "DELETE FROM diseases WHERE name = ?";
+                PreparedStatement pst = conn.prepareStatement(sql);
+                pst.setString(1, name.trim());
+                int res = pst.executeUpdate();
+                if (res > 0) JOptionPane.showMessageDialog(this, "Deleted Successfully!");
+                else JOptionPane.showMessageDialog(this, "No disease found with that name.");
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+            }
+        }
     }
 }
