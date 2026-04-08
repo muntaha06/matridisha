@@ -1,0 +1,2 @@
+javac -d bin -cp "lib/*" src/matridisha/*.java
+java -cp "bin;lib/*" matridisha.LoginFrame
