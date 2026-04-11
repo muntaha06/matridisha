@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+    <!-- ===============================
+         1️⃣ Basic Page Configuration
+    =============================== -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>মাতৃ দিশা - ড্যাশবোর্ড</title>
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- ===============================
+         2️⃣ Dashboard Custom Styling
+    =============================== -->
+    <style>
+
+        /* Grid Layout for Feature Cards */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        /* Card Design */
+        .card {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #f8bbd0;
+            cursor: pointer;
+            transition: 0.3s;
+            color: #ad1457;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        /* Hover Effect */
+        .card:hover {
+            background: #d81b60;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Chatbox Card (Centered & Full Width) */
+        .full-width {
+            grid-column: span 2;
+            width: 60%;
+            margin: 0 auto;
+        }
+
+        /* Welcome Message Styling */
+        .welcome-msg {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        /* Logout Button Styling */
+        .logout-btn {
+            margin-top: 30px;
+            background-color: #d81b60;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            width: 100%;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- ===============================
+         3️⃣ Main Dashboard Container
+    =============================== -->
+    <div class="container" style="width: 550px; margin: auto; text-align: center; padding-top: 50px;">
+
+        <!-- Application Title -->
+        <h1>মাতৃ দিশা</h1>
+
+        <!-- Welcome Section -->
+        <h2 style="color: #555; margin-bottom: 5px;">
+            স্বাগতম <span id="userDisplayName">ব্যবহারকারী</span>!
+        </h2>
+
+        <p class="welcome-msg">
+            "মাতৃত্বের এই সুন্দর পথচলায় আমরা আছি আপনার পাশে, ভরসা ও মমতায়।"
+        </p>
+
+        <!-- ===============================
+             4️⃣ Feature Navigation Cards
+        =============================== -->
+        <div class="grid-container">
+
+            <!-- Profile Page -->
+            <div class="card" onclick="location.href='profile.html'">
+                আমার প্রোফাইল
+            </div>
+
+            <!-- Diseases Information -->
+            <div class="card" onclick="location.href='diseases.html'">
+                সাধারণ রোগ ও সমাধান
+            </div>
+
+            <!-- Guidelines Before Birth -->
+            <div class="card" onclick="location.href='guidelines_pre.html'">
+                দিক-নির্দেশনা (জন্মের আগে)
+            </div>
+
+            <!-- Guidelines After Birth -->
+            <div class="card" onclick="location.href='guidelines_post.html'">
+                দিক-নির্দেশনা (জন্মের পরে)
+            </div>
+
+            <!-- Chatbot Section -->
+            <div class="card full-width" onclick="location.href='chatbot.html'">
+                চ্যাটবক্স (Chatbot)
+            </div>
+
+        </div>
+
+        <!-- ===============================
+             5️⃣ Logout Button
+        =============================== -->
+        <button class="logout-btn" onclick="location.href='index.html'">
+            লগ-আউট
+        </button>
+
+    </div>
+
+    <!-- ===============================
+         6️⃣ JavaScript Section
+    =============================== -->
+    <script>
+
+        // Load user full name dynamically from backend API
+        window.onload = function() {
+
+            fetch('/api/userprofile')
+            .then(response => {
+                if(!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(data => {
+                if(data && data.fullName && data.fullName !== "N/A") {
+                    document.getElementById('userDisplayName').innerText = data.fullName;
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching name: ', error);
+            });
+        };
+
+    </script>
+
+</body>
+</html>

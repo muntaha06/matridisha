@@ -1,0 +1,139 @@
+/* ==================================================
+   1️⃣ Global Page Layout
+================================================== */
+
+/* Main Body Styling */
+body { 
+    background-color: #fff0f5; 
+    font-family: 'Segoe UI', sans-serif; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    min-height: 100vh; 
+    margin: 0; 
+    padding: 40px 0; 
+}
+
+
+/* ==================================================
+   2️⃣ Container / Card Wrapper
+================================================== */
+
+/* Main Content Box */
+.container { 
+    background: white; 
+    padding: 35px; 
+    border-radius: 20px; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+    width: 420px; 
+    text-align: center; 
+}
+
+
+/* ==================================================
+   3️⃣ Typography Styling
+================================================== */
+
+/* Main Heading */
+h1 { 
+    color: #d81b60; 
+    margin-bottom: 5px; 
+}
+
+
+/* ==================================================
+   4️⃣ Form Layout & Input Fields
+================================================== */
+
+/* Input Group Wrapper */
+.input-group { 
+    text-align: left; 
+    margin-bottom: 15px; 
+}
+
+/* Label Styling */
+.input-group label { 
+    display: block; 
+    color: #ad1457; 
+    font-weight: bold; 
+    font-size: 14px; 
+    margin-bottom: 5px; 
+}
+
+/* Input and Select Fields */
+input, select { 
+    width: 100%; 
+    padding: 12px; 
+    margin: 5px 0; 
+    border: 1.5px solid #f8bbd0; 
+    border-radius: 8px; 
+    box-sizing: border-box; 
+    font-size: 15px; 
+}
+
+
+/* ==================================================
+   5️⃣ Button Styling
+================================================== */
+
+/* Primary Button */
+.btn { 
+    background-color: #d81b60; 
+    color: white; 
+    border: none; 
+    padding: 14px; 
+    width: 100%; 
+    border-radius: 10px; 
+    cursor: pointer; 
+    font-weight: bold; 
+    margin-top: 15px; 
+}
+
+/* Button Hover Effect */
+.btn:hover { 
+    background-color: #ad1457; 
+}
+
+
+/* ==================================================
+   6️⃣ Dashboard Layout
+================================================== */
+
+/* Grid Layout for Dashboard */
+.grid-container { 
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 15px; 
+    margin-top: 25px; 
+}
+
+/* Dashboard Card */
+.card { 
+    background: #fff; 
+    padding: 20px 10px; 
+    border-radius: 15px; 
+    border: 2px solid #fce4ec; 
+    cursor: pointer; 
+    color: #ad1457; 
+    font-weight: bold; 
+    text-align: center; 
+    transition: 0.3s; 
+}
+
+/* Card Hover Effect */
+.card:hover { 
+    background: #d81b60; 
+    color: white; 
+}
+
+
+/* ==================================================
+   7️⃣ Utility Classes
+================================================== */
+
+/* Full Width Elements (e.g., Logout Button) */
+.full-width { 
+    grid-column: span 2; 
+    width: 80%; 
+    margin: 5px auto; 
+}

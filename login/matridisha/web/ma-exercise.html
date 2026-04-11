@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ব্যায়াম পরিকল্পনা - মাতৃদিশা</title>
+  
+  <style>
+    :root {
+      --primary: #db2777; 
+      --purple-vibrant: #9333ea; 
+      --bg-body: #fff1f2; 
+      --card-bg: #ffffff;
+      --card-border: #fbcfe8;
+      --text-main: #1f2937;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0; padding: 20px;
+      color: var(--text-main);
+    }
+
+    .main-wrapper {
+      max-width: 850px; 
+      margin: 20px auto;
+      background: var(--card-bg); 
+      border-radius: 45px;
+      padding: 40px; 
+      box-shadow: 0 20px 50px rgba(219, 39, 119, 0.1);
+      border: 1px solid var(--card-border);
+    }
+
+    .header-section {
+      text-align: center;
+      margin-bottom: 35px;
+      padding-bottom: 25px;
+      border-bottom: 1px dashed var(--card-border);
+    }
+
+    .brand-title { 
+      color: var(--primary) !important; 
+      font-size: 48px; margin: 0; font-weight: 900;
+      letter-spacing: -1px;
+    }
+
+    .sub-title { 
+      color: #be185d; font-weight: 700; margin-top: 8px; font-size: 19px;
+    }
+
+    /* নতুন এবং বিস্তারিত সতর্কতা বক্স */
+    .warning-box {
+      background: #fffbfa; border: 1.5px solid #fecdd3;
+      border-left: 6px solid var(--primary); padding: 22px;
+      border-radius: 25px; margin-bottom: 35px;
+      color: #9f1239;
+    }
+    .warning-box h4 { margin: 0 0 10px 0; font-size: 17px; display: flex; align-items: center; gap: 8px; }
+    .warning-box ul { margin: 0; padding-left: 20px; font-size: 14px; font-weight: 600; line-height: 1.6; }
+    .warning-box li { margin-bottom: 5px; }
+
+    .exercise-card {
+      background: white; border: 1.5px solid #f3f4f6;
+      border-radius: 35px; padding: 28px; margin-bottom: 30px;
+      transition: all 0.4s ease;
+    }
+
+    .exercise-card:hover {
+      transform: translateY(-18px);
+      box-shadow: 0 35px 55px rgba(219, 39, 119, 0.12);
+      border-color: var(--card-border);
+    }
+
+    .card-header {
+      display: flex; align-items: center; gap: 22px; margin-bottom: 20px;
+    }
+
+    .icon-box {
+      background: #fff5f7; width: 75px; height: 75px;
+      border-radius: 22px; display: flex; align-items: center; 
+      justify-content: center; font-size: 38px; flex-shrink: 0;
+    }
+
+    .exercise-main-info h3 {
+      color: var(--purple-vibrant); font-size: 24px;
+      font-weight: 800; margin: 0 0 8px 0;
+    }
+
+    .meta-tags { display: flex; gap: 12px; }
+    .badge {
+      font-size: 13px; font-weight: 800; padding: 6px 14px;
+      border-radius: 12px; display: inline-flex; align-items: center; gap: 6px;
+    }
+    .badge-time { background: #fdf2f8; color: var(--primary); border: 1px solid #fbcfe8; }
+    .badge-count { background: #f5f3ff; color: var(--purple-vibrant); border: 1px solid #ddd6fe; }
+
+    .details-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
+    }
+    .detail-box {
+      background: #f9fafb; padding: 18px; border-radius: 20px; border: 1px solid #f3f4f6;
+    }
+    .detail-box h4 { margin: 0 0 8px; font-size: 15px; color: var(--primary); font-weight: 700; }
+    .detail-box p { margin: 0; font-size: 14px; line-height: 1.5; color: #4b5563; font-weight: 600; }
+
+    .yt-button {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      background: #fff1f2; color: #e11d48; text-decoration: none;
+      font-size: 15px; font-weight: 700; padding: 14px;
+      border-radius: 18px; border: 1.5px solid #fecdd3; margin-top: 22px;
+      transition: 0.3s;
+    }
+    .yt-button:hover { background: #e11d48; color: white; box-shadow: 0 10px 20px rgba(225, 29, 72, 0.2); }
+
+    .back-btn {
+      background: linear-gradient(135deg, var(--primary), var(--purple-vibrant));
+      color: white; padding: 16px 50px; border-radius: 50px;
+      font-weight: 800; text-decoration: none; display: inline-block;
+      margin-top: 25px; transition: 0.3s;
+    }
+
+    @media (max-width: 600px) { .details-grid { grid-template-columns: 1fr; } .brand-title { font-size: 36px; } }
+  </style>
+</head>
+<body>
+
+  <div class="main-wrapper">
+    <div class="header-section">
+      <h1 class="brand-title">মাতৃদিশা</h1>
+      <p class="sub-title">ব্যায়াম পরিকল্পনা - নিরাপদ মুভমেন্ট</p>
+    </div>
+
+    <div class="warning-box">
+      <h4>⚠️ শুরু করার আগে জরুরি সতর্কতা:</h4>
+      <ul>
+        <li>সিজারিয়ান ডেলিভারি হলে অন্তত ৬-৮ সপ্তাহ পর এবং ডাক্তারের পরামর্শ নিয়ে ব্যায়াম শুরু করুন।</li>
+        <li>ব্যায়াম করার সময় তীব্র ব্যথা বা অস্বাভাবিক অস্বস্তি অনুভব করলে সাথে সাথে থামিয়ে দিন।</li>
+        <li>অতিরিক্ত রক্তক্ষরণ বা মাথা ঘোরার সমস্যা দেখা দিলে দ্রুত ডাক্তারের পরামর্শ নিন।</li>
+        <li>ব্যায়ামের আগে এবং পরে পর্যাপ্ত পানি পান করে শরীর হাইড্রেটেড রাখুন।</li>
+        <li>প্রতিটি মুভমেন্ট ধীরস্থিরভাবে করুন, নিজের শরীরের সক্ষমতাকে জোর করবেন না।</li>
+      </ul>
+    </div>
+
+    <div class="exercise-card">
+      <div class="card-header">
+        <div class="icon-box">🧘‍♀️</div>
+        <div class="exercise-main-info">
+          <h3>কেগেল এক্সারসাইজ (Kegel)</h3>
+          <div class="meta-tags">
+            <span class="badge badge-time">⏱️ ৫ মিনিট</span>
+            <span class="badge badge-count">🔄 ১০ বার</span>
+          </div>
+        </div>
+      </div>
+      <div class="details-grid">
+        <div class="detail-box"><h4>📝 করার নিয়ম</h4><p>পেলভিক পেশি ৩ সেকেন্ড শক্ত করে ধরে রাখুন এবং ৩ সেকেন্ড শিথিল করুন।</p></div>
+        <div class="detail-box"><h4>🌟 উপকারিতা</h4><p>পেলভিক পেশি মজবুত করে এবং প্রসবোত্তর দ্রুত সুস্থতায় সহায়তা করে।</p></div>
+      </div>
+      <a href="https://www.youtube.com/results?search_query=postpartum+kegel+exercises+bangla" target="_blank" class="yt-button">🎬 ভিডিও টিউটোরিয়াল দেখুন</a>
+    </div>
+
+    <div class="exercise-card">
+      <div class="card-header">
+        <div class="icon-box">🚶‍♀️</div>
+        <div class="exercise-main-info">
+          <h3>হালকা হাঁটা (Walking)</h3>
+          <div class="meta-tags">
+            <span class="badge badge-time">⏱️ ১০-১৫ মিনিট</span>
+            <span class="badge badge-count">🚶‍♀️ ধীর গতি</span>
+          </div>
+        </div>
+      </div>
+      <div class="details-grid">
+        <div class="detail-box"><h4>📝 করার নিয়ম</h4><p>সোজা হয়ে দাঁড়িয়ে স্বাভাবিকভাবে ধীর গতিতে সমতল জায়গায় হাঁটুন।</p></div>
+        <div class="detail-box"><h4>🌟 উপকারিতা</h4><p>রক্ত সঞ্চালন বৃদ্ধি করে এবং মানসিক মেজাজ ফুরফুরে রাখে।</p></div>
+      </div>
+      <a href="https://www.youtube.com/results?search_query=postpartum+walking+tips" target="_blank" class="yt-button">🎬 ভিডিও টিউটোরিয়াল দেখুন</a>
+    </div>
+
+    <div class="exercise-card">
+      <div class="card-header">
+        <div class="icon-box">🛌</div>
+        <div class="exercise-main-info">
+          <h3>পেলভিক টিল্ট (Pelvic Tilt)</h3>
+          <div class="meta-tags">
+            <span class="badge badge-time">⏱️ ৩ মিনিট</span>
+            <span class="badge badge-count">🔄 ১০ বার</span>
+          </div>
+        </div>
+      </div>
+      <div class="details-grid">
+        <div class="detail-box"><h4>📝 করার নিয়ম</h4><p>শুয়ে হাঁটু ভাঁজ করে কোমর সামান্য ওপরে তুলুন ও নামান।</p></div>
+        <div class="detail-box"><h4>🌟 উপকারিতা</h4><p>কোমর ও পিঠের নিচের অংশের ব্যথা কমাতে দারুণ কাজ করে।</p></div>
+      </div>
+      <a href="https://www.youtube.com/results?search_query=pelvic+tilt+exercise+postpartum" target="_blank" class="yt-button">🎬 ভিডিও টিউটোরিয়াল দেখুন</a>
+    </div>
+
+    <div class="exercise-card">
+      <div class="card-header">
+        <div class="icon-box">🐈</div>
+        <div class="exercise-main-info">
+          <h3>ক্যাট-কাউ স্ট্রেচ</h3>
+          <div class="meta-tags">
+            <span class="badge badge-time">⏱️ ৪ মিনিট</span>
+            <span class="badge badge-count">🔄 ৮ বার</span>
+          </div>
+        </div>
+      </div>
+      <div class="details-grid">
+        <div class="detail-box"><h4>📝 করার নিয়ম</h4><p>হাঁটু ও হাতের ওপর ভর দিয়ে পিঠ ওপর-নিচ করে প্রসারিত করুন।</p></div>
+        <div class="detail-box"><h4>🌟 উপকারিতা</h4><p>শিরদাঁড়ার নমনীয়তা বাড়ায় এবং শরীরের ক্লান্তি দূর করে।</p></div>
+      </div>
+      <a href="https://www.youtube.com/results?search_query=cat+cow+stretch+postpartum" target="_blank" class="yt-button">🎬 ভিডিও টিউটোরিয়াল দেখুন</a>
+    </div>
+
+    <div class="exercise-card">
+      <div class="card-header">
+        <div class="icon-box">🌬️</div>
+        <div class="exercise-main-info">
+          <h3>গভীর শ্বাস-প্রশ্বাস</h3>
+          <div class="meta-tags">
+            <span class="badge badge-time">⏱️ ৫ মিনিট</span>
+            <span class="badge badge-count">🌬️ রিল্যাক্স</span>
+          </div>
+        </div>
+      </div>
+      <div class="details-grid">
+        <div class="detail-box"><h4>📝 করার নিয়ম</h4><p>নাক দিয়ে গভীর শ্বাস নিন এবং মুখ দিয়ে ধীরে ধীরে ছাড়ুন।</p></div>
+        <div class="detail-box"><h4>🌟 উপকারিতা</h4><p>মানসিক প্রশান্তি আনে এবং পেটের পেশিকে টোন করতে সাহায্য করে।</p></div>
+      </div>
+      <a href="https://www.youtube.com/results?search_query=postpartum+deep+breathing" target="_blank" class="yt-button">🎬 ভিডিও টিউটোরিয়াল দেখুন</a>
+    </div>
+
+    <div class="exercise-card">
+      <div class="card-header">
+        <div class="icon-box">🦵</div>
+        <div class="exercise-main-info">
+          <h3>হিল স্লাইড (Heel Slides)</h3>
+          <div class="meta-tags">
+            <span class="badge badge-time">⏱️ ৫ মিনিট</span>
+            <span class="badge badge-count">🔄 ১০ বার</span>
+          </div>
+        </div>
+      </div>
+      <div class="details-grid">
+        <div class="detail-box"><h4>📝 করার নিয়ম</h4><p>শুয়ে পা সোজা করুন এবং ধীরে হাঁটু ভাঁজ করে নিজের দিকে টানুন।</p></div>
+        <div class="detail-box"><h4>🌟 উপকারিতা</h4><p>পেটের নিচের পেশি এবং পায়ের শক্তি বাড়াতে সাহায্য করে।</p></div>
+      </div>
+      <a href="https://www.youtube.com/results?search_query=heel+slides+exercise+after+pregnancy" target="_blank" class="yt-button">🎬 ভিডিও টিউটোরিয়াল দেখুন</a>
+    </div>
+
+    <div class="exercise-card">
+      <div class="card-header">
+        <div class="icon-box">🙆‍♀️</div>
+        <div class="exercise-main-info">
+          <h3>শোল্ডার রোলস</h3>
+          <div class="meta-tags">
+            <span class="badge badge-time">⏱️ ২ মিনিট</span>
+            <span class="badge badge-count">🔄 ১০ বার</span>
+          </div>
+        </div>
+      </div>
+      <div class="details-grid">
+        <div class="detail-box"><h4>📝 করার নিয়ম</h4><p>বসে দুই কাঁধ গোল করে সামনে ও পেছনে ঘোরান।</p></div>
+        <div class="detail-box"><h4>🌟 উপকারিতা</h4><p>কাঁধ ও ঘাড়ের পেশির জড়তা এবং ব্যথা কমাতে সাহায্য করে।</p></div>
+      </div>
+      <a href="https://www.youtube.com/results?search_query=shoulder+rolls+exercise+bangla" target="_blank" class="yt-button">🎬 ভিডিও টিউটোরিয়াল দেখুন</a>
+    </div>
+
+    <div style="text-align: center; margin-top: 10px;">
+      <a href="ma.html" class="back-btn">← মূল মেনুতে ফিরুন</a>
+    </div>
+  </div>
+
+</body>
+</html>

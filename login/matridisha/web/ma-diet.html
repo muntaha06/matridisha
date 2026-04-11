@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>খাদ্য পরিকল্পনা - মাতৃদিশা</title>
+  
+  <style>
+    :root {
+      --primary: #db2777;
+      --accent: #f472b6;
+      --bg-light: #fff1f2; 
+      --text: #1a1a1a;
+      --protein: #f43f5e;
+      --carb: #f59e0b;
+      --vitamin: #10b981;
+      --calcium: #06b6d4;
+    }
+
+    body {
+      background: var(--bg-light);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0; padding: 20px;
+      color: var(--text);
+    }
+
+    .diet-container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 35px;
+      padding: 30px;
+      box-shadow: 0 20px 60px rgba(219, 39, 119, 0.1);
+      border: 2px solid #fbcfe8;
+    }
+
+    .header-section { text-align: center; margin-bottom: 40px; }
+    .brand-title { color: var(--primary); font-size: 38px; margin-bottom: 5px; font-weight: 900; }
+
+    .modern-tabs {
+      background: #fce7f3;
+      padding: 6px;
+      border-radius: 50px;
+      display: inline-flex;
+      margin-bottom: 30px;
+    }
+
+    /* Tab Button - Heavy Effect */
+    .tab-btn {
+      border: none; padding: 12px 28px; border-radius: 50px;
+      cursor: pointer; font-weight: 800; background: transparent;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+      color: #be185d;
+    }
+    .tab-btn:hover { transform: translateY(-5px); }
+    .tab-btn.active {
+      background: var(--primary); color: white;
+      box-shadow: 0 12px 20px rgba(219, 39, 119, 0.4);
+      transform: translateY(-5px);
+    }
+
+    .info-box {
+  background: #fff5f7; 
+  border: 2px solid #fbcfe8; 
+  border-radius: 20px;
+  padding: 15px; 
+  margin-bottom: 25px; 
+  text-align: left;
+
+  transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.info-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 22px 45px rgba(219, 39, 119, 0.18);
+}
+    .info-box p { margin: 5px 0; font-weight: 700; color: #be185d; font-size: 15px; }
+
+    .timeline { position: relative; border-left: 4px solid var(--primary); margin-left: 20px; padding-left: 30px; }
+    .timeline-item { position: relative; margin-bottom: 35px; }
+    .timeline-item::before {
+        content: ''; position: absolute; left: -39px; top: 5px;
+        width: 14px; height: 14px; background: white;
+        border-radius: 50%; border: 4px solid var(--primary); box-shadow: 0 0 10px rgba(219, 39, 119, 0.2);
+    }
+
+    /* Timeline Content - Heavy Effect */
+    .timeline-content {
+      background: #fff; border: 1px solid #fce7f3;
+      padding: 22px; border-radius: 25px;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.02);
+      cursor: pointer;
+    }
+    .timeline-content:hover {
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: 0 25px 50px rgba(219, 39, 119, 0.15);
+    }
+
+    .diet-time { font-size: 13px; color: var(--primary); font-weight: 800; }
+    .diet-title { font-size: 21px; margin: 5px 0 15px; font-weight: 900; color: #334155; }
+    .food-list { list-style: none; padding: 0; margin: 0; }
+    .food-list li { margin-bottom: 10px; font-weight: 600; display: flex; align-items: center; color: #475569; }
+    .food-list li::before { content: '🌸'; margin-right: 12px; font-size: 14px; }
+
+    /* Nutrition Card - Slides Right Effect (As requested) */
+    .nutrition-card {
+      background: white; margin-bottom: 25px; padding: 20px;
+      border-radius: 25px; display: flex; align-items: center;
+      gap: 25px; border: 1px solid #f1f5f9;
+      cursor: pointer; transition: transform 0.3s ease;
+    }
+    .nutrition-card:hover {
+      transform: translateX(10px); 
+    }
+    
+    .card-protein { border-left: 8px solid var(--protein); }
+    .card-carb { border-left: 8px solid var(--carb); }
+    .card-vitamin { border-left: 8px solid var(--vitamin); }
+    .card-calcium { border-left: 8px solid var(--calcium); }
+
+    .nutrition-img { width: 100px; height: 100px; border-radius: 20px; object-fit: cover; }
+    .nutrition-info h4 { margin: 0 0 8px; font-size: 20px; font-weight: 800; }
+    .nutrition-info p { font-size: 15px; color: #555; line-height: 1.6; margin: 0; }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: zoomIn 0.5s ease; }
+    @keyframes zoomIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+
+    .footer-btn { text-align: center; margin-top: 45px; }
+    .back-btn {
+      text-decoration: none; background: var(--primary); color: white;
+      padding: 14px 40px; border-radius: 50px;
+      font-weight: 800; transition: 0.3s; display: inline-block;
+    }
+    .back-btn:hover { transform: translateY(-7px); box-shadow: 0 10px 20px rgba(219, 39, 119, 0.4); }
+  </style>
+</head>
+<body>
+
+  <div class="diet-container">
+    <header class="header-section">
+      <h1 class="brand-title">খাদ্য পরিকল্পনা</h1>
+      <p style="color: #be185d; font-weight: 700;">মায়ের সুস্থতায় পূর্ণাঙ্গ পুষ্টি গাইড</p>
+      
+      <div class="modern-tabs">
+        <button class="tab-btn active" onclick="openTab('m0_3', this)">০–৩ মাস</button>
+        <button class="tab-btn" onclick="openTab('m3_6', this)">৩–৬ মাস</button>
+      </div>
+    </header>
+
+    <div id="m0_3" class="tab-content active">
+      <div class="info-box">
+        <p>🌸 ০–৩ মাস (শরীরের পুনরুদ্ধার ও শক্তি বৃদ্ধি)</p>
+        <p>👉 দৈনিক ক্যালোরি প্রয়োজন: আনুমানিক ২২০০–২৫০০ ক্যালোরি</p>
+        <p>💧 পানি: ২.৫–৩ লিটার</p>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <span class="diet-time">🌅 সকাল (৭:০০ – ৮:০০)</span>
+            <h3 class="diet-title">সকালের নাস্তা</h3>
+            <ul class="food-list">
+              <li>গরম পানি ১ গ্লাস (২৫০ মি.লি.), খেজুর ২টা বা কিশমিশ ১ টেবিল চামচ</li>
+              <li>দুধ ১ গ্লাস (২৫০ মি.লি.)</li>
+              <li>আটার রুটি ২টা ও ডিম ১টা (সেদ্ধ/পোচ)</li>
+              <li><b>বিকল্প:</b> ওটস ৪০ গ্রাম + দুধ ১ কাপ</li>
+            </ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <span class="diet-time">🌞 দুপুর (১:০০ – ২:০০)</span>
+            <h3 class="diet-title">দুপুরের খাবার</h3>
+            <ul class="food-list">
+              <li>ভাত ১.৫ কাপ (২৫০ গ্রাম) বা রুটি ২-৩টা</li>
+              <li>ডাল ১ কাপ (১৫০ মি.লি.)</li>
+              <li>সবজি ১ কাপ (১ বাটি)</li>
+              <li>মাছ ১ পিস (৬০–৮০ গ্রাম) বা মুরগি (৭৫ গ্রাম)</li>
+              <li>সালাদ ১/২ কাপ ও টক দই ১/২ কাপ (১০০ গ্রাম)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <span class="diet-time">☕ বিকাল (৪:০০ – ৫:০০)</span>
+            <h3 class="diet-title">বিকালের নাস্তা</h3>
+            <ul class="food-list">
+              <li>দুধ/লাচ্ছি ১ গ্লাস ও মুড়ি ১ কাপ</li>
+              <li>সেদ্ধ ছোলা ১/২ কাপ (৫০–৬০ গ্রাম)</li>
+              <li>ফল ১টি (আপেল/কমলা/কলা)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <span class="diet-time">🌙 রাত (৮:০০ – ৯:০০)</span>
+            <h3 class="diet-title">রাতের খাবার</h3>
+            <ul class="food-list">
+              <li>নরম ভাত ১ কাপ (২০০ গ্রাম) বা রুটি ২টা</li>
+              <li>মাছ/মুরগি ১ ছোট পিস ও ডাল-সবজি</li>
+              <li><b>ঘুমের আগে</b> হলুদ দুধ ১ কাপ (২০০ মি.লি.)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="m3_6" class="tab-content">
+      <div class="info-box">
+        <p>🌼 ৩–৬ মাস (শক্তি বৃদ্ধি + পুষ্টি বজায় রাখা)</p>
+        <p>👉 দৈনিক ক্যালোরি প্রয়োজন: ২৪০০–২৬০০ ক্যালোরি</p>
+        <p>💧 পানি: ৩ লিটার</p>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <span class="diet-time">🌅 সকাল</span>
+            <h3 class="diet-title">সকালের নাস্তা</h3>
+            <ul class="food-list">
+              <li>লেবু গরম পানি ১ গ্লাস</li>
+              <li>ওটস/ডালিয়া ১ কাপ ও ডিম ১টা</li>
+              <li>দুধ ১ গ্লাস (২৫০ মি.লি.), বাদাম ৪–৫টা</li>
+              
+            </ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <span class="diet-time">🌞 দুপুর</span>
+            <h3 class="diet-title">দুপুরের খাবার</h3>
+            <ul class="food-list">
+              <li>ভাত ১.৫ - ২ কাপ বা রুটি ৩টা</li>
+              <li>মাছ ১ পিস (৮০ গ্রাম)
+বা মুরগি ১ পিস (৮০–১০০ গ্রাম)
+বা গরুর মাংস ৭৫ গ্রাম (সপ্তাহে ১–২ দিন)</li>
+              <li>ডাল ১ কাপ ও সবজি ১.৫ কাপ</li>
+             <li>সালাদ ১ কাপ</li> 
+            </ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <span class="diet-time">☕ বিকাল</span>
+            <h3 class="diet-title">বিকালের নাস্তা</h3>
+            <ul class="food-list">
+              <li>ফল ১-২ সার্ভিং ও ছোলা/মুড়ি</li>
+              <li>চা ১ কাপ (চিনি কম)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <span class="diet-time">🌙 রাত</span>
+            <h3 class="diet-title">রাতের খাবার</h3>
+            <ul class="food-list">
+              <li>রুটি ২টা বা ভাত ১ কাপ</li>
+               <li>সবজি ১ কাপ</li>
+              <li>ডাল/স্যুপ ১ কাপ</li>
+          
+             <li> মাছ/মুরগি ১ পিস (~৭৫ গ্রাম)</li>
+              <li><b>ঘুমের আগে</b> দুধ ১ কাপ</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section style="margin-top:50px;">
+      <h3 style="text-align:center; color:#be185d; margin-bottom:30px; font-weight:900; font-size:24px;">🌈 পুষ্টি নির্দেশিকা: কেন এসব খাবেন?</h3>
+      
+      <div class="nutrition-card card-protein">
+        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=200&auto=format&fit=crop" class="nutrition-img">
+        <div class="nutrition-info">
+          <h4 style="color:var(--protein);">আমিষ (Protein)</h4>
+          <p><b>উৎস:</b>মাছ, মুরগি, ডিম, ডাল, ছোলা, বুট, বাদাম, পনির।</p>
+        <p><b>কাজ:</b> প্রসবের পর ক্ষত ও টিস্যু দ্রুত সারাতে সাহায্য করে,বুকের দুধ তৈরিতে গুরুত্বপূর্ণ ভূমিকা রাখে,পেশি গঠন ও শরীর মেরামতে সাহায্য করে।</p>
+        
+        </div>
+      </div>
+
+      <div class="nutrition-card card-carb">
+        <img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?q=80&w=200&auto=format&fit=crop" class="nutrition-img">
+        <div class="nutrition-info">
+          <h4 style="color:var(--carb);">শর্করা (Carbohydrate)</h4>
+           <p><b>উৎস:</b>ভাত, আটার রুটি, ওটস,ভাত, রুটি, আলু, মিষ্টি আলু।</p>
+           <p><b>কাজ:</b>  সারাদিন কাজ করার শক্তি দেয়, মানসিক ক্লান্তি কমাতে সাহায্য করে।</p>
+       
+          </div>
+      </div>
+
+      <div class="nutrition-card card-calcium">
+  <img src="https://images.pexels.com/photos/248412/pexels-photo-248412.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Milk" class="nutrition-img">
+  <div class="nutrition-info">
+    <h4 style="color: var(--calcium);">ক্যালসিয়াম (Calcium)</h4>
+    <p><b>উৎস:</b> দুধ, দই, পনির, ছোট মাছ, তিল।</p>
+    <p><b>কাজ:</b> হাড় ও দাঁত মজবুত রাখে, হাড়ের ক্ষয় রোধ করে, কোমর/হাড়ের ব্যথা কমাতে সাহায্য করে।</p>
+  </div>
+</div>
+
+      <div class="nutrition-card card-vitamin">
+        <img src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?q=80&w=200&auto=format&fit=crop" class="nutrition-img">
+        <div class="nutrition-info">
+          <h4 style="color:var(--vitamin);">ভিটামিন ও আয়রন</h4>
+          <p><b>উৎস:</b>শাকসবজি, পালং শাক, রঙিন ফল, কমলা, গাজর, বাদাম।</p>
+           <p><b>কাজ:</b> রোগ প্রতিরোধ ক্ষমতা বাড়ায়, হরমোনের ভারসাম্য ঠিক রাখতে সাহায্য করে, রক্তস্বল্পতা (অ্যানিমিয়া) প্রতিরোধ করে।</p>
+        
+        </div>
+      </div>
+    </section>
+
+    <section class="nutrition-section">
+      <h3 style="text-align:center; color: #be185d; margin-bottom: 20px; font-weight: 900; font-size: 22px;">⚖️ গুরুত্বপূর্ণ নির্দেশনা</h3>
+      
+      <div class="guideline-card">
+        <ul class="food-list">
+          <li><b>আয়রন : </b> কলিজা (সপ্তাহে ১ দিন) ও পালং শাক খান।</li>
+          <li><b>ক্যালসিয়াম : </b> প্রতিদিন অন্তত ২ কাপ দুধ নিশ্চিত করুন।</li>
+          <li><b>কোষ্ঠকাঠিন্য : </b> প্রচুর শাকসবজি ও ফলমূল খান।</li>
+          <li><b>বর্জনীয় : </b> অতিরিক্ত ভাজা, ঝাল ও ফাস্টফুড এড়িয়ে চলুন।</li>
+          <li><b>সাপ্লিমেন্ট : </b> ডাক্তারের দেওয়া ঔষধ নিয়মিত নিন।</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="footer-btn">
+      <a href="ma.html" class="back-btn">← মূল মেনুতে ফিরুন</a>
+    </div>
+  </div>
+
+  <script>
+    function openTab(tabId, btn) {
+      let content = document.getElementsByClassName("tab-content");
+      for (let i = 0; i < content.length; i++) { content[i].classList.remove("active"); }
+      let tabs = document.getElementsByClassName("tab-btn");
+      for (let i = 0; i < tabs.length; i++) { tabs[i].classList.remove("active"); }
+      document.getElementById(tabId).classList.add("active");
+      btn.classList.add("active");
+    }
+  </script>
+</body>
+</html>

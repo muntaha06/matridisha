@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>মাতৃদিশা</title>
+    <style>
+        /* বিশেষ গুরুত্ব বক্সের জন্য অতিরিক্ত স্টাইল */
+        .importance-box {
+            background: linear-gradient(135deg, #f8f9fa 0%, #fff0f3 100%);
+            padding: 20px;
+            border-radius: 20px;
+            margin: 20px 0 30px 0;
+            border-left: 5px solid #d63384;
+            text-align: left;
+            box-shadow: 0 4px 15px rgba(214, 51, 132, 0.15);
+            border: 1px solid #ffc1e3;
+        }
+
+        .importance-box h3 {
+            color: #d63384;
+            margin: 0 0 12px 0;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+        }
+
+        .importance-box p {
+            color: #444;
+            font-size: 16px;
+            line-height: 1.7;
+            margin: 0;
+            font-weight: 400;
+        }
+
+        .importance-icon {
+            font-size: 28px;
+            background: #d63384;
+            color: white;
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        /* ডাটা স্ক্রিনের জন্য স্টাইল */
+        .category-title {
+            color: #d63384;
+            margin: 30px 0 15px 0;
+            border-bottom: 2px solid #ffc1e3;
+            padding-bottom: 8px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .card {
+            border: 1px solid #ffc1e3;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 20px;
+            background: white;
+            box-shadow: 0 4px 10px rgba(214, 51, 132, 0.05);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(214, 51, 132, 0.1);
+        }
+
+        .card h3 {
+            color: #d63384;
+            margin: 0 0 15px 0;
+            font-size: 20px;
+        }
+
+        .card ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .card li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+            color: #555;
+        }
+
+        .video-btn {
+            display: inline-block;
+            background: #ff4757;
+            color: white;
+            padding: 10px 25px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 14px;
+            margin-top: 15px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .video-btn:hover {
+            background: #ff3333;
+        }
+
+        .caution-item {
+            color: #cc0000;
+            font-weight: bold;
+            font-size: 16px;
+            padding: 10px 0;
+            border-bottom: 1px dashed #ffc1e3;
+        }
+
+        .caution-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Home Screen -->
+    <div id="home-screen">
+        <h1 class="brand-title">মাতৃদিশা</h1>
+        <p class="tagline">সুস্থ মা, হাসিখুশি শিশু — আপনার পাশে প্রতিটি পর্বে মাতৃদিশা</p>
+
+        <div class="trimester-row">
+            <button class="main-btn" onclick="showOptions('trimester1')">১ম ট্রাইমেস্টার (১-৩ মাস)</button>
+            <button class="main-btn" onclick="showOptions('trimester2')">২য় ট্রাইমেস্টার (৪-৬ মাস)</button>
+            <button class="main-btn" onclick="showOptions('trimester3')">৩য় ট্রাইমেস্টার (৭-৯ মাস)</button>
+        </div>
+
+        <!-- Dashboard Button -->
+        <div style="margin-top:30px;">
+            <button class="dashboard-btn" onclick="goDashboard()">ড্যাশবোর্ডে ফিরে যান</button>
+        </div>
+    </div>
+
+    <!-- Option Screen -->
+    <div id="option-screen" class="content-box">
+        <h2 id="selected-title" style="color:#d63384; margin-bottom:20px;">বেছে নিন</h2>
+        
+        <!-- বিশেষ গুরুত্ব বক্স - এখানে দেখাবে -->
+        <div id="importance-container" style="display: none;">
+            <div class="importance-box">
+                <h3>
+                    <span class="importance-icon"></span> 
+                    বিশেষ গুরুত্ব
+                </h3>
+                <p id="special-importance"></p>
+            </div>
+        </div>
+
+        <div class="trimester-row" style="margin-top:20px;">
+            <button class="main-btn" onclick="showData('food')">🍚 খাবার (Food)</button>
+            <button class="main-btn" onclick="showData('exercise')">🏃‍♀️ ব্যায়াম (Exercise)</button>
+            <button class="main-btn" onclick="showData('caution')">⚠️ সতর্কতা (Caution)</button>
+        </div>
+    </div>
+
+    <!-- Data Screen -->
+    <div id="data-screen" class="content-box">
+        <div id="display-area"></div>
+    </div>
+
+    <!-- Footer Back Button -->
+    <div class="footer">
+        <button id="back-btn" class="back-btn" onclick="goStepBack()" style="display:none;">← পেছনে</button>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

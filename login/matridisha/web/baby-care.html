@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>শিশুর যত্ন ও পরিচর্যা - মাতৃদিশা</title>
+  
+  <style>
+    :root {
+      --primary: #db2777; 
+      --accent: #f472b6;
+      --bg-light: #fff1f2;
+      --text: #1e293b;
+    }
+
+    body {
+      background: var(--bg-light);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0; padding: 20px;
+      color: var(--text);
+    }
+
+    .care-container {
+      max-width: 850px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 40px;
+      padding: 30px;
+      box-shadow: 0 20px 50px rgba(219, 39, 119, 0.08);
+      border: 1px solid #fce7f3;
+    }
+
+    .header-section { text-align: center; margin-bottom: 40px; }
+    .brand-title { color: var(--primary); font-size: 34px; margin-bottom: 5px; font-weight: 900; }
+    
+    /* উপরের ৫টি কার্ড - Lift Effect */
+    .care-card {
+      background: white;
+      border-radius: 30px;
+      padding: 25px;
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      margin-bottom: 20px;
+      border: 1px solid #f1f5f9;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      outline: none;
+    }
+
+    .care-card:hover {
+      transform: translateY(-10px); /* উঁচু হবে */
+      box-shadow: 0 15px 35px rgba(219, 39, 119, 0.15);
+      border-color: var(--primary);
+    }
+
+    .icon-wrapper {
+      width: 80px; height: 80px;
+      background: #fff1f2;
+      border-radius: 25px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 35px;
+      flex-shrink: 0;
+    }
+
+    .care-info h3 { margin: 0 0 8px; font-size: 20px; color: var(--primary); font-weight: 850; }
+    .care-info p { margin: 0; font-size: 14.5px; color: #64748b; line-height: 1.6; font-weight: 600; }
+
+    /* প্রতিদিনের ৩টি টিপস - Slide Right Effect */
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .tip-button {
+      background: #fff5f7;
+      padding: 20px;
+      border-radius: 25px;
+      border: none;
+      border-left: 6px solid var(--primary);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-align: left;
+      display: block;
+      width: 100%;
+    }
+
+    .tip-button:hover {
+      transform: translateX(15px); /* ডানে সরে যাবে */
+      background: #fce7f3;
+    }
+
+    .tip-button h4 { margin: 0 0 10px; color: var(--primary); font-size: 18px; font-weight: 800; }
+    .tip-button p { margin: 0; font-size: 13.5px; line-height: 1.5; color: #475569; }
+
+    .footer-btn { text-align: center; margin-top: 50px; }
+    .back-btn {
+      text-decoration: none; background: var(--primary); color: white;
+      padding: 14px 45px; border-radius: 50px;
+      font-weight: 800; transition: 0.3s; display: inline-block;
+    }
+    .back-btn:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(219, 39, 119, 0.3); }
+  </style>
+</head>
+<body>
+
+  <div class="care-container">
+    <header class="header-section">
+      <h1 class="brand-title">যত্ন ও পরিচর্যা</h1>
+      <p style="color: #be185d; font-weight: 700;">শিশুর নিরাপদ ও সুস্থ বিকাশের গাইড</p>
+    </header>
+
+    <div class="care-list">
+      <button class="care-card">
+        <div class="icon-wrapper">😴</div>
+        <div class="care-info">
+          <h3>পর্যাপ্ত ঘুম নিশ্চিত করা</h3>
+          <p>শিশুর সঠিক বিকাশের জন্য দিনে অন্তত ১৪-১৬ ঘণ্টা ঘুম প্রয়োজন। পরিবেশ শান্ত রাখুন।</p>
+        </div>
+      </button>
+
+      <button class="care-card">
+        <div class="icon-wrapper">🧼</div>
+        <div class="care-info">
+          <h3>ব্যক্তিগত পরিচ্ছন্নতা</h3>
+          <p>কুসুম গরম পানি দিয়ে প্রতিদিন শরীর পরিষ্কার রাখুন এবং নিয়মিত পরিষ্কার ও আরামদায়ক পোশাক ব্যবহার করুন। সংক্রমণ এড়াতে হাত ধোয়ার অভ্যাস গড়ে তুলুন।</p>
+        </div>
+      </button>
+
+      <button class="care-card">
+        <div class="icon-wrapper">🧴</div>
+        <div class="care-info">
+          <h3>ত্বকের সঠিক যত্ন</h3>
+          <p>ত্বকের ধরন অনুযায়ী মানসম্মত লোশন ব্যবহার করুন। ত্বক পরিষ্কার ও ময়েশ্চারাইজ রাখা সংবেদনশীল ত্বকের জন্য বিশেষভাবে গুরুত্বপূর্ণ।</p>
+        </div>
+      </button>
+
+      <button class="care-card">
+        <div class="icon-wrapper">👶</div>
+        <div class="care-info">
+          <h3>হালকা ব্যায়াম</h3>
+          <p>পেশি শক্ত করতে প্রতিদিন কিছুক্ষণ উপুড় করে 'টামি টাইম' নিশ্চিত করুন। এতে শরীর সক্রিয় থাকে এবং পেশি শক্তিশালী হয়।</p>
+        </div>
+      </button>
+
+      <button class="care-card">
+        <div class="icon-wrapper">🛡️</div>
+        <div class="care-info">
+          <h3>নিরাপদ পরিবেশ</h3>
+          <p> শিশুকে ছোট খেলনা বা ধারালো বস্তু থেকে দূরে রাখুন এবং ইলেকট্রিক প্লাগ ঢেকে রাখুন।</p>
+        </div>
+      </button>
+    </div>
+
+    <h3 style="text-align:center; color:var(--primary); margin-top:50px; font-weight:900; font-size: 24px;">🌈 প্রতিদিনের ছোট টিপস</h3>
+    
+    <div class="tips-grid">
+      <button class="tip-button">
+        <h4>সকালের রোদ</h4>
+        <p>সকালের মৃদু রোদে শিশুকে ১০-১৫ মিনিট রাখুন যা ভিটামিন-ডি নিশ্চিত করে।</p>
+      </button>
+      <button class="tip-button">
+        <h4>আরামদায়ক মালিশ</h4>
+        <p>গোসলের আগে তেল মালিশ করলে শিশুর রক্ত সঞ্চালন ভালো হয়।</p>
+      </button>
+      <button class="tip-button">
+        <h4>কথোপকথন</h4>
+        <p>শিশুর সাথে কথা বলুন ও হাসুন, এটি তাদের বুদ্ধিবৃত্তিক বিকাশে সাহায্য করে।</p>
+      </button>
+    </div>
+
+    <div class="footer-btn">
+      <a href="baby.html" class="back-btn">← ফিরে যান</a>
+    </div>
+  </div>
+
+</body>
+</html>

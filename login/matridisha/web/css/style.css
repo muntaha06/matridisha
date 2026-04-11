@@ -1,0 +1,993 @@
+:root{
+  --bg1:#fde7ef;   /* flat soft pink */
+  --bg2:#fde7ef;   /* same pink */
+  --text:#1a1a1a;
+  --muted:#5b5f6a;
+  --card:#ffffff;
+  --border:rgba(0,0,0,.08);
+
+  --primary:#db2777;     /* pink */
+  --primary2:#7c3aed;    /* violet */
+  --shadow: 0 10px 30px rgba(0,0,0,.08);
+}
+
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, "Noto Sans Bengali", "SolaimanLipi", Arial, sans-serif;
+  color:var(--text);
+
+  /* EXACT 2nd pic style */
+  background: var(--bg1);
+}
+
+.container{ width:min(1050px, 92%); margin:0 auto; }
+
+.header{
+  position:sticky; top:0; z-index:50;
+  backdrop-filter: blur(10px);
+  background: rgba(255,255,255,.75);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-row{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 0;
+}
+
+.logo{
+  margin:0;
+  font-size:22px;
+  letter-spacing:.2px;
+  display:flex; align-items:center; gap:10px;
+}
+
+.logo::before{
+  content:"";
+  width:12px; height:12px;
+  border-radius:50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary2));
+  box-shadow: 0 0 0 6px rgba(219,39,119,.10);
+}
+
+.nav{ display:flex; align-items:center; gap:10px; }
+
+.nav a{
+  text-decoration:none;
+  color:var(--muted);
+  padding:10px 12px;
+  border-radius:999px;
+  font-weight:700;
+  transition:.2s ease;
+}
+
+.nav a:hover{
+  color:var(--text);
+  background: rgba(219,39,119,.08);
+}
+
+.nav a.active{
+  color:#fff;
+  background: linear-gradient(135deg, var(--primary), var(--primary2));
+  box-shadow: 0 10px 22px rgba(219,39,119,.22);
+}
+
+.hero{ padding:34px 0 24px; }
+
+.hero h2{
+  margin:0 0 10px;
+  font-size:34px;
+  line-height:1.15;
+  letter-spacing:-.3px;
+}
+
+.hero p{
+  margin:0 0 18px;
+  color:var(--muted);
+  font-size:16.5px;
+  line-height:1.7;
+  max-width: 70ch;
+}
+
+.card-grid{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap:16px;
+  margin-top:18px;
+}
+
+.card{
+  display:block;
+  text-decoration:none;
+  color:inherit;
+  background: rgba(255,255,255,.85);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding:18px;
+  box-shadow: var(--shadow);
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+
+.card:hover{
+  transform: translateY(-2px);
+  border-color: rgba(219,39,119,.25);
+  box-shadow: 0 16px 38px rgba(0,0,0,.10);
+}
+
+.card h3{ margin:0 0 8px; font-size:20px; }
+.card p{ margin:0; color:var(--muted); line-height:1.6; }
+
+.footer{
+  margin-top: 46px;
+  padding: 18px 0;
+  border-top: 1px solid var(--border);
+  background: rgba(255,255,255,.65);
+}
+
+.footer small{ color: var(--muted); }
+
+.tabs{
+  display:flex; gap:10px;
+  margin: 14px 0 16px;
+}
+
+.tab-btn{
+  border:1px solid var(--border);
+  background: rgba(255,255,255,.85);
+  padding:10px 14px;
+  border-radius: 999px;
+  cursor:pointer;
+  font-weight:800;
+  color: var(--muted);
+  transition: .2s ease;
+}
+
+.tab-btn:hover{
+  transform: translateY(-1px);
+  border-color: rgba(219,39,119,.25);
+}
+
+.tab-btn.active{
+  color:#fff;
+  background: linear-gradient(135deg, var(--primary), var(--primary2));
+  border-color: transparent;
+  box-shadow: 0 12px 24px rgba(219,39,119,.18);
+}
+
+.tab-content{
+  display:none;
+  background: rgba(255,255,255,.88);
+  border:1px solid var(--border);
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+
+.tab-content.active{ display:block; }
+
+/* Pro app card */
+.app-card{
+  margin: 26px auto 0;
+  max-width: 920px;
+  background: rgba(255,255,255,.88);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.app-head{
+  padding: 28px 22px 18px;
+  background: radial-gradient(900px 400px at 20% 0%, rgba(219,39,119,.18), transparent 55%),
+              radial-gradient(900px 400px at 90% 10%, rgba(124,58,237,.14), transparent 55%),
+              rgba(255,255,255,.55);
+  border-bottom: 1px solid var(--border);
+}
+
+.app-title{ margin:0 0 8px; font-size: 28px; }
+.app-subtitle{ margin:0; color: var(--muted); line-height: 1.7; }
+
+.pro-tabs{ padding: 14px 18px 8px; }
+
+.feature-grid{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.feature-grid.two-col{
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.feature-card{
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.92);
+  transition: .18s ease;
+}
+
+.feature-card:hover{
+  transform: translateY(-2px);
+  border-color: rgba(219,39,119,.25);
+  box-shadow: 0 14px 26px rgba(0,0,0,.08);
+}
+
+.feature-card h3{ margin:0 0 8px; font-size: 18px; }
+.feature-card p{ margin:0; color: var(--muted); line-height: 1.6; }
+
+.bottom-cta{
+  padding: 18px;
+  display:flex;
+  justify-content:flex-end;
+  border-top: 1px solid var(--border);
+  background: rgba(255,255,255,.7);
+}
+
+.cta-btn{
+  display:inline-block;
+  text-decoration:none;
+  color:#fff;
+  font-weight:900;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--primary), var(--primary2));
+  box-shadow: 0 14px 26px rgba(219,39,119,.18);
+}
+
+@media (max-width: 900px){
+  .feature-grid{ grid-template-columns: 1fr; }
+  .feature-grid.two-col{ grid-template-columns: 1fr; }
+}
+
+@media (max-width: 760px){
+  .card-grid{ grid-template-columns: 1fr; }
+  .hero h2{ font-size: 28px; }
+}
+
+/* ====== Login/Dashboard style Home ====== */
+.app-page{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding: 26px 0;
+}
+
+.center-wrap{
+  width:min(980px, 92%);
+  margin: 0 auto;
+}
+
+.center-card{
+  background: rgba(255,255,255,.9);
+  border: 1px solid var(--border);
+  border-radius: 26px;
+  box-shadow: 0 18px 50px rgba(0,0,0,.12);
+  padding: 34px 26px;
+  text-align:center;
+}
+
+.brand-title{
+  margin: 0 0 8px;
+  font-size: 44px;
+  font-weight: 900;
+  color: var(--primary);
+  letter-spacing: .3px;
+}
+
+.brand-sub{
+  margin: 0 auto 22px;
+  max-width: 60ch;
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: 16.5px;
+}
+
+.menu-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.menu-btn{
+  display:block;
+  padding: 16px 16px;
+  border-radius: 18px;
+  text-decoration:none;
+  font-weight: 900;
+  border: 2px solid rgba(219,39,119,.25);
+  color: #a80f55;
+  background: rgba(255,255,255,.95);
+  transition:.18s ease;
+}
+
+.menu-btn:hover{
+  transform: translateY(-2px);
+  border-color: rgba(219,39,119,.45);
+  box-shadow: 0 14px 28px rgba(219,39,119,.12);
+}
+
+.mini-note{
+  margin-top: 18px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(219,39,119,.06);
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+@media (max-width: 760px){
+  .menu-grid{ grid-template-columns: 1fr; }
+  .brand-title{ font-size: 34px; }
+}
+
+.menu-btn{
+  font-size: 18px;
+  padding: 18px 18px;
+  border-radius: 22px;
+  border: 2px solid rgba(219,39,119,.18);
+  background: rgba(255,255,255,.92);
+}
+
+.menu-btn:hover{
+  background: rgba(219,39,119,.05);
+}
+
+.brand-title{
+  text-shadow: 0 12px 30px rgba(219,39,119,.25);
+}
+
+/* make ma/baby page like home-card */
+.left-card{
+  text-align: left;
+  padding: 30px 26px;
+}
+
+.small-title{
+  text-align:center;
+  font-size: 36px;
+  margin-bottom: 4px;
+}
+
+.left-card .brand-sub{
+  text-align:center;
+  margin-bottom: 18px;
+}
+
+.two-btn{
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ghost-btn{
+  display:inline-block;
+  text-decoration:none;
+  font-weight: 900;
+  padding: 12px 18px;
+  border-radius: 999px;
+  border: 2px solid rgba(219,39,119,.20);
+  color: #a80f55;
+  background: rgba(255,255,255,.9);
+}
+
+.ghost-btn:hover{
+  background: rgba(219,39,119,.06);
+}
+
+/* polish tabs + cards */
+.pro-tabs{
+  gap:10px;
+}
+
+.tab-btn{
+  border-radius: 999px;
+  padding: 12px 18px;
+  font-weight: 800;
+  border: 2px solid rgba(219,39,119,.18);
+  background: rgba(255,255,255,.9);
+  color: #5b5b5b;
+  transition: .18s ease;
+}
+
+.tab-btn:hover{
+  transform: translateY(-1px);
+  border-color: rgba(219,39,119,.35);
+  background: rgba(219,39,119,.05);
+}
+
+.tab-btn.active{
+  background: linear-gradient(135deg, #db2777, #7c3aed);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 14px 30px rgba(219,39,119,.22);
+}
+
+.feature-card h3{
+  margin-bottom: 6px;
+}
+
+.feature-card p{
+  margin:0;
+  color: var(--muted);
+}
+
+@media (max-width: 760px){
+  .card-grid{ grid-template-columns: 1fr; }
+  .hero h2{ font-size: 28px; }
+}
+/* ===== Fix: card/link text blue -> brand color ===== */
+.tab-content a,
+.feature-card a,
+.card a{
+  color: #a80f55;              
+  text-decoration: none;        
+  font-weight: 800;
+}
+
+.tab-content a:hover,
+.feature-card a:hover,
+.card a:hover{
+  text-decoration: underline;   
+}
+/* ===== Reduce extra white spacing ===== */
+.app-head{
+  padding: 22px 18px 14px;   
+}
+
+.tab-content{
+  padding: 12px;             
+  border-radius: 16px;       
+}
+
+.feature-card{
+  padding: 12px;             
+  border-radius: 14px;
+}
+
+.bottom-cta{
+  padding: 14px;             
+}
+.feature-card{
+  transition: all .25s ease;
+}
+
+.feature-card:hover{
+  transform: translateY(-6px);
+  box-shadow: 0 18px 45px rgba(219,39,119,.18);
+}
+/* ma-diet.html এর জন্য অতিরিক্ত স্টাইল */
+
+/* খাবারের বিস্তারিত অংশের ডিজাইন */
+.meal-details {
+    display: none; /* শুরুতে লুকানো থাকবে */
+    padding: 15px;
+    background: #fffafa; /* হালকা গোলাপি আভা */
+    border-radius: 12px;
+    margin-top: 15px;
+    border: 1px dashed #db2777;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* বিস্তারিত খোলার সময় হালকা এনিমেশন */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* খাবারের ছবি */
+.meal-details img {
+    width: 100%;
+    max-width: 250px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* ডায়েট কার্ডের ওপর মাউস রাখলে হালকা বড় হবে */
+.diet-card:hover {
+    transform: translateY(-3px);
+    border-color: #db2777;
+}
+
+/* দিক-নির্দেশনা বক্সের স্টাইল */
+.instruction-box {
+    margin-top: 25px;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: left;
+    background: white;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.instruction-box h4 {
+    color: #db2777;
+    margin-bottom: 10px;
+}  
+
+/* ১. ফিচারের কার্ডগুলোকে আধুনিক ও প্রফেশনাল করা */
+.feature-card {
+    background: #ffffff !important;
+    border: 1px solid rgba(219, 39, 119, 0.1) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03) !important;
+    padding: 20px !important;
+    border-radius: 20px !important;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none !important; /* লিংকের নিচে দাগ মুছতে */
+}
+
+/* ২. মাউস নিলে কার্ডটি সুন্দরভাবে উপরে উঠবে */
+.feature-card:hover {
+    transform: translateY(-8px) !important;
+    box-shadow: 0 20px 40px rgba(219, 39, 119, 0.15) !important;
+    border-color: #db2777 !important;
+}
+
+/* ৩. আইকনটি বড় ও স্পষ্ট করা */
+.feature-icon {
+    font-size: 42px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* ৪. নিচের বাটনগুলোকে ড্যাশবোর্ডের মতো গোল ও শ্যাডোযুক্ত করা */
+.back-card-btn {
+    text-decoration: none;
+    background: #ffffff;
+    color: #db2777;
+    padding: 12px 28px;
+    border-radius: 999px;
+    border: 2px solid rgba(219, 39, 119, 0.15);
+    font-weight: 800;
+    font-size: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: all 0.25s ease;
+}
+
+.back-card-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(219, 39, 119, 0.1);
+    border-color: #db2777;
+}
+
+/* কার্ডের সমান উচ্চতা এবং হোভার ইফেক্ট */
+.feature-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.feature-card {
+    flex: 1; /* সবগুলো কার্ড সমান জায়গা নিবে */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(219, 39, 119, 0.1);
+}
+
+/* খাদ্য পরিকল্পনা পেজের জন্য বিশেষ স্টাইল */
+
+/* খাবারের বিস্তারিত লিস্ট আইটেম */
+.food-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: #ffffff;
+    padding: 12px;
+    border-radius: 15px;
+    margin-bottom: 12px;
+    border: 1px solid rgba(0,0,0,0.05);
+    text-align: left;
+}
+
+/* খাবারের ছোট ছবি */
+.food-item img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 2px solid var(--bg1);
+}
+
+/* পুষ্টিগুণ ট্যাগ (শর্করা, আমিষ ইত্যাদি) */
+.tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    background: rgba(219, 39, 119, 0.1);
+    color: var(--primary);
+}
+
+.tag.protein {
+    background: rgba(124, 58, 237, 0.1);
+    color: var(--primary2);
+}
+
+/* পানির সেকশন */
+.water-card {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+    border-radius: 22px;
+    border: 1px solid #bae6fd;
+    text-align: left;
+}
+
+.water-card h3 {
+    margin: 0;
+    color: #0369a1;
+}
+
+.water-card p {
+    margin: 5px 0 0;
+    color: #075985;
+}
+/* ৩য় ছবির মতো ৪টি কার্ডের গ্রিড */
+.meal-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* মোবাইলে ২ কলাম */
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+/* ডেস্কটপের জন্য ৪ কলাম */
+@media (min-width: 768px) {
+    .meal-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+.meal-card {
+    background: #fff;
+    padding: 15px;
+    border-radius: 20px;
+    border: 2px solid rgba(219, 39, 119, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.meal-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+    background: rgba(219, 39, 119, 0.02);
+}
+
+.meal-card h3 {
+    font-size: 16px;
+    margin-top: 10px;
+    color: var(--text);
+}
+
+/* বিস্তারিত সেকশন শুরুতে হাইড থাকবে */
+.meal-details {
+    display: none; 
+    background: #fff;
+    padding: 20px;
+    border-radius: 22px;
+    border: 1px solid var(--border);
+    margin-bottom: 20px;
+    animation: slideDown 0.4s ease forwards;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Diet Page Add-ons ===== */
+.meal-list{
+  text-align: left;
+  padding-left: 20px;
+  margin: 10px 0 0;
+}
+
+.info-card{
+  background: rgba(255,255,255,.92);
+  border: 1px solid rgba(219,39,119,.14);
+  border-radius: 18px;
+  padding: 16px 18px;
+  box-shadow: 0 16px 45px rgba(17,24,39,.07);
+}
+
+.info-head{
+  display:flex;
+  gap: 12px;
+  align-items:flex-start;
+}
+
+.info-emoji{
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display:grid;
+  place-items:center;
+  background: rgba(219,39,119,.10);
+  border: 1px solid rgba(219,39,119,.16);
+  font-size: 20px;
+  flex: 0 0 auto;
+}
+
+.info-title{
+  margin: 0;
+  font-size: 18px;
+}
+
+.info-sub{
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.water-row{
+  margin-top: 12px;
+  display:flex;
+  flex-wrap:wrap;
+  gap: 10px;
+  align-items:center;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(124,58,237,.08);
+  border: 1px solid rgba(124,58,237,.14);
+}
+
+.water-tip{
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.nutri-tags{
+  margin-top: 12px;
+  display:flex;
+  flex-wrap:wrap;
+  gap: 8px;
+}
+
+.tag{
+  font-size: 12px;
+  font-weight: 800;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(17,24,39,.10);
+  background: rgba(255,255,255,.85);
+}
+
+.tag.p{ border-color: rgba(219,39,119,.22); }
+.tag.c{ border-color: rgba(249,115,22,.22); }
+.tag.v{ border-color: rgba(34,197,94,.22); }
+.tag.ca{ border-color: rgba(59,130,246,.22); }
+.tag.w{ border-color: rgba(124,58,237,.22); }
+
+.tip-box{
+  margin-top: 18px;
+  background: rgba(219,39,119,.06);
+  border: 1px solid rgba(219,39,119,.12);
+  border-left: 4px solid rgba(219,39,119,.45);
+  border-radius: 14px;
+  padding: 12px 14px;
+  color: #111827;
+  line-height: 1.7;
+}
+
+.targets{
+  margin-top: 12px;
+  display:grid;
+  gap: 10px;
+}
+
+.t{
+  display:flex;
+  gap: 10px;
+  align-items:flex-start;
+  color: #111827;
+  line-height: 1.6;
+}
+
+.dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  margin-top: 6px;
+  flex: 0 0 auto;
+}
+
+.dot.p{ background: rgba(219,39,119,.9); }
+.dot.c{ background: rgba(249,115,22,.9); }
+.dot.v{ background: rgba(34,197,94,.9); }
+.dot.ca{ background: rgba(59,130,246,.9); }
+.dot.w{ background: rgba(124,58,237,.9); }
+
+@media (max-width: 700px){
+  .feature-grid{
+    grid-template-columns: 1fr !important;
+  }
+}
+/* আইকনগুলোকে আরও উজ্জ্বল করতে */
+.timeline-icon {
+    background: var(--bg-light) !important;
+    transform: scale(1.1);
+    transition: 0.3s;
+}
+
+/* লিস্ট আইটেমগুলোর মধ্যে দূরত্ব বাড়াতে */
+.food-list li {
+    margin-bottom: 12px;
+}
+/* ট্যাব বাটন এবং নিচের বাটন উঁচু করার স্টাইল */
+.tab-btn, .back-btn {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* হালকা ছায়া যা উঁচু দেখাবে */
+    transition: all 0.3s ease;
+    border: 1px solid rgba(219, 39, 119, 0.1);
+}
+
+/* মাউস নিলে বা ক্লিক করলে আরও উঁচু দেখাবে */
+.tab-btn:hover, .back-btn:hover {
+    transform: translateY(-3px); /* সামান্য উপরে উঠে আসবে */
+    box-shadow: 0 8px 15px rgba(219, 39, 119, 0.2); /* ছায়া বাড়বে */
+}
+
+/* অ্যাক্টিভ বাটনটিকে বেশি উঁচু দেখানোর জন্য */
+.tab-btn.active {
+    box-shadow: 0 6px 12px rgba(219, 39, 119, 0.3);
+    transform: scale(1.05); /* সামান্য বড় হবে */
+}
+
+/* টাইমলাইনের আইকনগুলোকেও উঁচু (3D) করার জন্য */
+.timeline-icon {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1), 0 0 0 5px white;
+    transition: transform 0.3s ease;
+}
+
+.timeline-item:hover .timeline-icon {
+    transform: scale(1.1) rotate(5deg); /* মাউস নিলে আইকনটি বড় ও সামান্য বাঁকা হবে */
+}
+
+/* বাটন ও কার্ডের জন্য বিশেষ হোভার ইফেক্ট */
+.tab-btn, .back-btn, .timeline-content {
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* স্মুথ মুভমেন্টের জন্য */
+    cursor: pointer;
+}
+
+/* মাউস বাটনের ওপর রাখলে যেটা হবে (Hover) */
+.tab-btn:hover, .back-btn:hover {
+    transform: translateY(-5px); /* ৫ পিক্সেল ওপরে উঠে আসবে */
+    box-shadow: 0 12px 20px rgba(219, 39, 119, 0.25); /* নিচ দিয়ে বড় শ্যাডো পড়বে */
+}
+
+/* টাইমলাইন কার্ডের ওপর মাউস রাখলে */
+.timeline-content:hover {
+    transform: translateY(-8px); /* কার্ডটি ওপরে ভেসে উঠবে */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); /* গভীর শ্যাডো */
+    border-color: var(--accent); /* বর্ডার কালার হাইলাইট হবে */
+}
+
+/* বাটন যখন ক্লিক করে ধরে রাখা হবে (Active) */
+.tab-btn:active, .back-btn:active {
+    transform: translateY(-1px); /* সামান্য নিচে নামবে, মনে হবে অরিজিনাল বাটন চিপেছে */
+    box-shadow: 0 5px 10px rgba(219, 39, 119, 0.2);
+}
+
+/* টাইমলাইন আইকনকেও একটু উঁচু করা */
+.timeline-item:hover .timeline-icon {
+    transform: scale(1.15); /* আইকনটি সামান্য বড় হবে */
+    box-shadow: 0 0 0 8px rgba(219, 39, 119, 0.1); /* চারপাশে একটা আভা ছড়াবে */
+}
+:root {
+      /* সিগনেচার পিঙ্ক কালার */
+      --primary: #db2777; 
+      --purple-vibrant: #9333ea; 
+      
+      /* আপনার পছন্দমতো হালকা গোলাপি ব্যাকগ্রাউন্ড (Perfect Balance) */
+      --bg-body: #fff1f2; 
+      
+      --card-bg: #ffffff;
+      --card-border: #fbcfe8;
+    }
+
+    body {
+      background-color: var(--bg-body); /* হালকা মিষ্টি গোলাপি */
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0; padding: 20px;
+      color: #1a1a1a;
+    }
+
+    /* মাতৃদিশা লেখাটি এখন পিঙ্ক দেখাবে */
+    .brand-title { 
+      color: var(--primary) !important; /* !important দিলে নীল হওয়ার ভয় থাকবে না */
+      font-size: 42px; 
+      margin-bottom: 5px; 
+      font-weight: 900;
+      text-align: center;
+      text-shadow: 2px 2px 4px rgba(219, 39, 119, 0.1);
+    }
+
+    .sub-title { 
+      color: #be185d; 
+      font-weight: 700; 
+      margin-top: 0; 
+      text-align: center;
+      font-size: 18px;
+    }
+
+    .exercise-container {
+      max-width: 850px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border-radius: 40px;
+      padding: 35px;
+      box-shadow: 0 15px 40px rgba(219, 39, 119, 0.08);
+      border: 1px solid var(--card-border);
+    }
+
+    /* ব্যায়াম কার্ড - Heavy Lift Effect */
+    .exercise-card {
+      background: white;
+      border: 1.5px solid #f9fafb;
+      border-radius: 30px;
+      padding: 25px;
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .exercise-card:hover {
+      transform: translateY(-15px); /* সুন্দরভাবে ওপরে উঠবে */
+      box-shadow: 0 20px 40px rgba(219, 39, 119, 0.12);
+      border-color: var(--card-border);
+    }
+
+    .icon-box {
+      background: #fff5f7;
+      width: 90px; height: 90px;
+      border-radius: 25px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 45px; flex-shrink: 0;
+      box-shadow: inset 0 0 15px rgba(219, 39, 119, 0.05);
+    }
+
+    .exercise-info h3 {
+      color: var(--purple-vibrant); /* টাইটেল বেগুনি রাখলাম প্রফেশনাল লুকের জন্য */
+      font-size: 24px;
+      font-weight: 900;
+      margin: 0 0 5px;
+    }
+
+    .exercise-info p {
+      color: #4b5563;
+      font-weight: 600;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* ছোট ট্যাগ */
+    .tag {
+      background: #fdf2f8;
+      color: var(--primary);
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 800;
+      border: 1px solid #fbcfe8;
+      margin-bottom: 8px;
+      display: inline-block;
+    }

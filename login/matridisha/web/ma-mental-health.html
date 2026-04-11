@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>মানসিক সুস্থতা - মাতৃদিশা</title>
+  <style>
+    :root {
+      --primary: #db2777;
+      --accent: #f472b6;
+      --bg-light: #fff1f2; /* ব্যায়াম পেজের মতো হালকা গোলাপি ব্যাকগ্রাউন্ড */
+      --text: #1a1a1a;
+      --pink-border: #fbcfe8;
+    }
+
+    body {
+      background: var(--bg-light);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0; padding: 20px;
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 35px;
+      padding: 35px;
+      box-shadow: 0 25px 70px rgba(219, 39, 119, 0.08);
+      border: 2px solid var(--pink-border);
+    }
+
+    .header-section { text-align: center; margin-bottom: 20px; }
+    .brand-title { color: var(--primary); font-size: 38px; margin-bottom: 5px; font-weight: 900; }
+    
+    /* ব্যায়াম পেজের মতো ডটেড ডিভাইডার */
+    .dotted-divider {
+      border-top: 2px dotted var(--pink-border);
+      margin: 20px 0 30px;
+    }
+
+    /* ইনফো বক্স এখন হালকা গোলাপি */
+    .info-box {
+      background: #fff5f7; 
+      border: 2px solid var(--pink-border); 
+      border-radius: 25px;
+      padding: 20px; 
+      margin-bottom: 30px; 
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .info-box:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(219, 39, 119, 0.1);
+    }
+    .info-box p { margin: 8px 0; font-weight: 700; color: #be185d; font-size: 16px; text-align: center; }
+
+    /* কার্ডের আইকন বক্স থেকেও নীল রঙ সরিয়ে সাদা/গোলাপি করা হয়েছে */
+    .mental-card {
+      background: white;
+      margin-bottom: 25px;
+      padding: 25px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      border: 1px solid #fdf2f8;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.02);
+    }
+    
+    .mental-card:hover {
+      transform: translateY(-15px) scale(1.02);
+      box-shadow: 0 30px 60px rgba(219, 39, 119, 0.12);
+      border-color: var(--primary);
+    }
+
+    .card-icon {
+      font-size: 45px;
+      background: #fff1f2; /* হালকা গোলাপি আইকন ব্যাকগ্রাউন্ড */
+      width: 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 20px;
+    }
+
+    .card-info h3 { margin: 0 0 10px; font-size: 22px; font-weight: 800; color: #1e293b; }
+    .card-info p { font-size: 15px; color: #475569; line-height: 1.6; margin: 0; }
+
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    .tip-item {
+      background: #fff1f2;
+      padding: 25px;
+      border-radius: 25px;
+      border-left: 6px solid var(--primary);
+      transition: transform 0.3s ease;
+    }
+    .tip-item:hover { transform: translateX(10px); }
+    .tip-item h4 { margin: 0 0 10px; color: var(--primary); font-weight: 800; }
+
+    .footer-btn { text-align: center; margin-top: 50px; }
+    .back-btn {
+      text-decoration: none; 
+      background: linear-gradient(135deg, var(--primary), #db2777);
+      color: white;
+      padding: 15px 45px; 
+      border-radius: 50px;
+      font-weight: 800; 
+      transition: 0.3s; 
+      display: inline-block;
+    }
+    .back-btn:hover { 
+      transform: translateY(-5px); 
+      box-shadow: 0 12px 25px rgba(219, 39, 119, 0.3); 
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header class="header-section">
+      <h1 class="brand-title">মানসিক সুস্থতা</h1>
+      <p style="color: #be185d; font-weight: 700;">সুখী মা, সুস্থ শিশু — মনের যত্নে মাতৃদিশা</p>
+    </header>
+
+    <div class="dotted-divider"></div>
+
+    <div class="info-box">
+      <p>🧠 প্রসবোত্তর বিষণ্ণতা (Postpartum Blues) খুবই স্বাভাবিক।</p>
+      <p>💖 নিজেকে সময় দিন এবং প্রিয়জনদের সাথে কথা বলুন।</p>
+    </div>
+
+    <div class="mental-card">
+      <div class="card-icon">🧘‍♀️</div>
+      <div class="card-info">
+        <h3>ব্রিদিং ও রিল্যাক্সেশন</h3>
+        <p>প্রতিদিন ১০ মিনিট গভীর শ্বাস নিন। এটি আপনার স্ট্রেস হরমোন কমাতে এবং মন শান্ত রাখতে ম্যাজিকের মতো কাজ করবে।</p>
+      </div>
+    </div>
+
+    <div class="mental-card">
+      <div class="card-icon">😴</div>
+      <div class="card-info">
+        <h3>পর্যাপ্ত ঘুম নিশ্চিত করা</h3>
+        <p>শিশু যখন ঘুমাবে, আপনিও তখন ঘুমানোর চেষ্টা করুন। ঘুমের অভাব মেজাজ খিটখিটে হওয়ার প্রধান কারণ।</p>
+      </div>
+    </div>
+
+    <div class="mental-card">
+      <div class="card-icon">🗣️</div>
+      <div class="card-info">
+        <h3>অনুভূতি শেয়ার করুন</h3>
+        <p>আপনার মন খারাপ বা ক্লান্তি চেপে রাখবেন না। স্বামী বা পরিবারের সদস্যদের সাথে মন খুলে কথা বলুন।</p>
+      </div>
+    </div>
+
+    <h3 style="text-align:center; color: #be185d; margin: 40px 0 25px; font-weight: 900; font-size: 24px;">🌈 প্রতিদিনের ছোট টিপস</h3>
+    
+    <div class="tips-grid">
+      <div class="tip-item">
+        <h4>রোদ ও বাতাস</h4>
+        <p>দিনে অন্তত ১৫ মিনিট বারান্দায় বা বাইরে খোলা বাতাসে সময় কাটান।</p>
+      </div>
+      <div class="tip-item">
+        <h4>পছন্দের কাজ</h4>
+        <p>গান শোনা বা বই পড়ার মতো ছোট কোনো শখ প্রতিদিন চর্চা করুন।</p>
+      </div>
+      <div class="tip-item">
+        <h4>সাহায্য নিন</h4>
+        <p>সব কাজ একা করতে যাবেন না, ঘরের কাজে অন্যদের সাহায্য নিতে দ্বিধা করবেন না।</p>
+      </div>
+    </div>
+
+    <div class="footer-btn">
+      <a href="ma.html" class="back-btn">← মূল মেনুতে ফিরুন</a>
+    </div>
+  </div>
+
+</body>
+</html>
