@@ -10,6 +10,9 @@ public class AdminFrame extends JFrame {
     JTextField nameField, causeField, imagePathField;
     JTextArea symArea, solArea;
 
+    // ===============================
+    // 1️⃣ Constructor & UI Layout
+    // ===============================
     public AdminFrame() {
         setTitle("Matridisha - Admin Control Panel");
         setSize(550, 700);
@@ -21,7 +24,7 @@ public class AdminFrame extends JFrame {
         Color lightPink = new Color(255, 182, 193);
         Font boldFont = new Font("Arial", Font.BOLD, 14);
 
-        // --- Main Panel ---
+        // --- Main Panel Setup ---
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.setBorder(new EmptyBorder(30, 40, 30, 40));
@@ -33,7 +36,7 @@ public class AdminFrame extends JFrame {
         header.setForeground(deepPink);
         header.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // --- Input Fields ---
+        // --- Input Fields Initialization ---
         nameField = createStyledField("Disease Name", lightPink);
         causeField = createStyledField("Cause (Why it happens)", lightPink);
         imagePathField = createStyledField("Image URL / Path", lightPink);
@@ -43,7 +46,7 @@ public class AdminFrame extends JFrame {
         setupTextArea(symArea, "Symptoms", lightPink);
         setupTextArea(solArea, "Solution / Remedy", lightPink);
 
-        // --- Buttons ---
+        // --- Buttons Setup ---
         JButton addBtn = createPinkButton("Add Disease Record", deepPink);
         JButton deleteBtn = new JButton("Delete Disease by Name");
         deleteBtn.setBackground(Color.BLACK);
@@ -59,7 +62,7 @@ public class AdminFrame extends JFrame {
         backBtn.setBorderPainted(false);
         backBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // --- Assembly ---
+        // --- Assembly of Components ---
         mainPanel.add(header);
         mainPanel.add(Box.createRigidArea(new Dimension(0, 25)));
         mainPanel.add(nameField);
@@ -86,6 +89,9 @@ public class AdminFrame extends JFrame {
         backBtn.addActionListener(e -> dispose());
     }
 
+    // ===============================
+    // 2️⃣ UI Helper Methods
+    // ===============================
     private JTextField createStyledField(String title, Color borderCol) {
         JTextField f = new JTextField();
         f.setBorder(BorderFactory.createTitledBorder(new LineBorder(borderCol, 1), title));
@@ -110,6 +116,9 @@ public class AdminFrame extends JFrame {
         return b;
     }
 
+    // ===============================
+    // 3️⃣ Database: Add Data Method
+    // ===============================
     private void addData() {
         String name = nameField.getText().trim();
         String symptoms = symArea.getText().trim();
@@ -132,7 +141,8 @@ public class AdminFrame extends JFrame {
             pst.setString(5, img);
             pst.executeUpdate();
             JOptionPane.showMessageDialog(this, "Disease Added Successfully!");
-            // Clear fields
+            
+            // Clear fields after success
             nameField.setText(""); symArea.setText(""); causeField.setText(""); 
             solArea.setText(""); imagePathField.setText("");
         } catch (SQLException ex) {
@@ -140,6 +150,9 @@ public class AdminFrame extends JFrame {
         }
     }
 
+    // ===============================
+    // 4️⃣ Database: Delete Data Method
+    // ===============================
     private void deleteData() {
         String name = JOptionPane.showInputDialog(this, "Enter the exact Disease Name to delete:");
         if (name != null && !name.trim().isEmpty()) {
@@ -148,8 +161,12 @@ public class AdminFrame extends JFrame {
                 PreparedStatement pst = conn.prepareStatement(sql);
                 pst.setString(1, name.trim());
                 int res = pst.executeUpdate();
-                if (res > 0) JOptionPane.showMessageDialog(this, "Deleted Successfully!");
-                else JOptionPane.showMessageDialog(this, "No disease found with that name.");
+                
+                if (res > 0) {
+                    JOptionPane.showMessageDialog(this, "Deleted Successfully!");
+                } else {
+                    JOptionPane.showMessageDialog(this, "No disease found with that name.");
+                }
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
             }

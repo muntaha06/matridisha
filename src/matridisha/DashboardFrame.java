@@ -12,6 +12,9 @@ public class DashboardFrame extends JFrame {
     private Color darkPink = new Color(199, 21, 133);
     private Color bgPink = new Color(255, 245, 247); // Light Pink Background
 
+    // ===============================
+    // 1️⃣ Constructor & Initialization
+    // ===============================
     public DashboardFrame(String username) {
         this.username = username;
         fetchFullName();
@@ -23,15 +26,25 @@ public class DashboardFrame extends JFrame {
         showDashboard();
     }
 
+    // ===============================
+    // 2️⃣ Database: Fetch User Data
+    // ===============================
     private void fetchFullName() {
         try (Connection conn = DBConnection.getConnection()) {
             PreparedStatement pst = conn.prepareStatement("SELECT name FROM users WHERE username = ?");
             pst.setString(1, username);
             ResultSet rs = pst.executeQuery();
-            if (rs.next()) fullName = rs.getString("name");
-        } catch (Exception e) { e.printStackTrace(); }
+            if (rs.next()) {
+                fullName = rs.getString("name");
+            }
+        } catch (Exception e) { 
+            e.printStackTrace(); 
+        }
     }
 
+    // ===============================
+    // 3️⃣ UI: Build Main Dashboard
+    // ===============================
     public void showDashboard() {
         getContentPane().removeAll();
         setLayout(new BorderLayout());
@@ -53,14 +66,14 @@ public class DashboardFrame extends JFrame {
         welcome.setFont(new Font("Arial", Font.BOLD, 22));
         welcome.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Pregnancy Heading (HTML used for perfect centering and line break)
+        // Pregnancy Quote/Heading
         JLabel pregnancyHeading = new JLabel("<html><div style='text-align: center; width: 350px;'>" +
                 "Embrace the Joy of Motherhood:<br>Your Healthy Pregnancy Guide</div></html>", JLabel.CENTER);
         pregnancyHeading.setFont(new Font("Serif", Font.ITALIC, 19));
         pregnancyHeading.setForeground(new Color(150, 50, 100));
         pregnancyHeading.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Grid Menu
+        // Grid Menu for Navigation
         JPanel grid = new JPanel(new GridLayout(2, 2, 20, 20));
         grid.setOpaque(false);
         grid.setMaximumSize(new Dimension(450, 280));
@@ -81,13 +94,17 @@ public class DashboardFrame extends JFrame {
         logout.setAlignmentX(Component.CENTER_ALIGNMENT);
         logout.setFocusable(false);
 
-        // Listeners for Redirection
+        // --- Event Listeners for Navigation ---
         b1.addActionListener(e -> setContentPanel(new ProfilePanel(this, username)));
         b2.addActionListener(e -> setContentPanel(new SearchPanel(this)));
         b3.addActionListener(e -> setContentPanel(new GuidancePanel(this, true)));
         b4.addActionListener(e -> setContentPanel(new GuidancePanel(this, false)));
-        logout.addActionListener(e -> { new LoginFrame().setVisible(true); dispose(); });
+        logout.addActionListener(e -> { 
+            new LoginFrame().setVisible(true); 
+            dispose(); 
+        });
 
+        // Add Components to Main Panel
         mainPanel.add(title);
         mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         mainPanel.add(welcome);
@@ -103,6 +120,9 @@ public class DashboardFrame extends JFrame {
         repaint();
     }
 
+    // ===============================
+    // 4️⃣ UI Helper Methods
+    // ===============================
     private void setContentPanel(JPanel panel) {
         getContentPane().removeAll();
         add(panel);

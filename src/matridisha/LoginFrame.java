@@ -12,6 +12,9 @@ public class LoginFrame extends JFrame {
     private Color darkPink = new Color(199, 21, 133);
     private Color lightPink = new Color(255, 182, 193);
 
+    // ===============================
+    // 1️⃣ Constructor & UI Layout
+    // ===============================
     public LoginFrame() {
         setTitle("Matridisha - Login");
         setSize(450, 550);
@@ -25,7 +28,7 @@ public class LoginFrame extends JFrame {
         mainPanel.setBorder(new EmptyBorder(40, 50, 40, 50));
         mainPanel.setBackground(Color.WHITE);
 
-        // Header
+        // Header Section
         JLabel title = new JLabel("Matridisha");
         title.setFont(new Font("Arial", Font.BOLD, 28));
         title.setForeground(darkPink);
@@ -36,14 +39,14 @@ public class LoginFrame extends JFrame {
         subtitle.setForeground(Color.GRAY);
         subtitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Input Fields
+        // --- Input Fields Initialization ---
         userField = new JTextField();
         setupField(userField, "Username");
 
         passField = new JPasswordField();
         setupField(passField, "Password");
 
-        // Buttons
+        // --- Buttons Initialization ---
         JButton loginBtn = new JButton("Login");
         styleButton(loginBtn, darkPink, Color.WHITE);
 
@@ -54,7 +57,7 @@ public class LoginFrame extends JFrame {
         regBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         regBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Assembly
+        // Assembly of Components
         mainPanel.add(title);
         mainPanel.add(Box.createRigidArea(new Dimension(0, 5)));
         mainPanel.add(subtitle);
@@ -69,13 +72,17 @@ public class LoginFrame extends JFrame {
 
         add(mainPanel);
 
-        // --- Listeners ---
+        // --- Event Listeners ---
         loginBtn.addActionListener(e -> handleLogin());
         regBtn.addActionListener(e -> {
             new RegisterFrame().setVisible(true);
+            // Optional: dispose(); // Close login if you want
         });
     }
 
+    // ===============================
+    // 2️⃣ UI Helper Methods
+    // ===============================
     private void setupField(JComponent c, String title) {
         c.setBorder(BorderFactory.createTitledBorder(new LineBorder(lightPink, 2), title));
         c.setMaximumSize(new Dimension(400, 55));
@@ -92,6 +99,9 @@ public class LoginFrame extends JFrame {
         b.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
+    // ===============================
+    // 3️⃣ Database: Login Logic
+    // ===============================
     private void handleLogin() {
         String user = userField.getText().trim();
         String pass = new String(passField.getPassword()).trim();
@@ -110,7 +120,7 @@ public class LoginFrame extends JFrame {
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
                 showCustomMsg("Login Successful!");
-                // Crucial: Passing the username to the Dashboard
+                // Open Dashboard and pass current user
                 new DashboardFrame(user).setVisible(true);
                 dispose();
             } else {
@@ -122,6 +132,9 @@ public class LoginFrame extends JFrame {
         }
     }
 
+    // ===============================
+    // 4️⃣ Custom Message Dialog
+    // ===============================
     private void showCustomMsg(String m) {
         UIManager.put("OptionPane.background", Color.WHITE);
         UIManager.put("Panel.background", Color.WHITE);
@@ -131,6 +144,9 @@ public class LoginFrame extends JFrame {
             JOptionPane.PLAIN_MESSAGE);
     }
 
+    // ===============================
+    // 5️⃣ Main Method
+    // ===============================
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new LoginFrame().setVisible(true));
     }
