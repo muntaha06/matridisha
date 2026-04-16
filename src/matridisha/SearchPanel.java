@@ -5,10 +5,6 @@ import javax.swing.border.*;
 import java.awt.*;
 import java.sql.*;
 
-/**
- * SearchPanel: Displays detailed disease information with search functionality.
- * Designed to handle 500+ word descriptions with high readability.
- */
 public class SearchPanel extends JPanel {
     JTextField searchField;
     JPanel resultPanel;
@@ -16,50 +12,51 @@ public class SearchPanel extends JPanel {
     Color darkPink = new Color(199, 21, 133);
     Color lightPink = new Color(255, 182, 193);
 
+    // ===============================
+    // 1️⃣ Constructor & Layout Setup
+    // ===============================
     public SearchPanel(DashboardFrame parent) {
         this.parent = parent;
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
 
-        // --- Top Search Bar Section ---
-        JPanel top = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 20));
+        // --- Top Search Bar ---
+        JPanel top = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
         top.setBackground(Color.WHITE);
         
         searchField = new JTextField(20);
-        searchField.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        searchField.setFont(new Font("Arial", Font.PLAIN, 14));
         searchField.setBorder(new LineBorder(lightPink, 2));
-        searchField.setPreferredSize(new Dimension(280, 45));
+        searchField.setPreferredSize(new Dimension(250, 40));
 
         JButton searchBtn = new JButton("Search");
         styleButton(searchBtn, darkPink, Color.WHITE);
-        searchBtn.setPreferredSize(new Dimension(120, 45));
+        searchBtn.setPreferredSize(new Dimension(100, 40));
 
-        JLabel searchLabel = new JLabel("Search Disease:");
-        searchLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
-
-        top.add(searchLabel);
+        top.add(new JLabel("Search Disease:"));
         top.add(searchField);
         top.add(searchBtn);
 
-        // --- Result Display Area with Fast Scrolling ---
+        // --- Result Area with Smooth Scroll ---
         resultPanel = new JPanel();
         resultPanel.setLayout(new BoxLayout(resultPanel, BoxLayout.Y_AXIS));
         resultPanel.setBackground(new Color(255, 245, 247));
         
         JScrollPane scroll = new JScrollPane(resultPanel);
-        scroll.setBorder(new EmptyBorder(10, 30, 10, 30));
-        scroll.getVerticalScrollBar().setUnitIncrement(25); // Faster scrolling for long text content
+        scroll.setBorder(new EmptyBorder(10, 20, 10, 20));
+        // Crucial for long text: make the scrollbar move faster
+        scroll.getVerticalScrollBar().setUnitIncrement(20);
 
         // --- Bottom Navigation ---
         JButton backBtn = new JButton("← Back to Dashboard");
         styleButton(backBtn, darkPink, Color.WHITE);
-        backBtn.setPreferredSize(new Dimension(0, 60));
+        backBtn.setPreferredSize(new Dimension(0, 55));
 
         add(top, BorderLayout.NORTH);
         add(scroll, BorderLayout.CENTER);
         add(backBtn, BorderLayout.SOUTH);
 
-        // Initial load of all diseases
+        // Load all data on start
         loadData("");
 
         // Listeners
@@ -67,9 +64,9 @@ public class SearchPanel extends JPanel {
         backBtn.addActionListener(e -> parent.showDashboard());
     }
 
-    /**
-     * Fetches data from MySQL and populates the result panel
-     */
+    // ===============================
+    // 2️⃣ Database Logic
+    // ===============================
     private void loadData(String query) {
         resultPanel.removeAll();
         try (Connection conn = DBConnection.getConnection()) {
@@ -85,7 +82,7 @@ public class SearchPanel extends JPanel {
                     rs.getString("cause"), 
                     rs.getString("solution")
                 ));
-                resultPanel.add(Box.createRigidArea(new Dimension(0, 30))); // Gap between cards
+                resultPanel.add(Box.createRigidArea(new Dimension(0, 20)));
             }
         } catch (Exception e) { 
             e.printStackTrace(); 
@@ -94,50 +91,52 @@ public class SearchPanel extends JPanel {
         resultPanel.repaint();
     }
 
-    /**
-     * Creates a card using HTML to style long text with bold sub-headers
-     */
+    // ===============================
+    // 3️⃣ UI Component: Enhanced Card
+    // ===============================
     private JPanel createCard(String name, String sym, String cause, String sol) {
         JPanel card = new JPanel(new BorderLayout());
         card.setBackground(Color.WHITE);
         card.setBorder(BorderFactory.createCompoundBorder(
             new LineBorder(lightPink, 2), 
-            new EmptyBorder(10, 10, 10, 10)
+            new EmptyBorder(20, 20, 20, 20)
         ));
+        // Increased height to accommodate the 500-word content
+        card.setMaximumSize(new Dimension(700, 450));
 
-        // JTextPane allows for 13pt font and Bold styling via HTML
-        JTextPane infoPane = new JTextPane();
-        infoPane.setContentType("text/html");
-        infoPane.setEditable(false);
-        infoPane.setFocusable(false);
-        infoPane.setMargin(new Insets(15, 15, 15, 15));
+        JLabel title = new JLabel(name.toUpperCase());
+        title.setFont(new Font("Arial", Font.BOLD, 18));
+        title.setForeground(darkPink);
+        title.setBorder(new EmptyBorder(0, 0, 10, 0));
 
-        // --- HTML String for Disease Details ---
-        String htmlContent = "<html><body style='font-family: Segoe UI, Arial; font-size: 13pt; line-height: 1.6; color: #333333;'>" +
-            "<h2 style='color: #C71585; font-size: 19pt; margin-bottom: 12px;'>" + name.toUpperCase() + "</h2>" +
-            "<p><b>SYMPTOMS:</b><br>" + sym.replaceAll("\n", "<br>") + "</p>" +
-            "<p><b>CAUSES:</b><br>" + cause.replaceAll("\n", "<br>") + "</p>" +
-            "<p><b>DIETARY SOLUTION (What, Why, When, How Much):</b><br>" + sol.replaceAll("\n", "<br>") + "</p>" +
-            "</body></html>";
+        // Use a styled JTextPane or TextArea for rich text
+        JTextArea infoArea = new JTextArea();
+        infoArea.setText(
+            "SYMPTOMS:\n" + sym + "\n\n" +
+            "CAUSES:\n" + cause + "\n\n" +
+            "DIETARY SOLUTION (What, Why, When, How Much):\n" + sol
+        );
+        infoArea.setFont(new Font("Arial", Font.PLAIN, 14));
+        infoArea.setLineWrap(true);
+        infoArea.setWrapStyleWord(true);
+        infoArea.setEditable(false);
+        infoArea.setMargin(new Insets(10, 10, 10, 10));
 
-        infoPane.setText(htmlContent);
-        card.add(infoPane, BorderLayout.CENTER);
-        
-        // Ensure card expands to fit 500+ words
-        card.setMaximumSize(new Dimension(850, 2000)); 
+        // Putting the text inside its own scroll pane if it's too long
+        JScrollPane internalScroll = new JScrollPane(infoArea);
+        internalScroll.setBorder(null);
+
+        card.add(title, BorderLayout.NORTH);
+        card.add(internalScroll, BorderLayout.CENTER);
         
         return card;
     }
 
-    /**
-     * Common styling for buttons
-     */
     private void styleButton(JButton b, Color bg, Color fg) {
         b.setBackground(bg);
         b.setForeground(fg);
-        b.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        b.setFont(new Font("Arial", Font.BOLD, 14));
         b.setFocusable(false);
         b.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        b.setBorder(BorderFactory.createEmptyBorder());
     }
 }

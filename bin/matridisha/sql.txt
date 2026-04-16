@@ -1,0 +1,217 @@
+ CREATE DATABASE matridisha_db;
+ 
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(50) NOT NULL,
+    age INT NULL,
+    weight DECIMAL(5, 2) NULL,
+    current_weeks INT NULL,
+    prev_child VARCHAR(10) NULL,
+    delivery_type VARCHAR(50) NULL,
+    current_disease VARCHAR(255) NULL
+);
+ 
+ 
+ 
+ 
+ -- 1️⃣ Create the guidance table if it doesn't exist
+CREATE TABLE IF NOT EXISTS guidance (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    category VARCHAR(50),
+    title VARCHAR(100),
+    info TEXT
+);
+//TRUNCATE TABLE guidance;
+
+INSERT INTO guidance (category, title, info) VALUES 
+(
+'Prenatal', 
+'1st Trimester: Foundation Phase (Month 1 - Month 3)', 
+'THE JOURNEY BEGINS: The first trimester spans from week 1 to week 12. This is the most delicate phase because the zygote transforms into an embryo and then a fetus. 
+
+DIET (What, Why, When, How Much):
+- WHAT: You must focus on Folic Acid-rich foods like spinach, broccoli, lentils, and fortified cereals. Include Vitamin B6 sources like bananas and chickpeas. 
+- WHY: Folic acid is non-negotiable for preventing Neural Tube Defects (NTDs), which affect the baby’s brain and spine. Vitamin B6 and Ginger are your best friends against morning sickness, which is caused by rising hCG hormones. 
+- WHEN: Eat a small dry snack like a biscuit or puffed rice (muri) at 7:00 AM before even sitting up in bed. 
+- HOW MUCH: You need 600mcg of Folic Acid daily. Do not "eat for two" yet; your calorie needs haven’t increased much, but your nutrient needs have. Eat 6 tiny meals throughout the day to keep your blood sugar stable and prevent nausea.
+
+EXERCISE:
+- Gentle Walking: 15-20 minutes of steady walking helps circulation.
+- Pelvic Floor (Kegels): Start squeezing and relaxing your pelvic muscles to prepare for the weight of the baby.
+- AVOID: Any contact sports, heavy weightlifting, or exercises that require lying flat on your back for long periods.
+
+RECOVERY & TIPS:
+- Rest is your priority. Your body is building a placenta, which is like growing a new organ. If you feel tired, sleep. Stay hydrated with 2-3 liters of water to manage the increased blood volume.'
+),
+(
+'Prenatal', 
+'2nd Trimester: The Golden Period (Month 4 - Month 6)', 
+'THE GROWTH SURGE: Spanning weeks 13 to 26, this is often the most comfortable phase. The baby’s bones are hardening, and they can now hear your voice.
+
+DIET (What, Why, When, How Much):
+- WHAT: Calcium and Vitamin D (Milk, Paneer, Curd, Sardines) and Iron (Lean red meat, beans, tofu).
+- WHY: The baby is developing a skeleton; if you don’t eat enough calcium, the baby will take it from your own bones. Iron is needed to prevent anemia as your blood supply doubles.
+- WHEN: Have a calcium-rich snack around 11:00 AM. Take your iron supplement with a glass of lemon water (Vitamin C) at 4:00 PM for maximum absorption.
+- HOW MUCH: 1,000mg of Calcium and 27mg of Iron daily. You now need an extra 300-350 calories per day—think of it as an extra healthy snack.
+
+EXERCISE:
+- Prenatal Yoga: Focus on "Cat-Cow" and "Child’s Pose" to relieve growing back tension.
+- Swimming: The water supports your weight, making it the perfect cardio for the second trimester.
+- AVOID: Exercises where you might fall or lose balance, as your center of gravity is shifting.
+
+RECOVERY & TIPS:
+- This is the best time to start moisturizing your belly to manage skin stretching. Keep your legs elevated when sitting to prevent the early onset of varicose veins.'
+),
+(
+'Prenatal', 
+'3rd Trimester: The Final Stretch (Month 7 - Month 9)', 
+'PREPARING FOR ARRIVAL: Weeks 27 to 40. The baby is now practicing breathing and opening their eyes. Brain development is at its peak.
+
+DIET (What, Why, When, How Much):
+- WHAT: DHA/Omega-3 (Walnuts, Chia seeds, Fatty fish) and High Fiber (Oats, Whole grains, Prunes).
+- WHY: DHA is the primary structural component of the baby’s brain and retina. Fiber is essential because the growing uterus slows down your digestion, leading to severe constipation.
+- WHEN: Eat 8-10 micro-meals. Your stomach is compressed, so large meals will cause painful heartburn.
+- HOW MUCH: 200mg of DHA daily. Fiber intake should be 25-30g. Drink 3 liters of water daily to prevent preterm contractions.
+
+EXERCISE:
+- Pelvic Tilts: These strengthen your core and help the baby move into the "head-down" position.
+- Squatting: Use a wall for support. Squatting opens the pelvic outlet and prepares the muscles for the pushing stage of labor.
+- Walking: Keep walking, but shorten the distance. Focus on "active rest."
+
+RECOVERY & TIPS:
+- Sleep on your left side to maximize blood flow to the placenta. Prepare your hospital bag and practice deep breathing exercises (Lamaze technique) to manage labor pain.'
+),
+(
+'Postnatal', 
+'Mother’s Care (0-1 Year Post-Delivery)', 
+'THE FOURTH TRIMESTER: Healing your body is a 12-month process. Whether you had a C-section or a normal delivery, your internal organs are shifting back to their original places.
+
+DIET (What, Why, When, How Much):
+- WHAT: High Protein (Chicken, Eggs, Dal), Iron, and Galactagogues (Fenugreek/Methi, Garlic, Oats).
+- WHY: Protein is the "repair man" for your tissues and stitches. Galactagogues stimulate the hormone prolactin to ensure you have enough milk for the baby.
+- WHEN: Drink a glass of water and eat a small snack every time you sit down to breastfeed.
+- HOW MUCH: You need an extra 500 calories daily. Do not attempt "weight loss diets" for at least 6 months; your body needs energy to produce milk.
+
+EXERCISE & CARE:
+- Rest: "Sleep when the baby sleeps" is not just a saying—it is a survival strategy to prevent postpartum depression.
+- Postpartum Walking: Start with 5-minute walks around the house after 6 weeks (if cleared by a doctor).
+- Pelvic Floor: Continue Kegels to heal the vaginal muscles and prevent bladder leakage.
+
+MENTAL HEALTH:
+- Monitor your moods. "Baby Blues" are common for 2 weeks, but if sadness lasts longer, seek help. Your mental health directly impacts the baby’s development.'
+),
+(
+'Postnatal', 
+'Baby’s Care (0-6 Months)', 
+'THE EXCLUSIVE BREASTFEEDING PHASE: Your baby’s digestive system is immature and can only handle breast milk.
+
+WHAT TO FEED: 
+- Mother’s Milk ONLY. Absolutely no water, no honey, and no infant cereal until the 6th month.
+- WHY: Breast milk is "Liquid Gold." It contains colostrum (in the first few days), which acts as the baby’s first vaccine, coating their gut with protective antibodies.
+- HOW MUCH: Feed on demand (8-12 times a day). A newborn’s stomach is tiny, so they need to eat frequently.
+
+CARE: 
+- Vaccination: Follow the EPI schedule strictly. This is the window for BCG, Polio, and Pentavalent vaccines.
+- Hygiene: Always wash your hands before touching the baby. Keep the umbilical cord stump clean and dry—it will fall off on its own.
+- Bonding: Practice Skin-to-Skin contact. This regulates the baby’s heart rate and temperature.'
+),
+(
+'Postnatal', 
+'Baby’s Care (6-12 Months)', 
+'WEANING AND DEVELOPMENT: At 6 months, the baby’s iron stores are depleted, and they need solid food to support brain growth and motor skills.
+
+WHAT TO FEED: 
+- STARTING SOLIDS: Begin with mashed banana, well-cooked Khichdi (Rice + Lentils + Ghee), or mashed papaya.
+- WHY: Ghee provides essential fats for brain growth; lentils provide the protein needed for crawling and sitting up.
+- WHEN: Start with one solid meal at 12:00 PM, then gradually add a second meal in the evening. Breast milk remains a secondary source of nutrition.
+- HOW MUCH: Start with 2-3 teaspoons and build up to half a bowl per meal.
+
+CARE: 
+- Tummy Time: Vital for strengthening the neck and shoulder muscles so the baby can begin to crawl.
+- Safety: As the baby starts moving, "child-proof" your home. Cover sharp corners and electrical outlets.
+- NO SALT/SUGAR: A baby’s kidneys cannot process added salt or sugar until after their first birthday.'
+);
+
+
+
+
+
+
+
+
+
+
+//////////////diseases
+
+
+CREATE TABLE diseases (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100),
+    symptoms TEXT, cause TEXT,
+    solution TEXT
+);
+
+-- 1. Insert 10 Detailed Diseases in English
+INSERT INTO diseases (name, symptoms, cause, solution) VALUES 
+(
+'Anemia (Iron Deficiency)', 
+'Extreme fatigue, pale skin, shortness of breath, dizziness, cold hands and feet, and a rapid or irregular heartbeat. You may also experience cravings for non-food items like ice or dirt (Pica).', 
+'During pregnancy, your blood volume increases by 50%. Your body needs extra iron to make more hemoglobin for this blood. If iron, Vitamin B12, or Folic Acid intake is low, the body cannot produce enough red blood cells to carry oxygen to the baby.', 
+'**What to Eat:** Focus on "Heme" iron like lean red meat and poultry, and "Non-heme" iron like spinach, lentils, and fortified cereals. **Why:** Iron builds hemoglobin; Vitamin C (lemons/oranges) helps absorb it. **When:** Take iron supplements on an empty stomach with orange juice for max absorption. **How Much:** Aim for 27mg of iron daily. Avoid tea or coffee within 2 hours of eating as they block iron absorption.'
+),
+(
+'Morning Sickness', 
+'Nausea and vomiting, often triggered by certain smells, spicy foods, or even heat. While called "morning" sickness, it can occur at any time of the day or night.', 
+'Rapidly rising levels of the hormone hCG (human chorionic gonadotropin) and estrogen. An empty stomach or low blood sugar can make the sensation much worse.', 
+'**What to Eat:** Bland foods like crackers, toast, ginger tea, and bananas. **Why:** Ginger is a natural anti-nausea agent; dry carbs stabilize blood sugar. **When:** Eat a few crackers *before* getting out of bed in the morning. **How Much:** Eat 6 small meals instead of 3 large ones. Drink 2 liters of water but only between meals, not during, to prevent a full-stomach trigger.'
+),
+(
+'Gestational Diabetes', 
+'Increased thirst, frequent urination, blurred vision, and unusual fatigue. Often, there are no obvious symptoms, which is why screening at 24-28 weeks is vital.', 
+'The placenta produces hormones that cause glucose to build up in your blood. If your pancreas cannot produce enough insulin to handle this, blood sugar levels rise dangerously high.', 
+'**What to Eat:** Complex carbs like brown rice, oats, and high-fiber vegetables. **Why:** Fiber slows sugar absorption. **When:** Never skip breakfast. Space out snacks every 2-3 hours to keep sugar levels flat. **How Much:** Limit fruit to 2 servings a day and strictly avoid sweets/soda. Walk for 15 minutes after every meal to help your body process the glucose naturally.'
+),
+(
+'Preeclampsia (High Blood Pressure)', 
+'Severe headaches, swelling in the hands and face (edema), sudden weight gain, vision changes (blurriness or spots), and decreased urination.', 
+'The exact cause is unknown but involves abnormal development of the placenta blood vessels. Risk factors include first-time pregnancy, obesity, or being over age 35.', 
+'**What to Eat:** Potassium-rich foods like bananas, sweet potatoes, and low-fat dairy. **Why:** Potassium balances sodium levels to lower pressure. **When:** Monitor BP every morning. **How Much:** Limit salt intake to less than 1 teaspoon (2,300mg) per day. Sleep strictly on your left side to improve blood flow to the placenta and kidneys. If BP exceeds 140/90, seek emergency care.'
+),
+(
+'Leg Cramps', 
+'Sudden, sharp, involuntary contractions of the calf or foot muscles, usually occurring at night or during periods of rest.', 
+'Likely caused by a combination of mineral imbalances (Calcium and Magnesium) and the increased weight of the uterus putting pressure on the leg veins.', 
+'**What to Eat:** Milk, yogurt, almonds, and pumpkin seeds. **Why:** Calcium and Magnesium are essential for muscle relaxation. **When:** Stretch your calves before bed. **How Much:** Drink at least 2 glasses of milk daily. If a cramp hits, flex your foot upward toward your shin. Stay hydrated, as dehydration is a major trigger for muscle spasms.'
+),
+(
+'Back Pain', 
+'A dull ache or sharp pain in the lower back or sacroiliac joints. It may radiate down into the buttocks or legs.', 
+'Your center of gravity shifts forward as the baby grows, straining your spine. Additionally, the hormone "Relaxin" loosens the ligaments in your pelvic area, making the joints less stable.', 
+'**What to Eat:** Vitamin D-rich foods like egg yolks and fatty fish. **Why:** Vitamin D helps bones stay strong under extra weight. **When:** Practice pelvic tilts (Kegels) every morning. **How Much:** Wear supportive, low-heeled shoes. Use a pregnancy pillow between your knees while sleeping on your side. Avoid standing for more than 30 minutes at a time.'
+),
+(
+'Jaundice (Intrahepatic Cholestasis)', 
+'Yellowing of the eyes/skin, dark tea-colored urine, and intense itching on the palms and soles of the feet without a rash.', 
+'Hormones slow down the normal flow of bile out of the liver. The bile then builds up in the bloodstream, causing the yellow tint and the itching sensation.', 
+'**What to Eat:** Low-fat, easily digestible foods like boiled vegetables and papaya. **Why:** Reducing fat lightens the load on your liver. **When:** Eat dinner early to allow the liver time to process. **How Much:** Drink 3 liters of water to flush toxins. Strictly avoid fried/oily foods and alcohol. This condition requires weekly Liver Function Tests (LFT) and medical monitoring.'
+),
+(
+'Thyroid Disorders (Hypothyroidism)', 
+'Extreme exhaustion, depression, unexplained weight gain, brittle hair, and feeling cold even in warm weather.', 
+'The baby relies on the mother for thyroid hormones for brain development. If the mother’s thyroid gland is sluggish or lacks iodine, it cannot meet this demand.', 
+'**What to Eat:** Iodized salt, eggs, seafood, and dairy. **Why:** Iodine is the fuel for thyroid hormones. **When:** Take thyroid medication (Levothyroxine) 30-60 minutes before breakfast. **How Much:** Ensure 250mcg of iodine daily. Avoid raw cabbage or kale in large amounts as they can interfere with thyroid function. Regular blood tests (TSH) are essential every 4-6 weeks.'
+),
+(
+'Edema (Severe Swelling)', 
+'Significant swelling of feet, ankles, and fingers. The skin may look "pitted" (a fingerprint stays in the skin after pressing).', 
+'The body produces extra fluid to soften the body for delivery. Gravity causes this fluid to pool in the lower limbs, especially during the third trimester.', 
+'**What to Eat:** Watermelon, cucumbers, and celery. **Why:** These are natural diuretics that help flush out excess water. **When:** Elevate your feet above your heart level for 20 minutes every evening. **How Much:** Drink 10 glasses of water. It sounds counter-intuitive, but drinking more water helps the body release the water it is holding. Avoid tight socks or leggings.'
+),
+(
+'Constipation', 
+'Abdominal bloating, pain during bowel movements, and passing hard, dry stools less than three times a week.', 
+'Progesterone relaxes the intestinal muscles, slowing down the passage of food. Iron supplements and lack of physical activity further contribute to the blockage.', 
+'**What to Eat:** High-fiber foods like pears, prunes, beans, and whole-wheat bread. **Why:** Fiber adds bulk and moisture to stool. **When:** Drink a glass of warm water immediately upon waking. **How Much:** Aim for 25-30g of fiber daily. Walk for 30 minutes a day to stimulate bowel movement. Never take laxatives without a doctor’s prescription, as they can trigger contractions.'
+);
